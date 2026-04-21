@@ -1,0 +1,596 @@
+@use '../../../common/yiyabase' as *;
+body {
+    background: transparent;
+}
+#app {
+    overflow: hidden;
+}
+
+.numShop__warp {
+    height: 100vh;
+    overflow-y: auto;
+    background: #385898;
+    .numShop__banner {
+        width: 750px;
+        height: 482px;
+        background: img-url('/numShop/n5.png') no-repeat;
+        background-size: 100% 100%;
+        box-sizing: border-box;
+        padding: 60px;
+        position: relative;
+        .rule__text {
+            min-width: 140px;
+            height: 64px;
+            background: rgba(10, 87, 238, 0.22);
+            border-radius: 0px 32px 32px 0px;
+            border: 1px solid;
+            border-image: linear-gradient(
+                270deg,
+                rgba(10, 87, 238, 1),
+                rgba(255, 255, 255, 0),
+                rgba(91, 226, 248, 1)
+            );
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 600;
+            font-size: 24px;
+            color: #ffffff;
+            position: absolute;
+            left: 0;
+            top: 30px;
+            box-sizing: border-box;
+            padding: 0 10px;
+            .s__icon {
+                width: 28px;
+                height: 28px;
+                background: img-url('/numShop/n6.png') left top no-repeat;
+                background-size: 100% 100%;
+                margin-right: 10px;
+            }
+        }
+        .rule__btn {
+            width: 112px;
+            height: 64px;
+            background: rgba(10, 87, 238, 0.22);
+            border-radius: 32px 0px 0px 32px;
+            border: 1px solid;
+            border-image: linear-gradient(
+                270deg,
+                rgba(10, 87, 238, 1),
+                rgba(255, 255, 255, 0),
+                rgba(91, 226, 248, 1)
+            );
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 600;
+            font-size: 24px;
+            color: #ffffff;
+            position: absolute;
+            right: 0;
+            top: 30px;
+        }
+    }
+    .num_tab {
+        position: relative;
+        background: #111856;
+        box-sizing: border-box;
+        padding-bottom: 30px;
+        .ls-tab {
+            .ls-tab-header {
+                width: 700px;
+                margin: -80px auto 0 auto;
+                .ls-tab-ul {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    .ls-tab-ul-li {
+                        width: 160px;
+                        height: 150px;
+                        background: #385898;
+                        border-radius: 24px;
+                        position: relative;
+                        .ls-tab-ul-li-des {
+                            width: 88px;
+                            height: 88px;
+                            img {
+                                width: 88px;
+                                height: 88px;
+                            }
+                            position: absolute;
+                            left: 50%;
+                            transform: translateX(-50%);
+                            top: -20px;
+                        }
+                        .ls-tab-ul-li-title {
+                            font-weight: 400;
+                            font-size: 24px;
+                            color: #879fce;
+                            text-align: center;
+                            position: absolute;
+                            left: 50%;
+                            transform: translateX(-50%);
+                            bottom: 30px;
+                            width: 160px;
+                        }
+                        &.active {
+                            background: linear-gradient(
+                                180deg,
+                                #aad9e6 0%,
+                                #fff7d2 100%
+                            );
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .numShop__content {
+        width: 750px;
+        // margin-top: 30px;
+
+        .n_tab-wapr {
+            background: #111856;
+        }
+        .n_tab {
+            box-sizing: border-box;
+            padding: 30px;
+            background: #385898;
+            border-radius: 24px 24px 0px 0px;
+            .ls-tab {
+                .ls-tab-header {
+                    .ls-tab-ul {
+                        display: flex;
+                        justify-content: left;
+                        align-items: center;
+                        .ls-tab-ul-li {
+                            width: 124px;
+                            height: 64px;
+                            background: #7992c4;
+                            border-radius: 32px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            margin-right: 20px;
+                            .ls-tab-ul-li-title {
+                                font-weight: 400;
+                                font-size: 24px;
+                                color: #fff;
+                                text-align: center;
+                            }
+                            &.active {
+                                background: #ffffff;
+
+                                .ls-tab-ul-li-title {
+                                    color: #0d3075;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .shop__warp-div {
+            box-sizing: border-box;
+            padding: 30px;
+            min-height: 800px;
+            ul {
+                display: flex;
+                flex-wrap: wrap;
+
+                li {
+                    width: 214px;
+                    height: 168px;
+                    background: linear-gradient(
+                        180deg,
+                        #7296dd 0%,
+                        #5073bb 100%
+                    );
+                    border-radius: 24px;
+                    border: 1px solid rgba(255, 255, 255, 0.21);
+
+                    margin-bottom: 26px;
+                    margin-right: 16px;
+                    .li__top-div {
+                        width: 214px;
+
+                        border-radius: 30px 30px 0px 0px;
+                        text-align: center;
+                        box-sizing: border-box;
+                        padding-top: 30px;
+                        .li__top-num {
+                            font-size: 36px;
+                            font-family:
+                                PingFangSC-Semibold,
+                                PingFang SC;
+                            font-weight: 600;
+                            color: #eff3fa;
+                            line-height: 50px;
+                        }
+                        .li__top-day {
+                            font-size: 24px;
+                            font-family:
+                                PingFangSC-Semibold,
+                                PingFang SC;
+                            font-weight: 600;
+                            color: #915417;
+                        }
+                    }
+                    .li__bottom-div {
+                        width: 214px;
+                        height: 74px;
+
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        .li__bottom-icon {
+                            width: 28px;
+                            height: 28px;
+                            background: img-url('/jinbi.png') left top no-repeat;
+                            background-size: 100% 100%;
+                            margin-right: 10px;
+                        }
+                        .li__bottom-price {
+                            font-size: 24px;
+                            font-family: HiraginoSansGB-W6, HiraginoSansGB;
+                            font-weight: normal;
+                            color: #fbebc1;
+                        }
+                        .li__bottom-score {
+                            width: 28px;
+                            height: 28px;
+                            background: img-url('/numShop/n6.png') left top
+                                no-repeat;
+                            background-size: 100% 100%;
+                            margin-right: 10px;
+                        }
+                    }
+                }
+                li:nth-of-type(3n) {
+                    margin-right: 0;
+                }
+            }
+        }
+        .nodata__li {
+            background: transparent;
+            box-sizing: border-box;
+            padding-top: 200px;
+            .nodata__div-icon {
+                width: 280px;
+                height: 280px;
+                background: img-url('/no__data.png?v=1') left top no-repeat;
+                background-size: 100% 100%;
+                margin: auto;
+            }
+            .nodata__div-text {
+                font-size: 24px;
+                font-family: PingFangTC-Regular, PingFangTC;
+                font-weight: 400;
+                color: #999999;
+                text-align: center;
+                margin-top: 20px;
+            }
+        }
+    }
+}
+.btn__alert {
+    .center-content {
+        height: 700px;
+        .title {
+            font-size: 36px;
+            font-family:
+                PingFangSC-Semibold,
+                PingFang SC;
+            font-weight: 600;
+            color: #333333;
+            text-align: center;
+            margin: 10px 0;
+        }
+        .tips {
+            font-size: 24px;
+            font-family:
+                PingFangSC-Regular,
+                PingFang SC;
+            font-weight: 400;
+            color: #999999;
+            text-align: center;
+        }
+        .uids {
+            margin-bottom: 10px;
+            .uids_tips {
+                font-size: 24px;
+                font-family:
+                    PingFangSC-Regular,
+                    PingFang SC;
+                font-weight: 400;
+                color: red;
+                text-align: center;
+                margin-bottom: 10px;
+            }
+            .adm-input {
+                width: 400px;
+                margin: auto;
+                input {
+                    background: #f8f8f8;
+                    width: 400px;
+                    height: 80px;
+                    box-sizing: border-box;
+                    padding: 10px 20px;
+                }
+            }
+        }
+        .rule__btns {
+            margin: 10px 0 0 0;
+            text-align: center;
+            .adm-checkbox-content {
+                font-weight: 400;
+                font-size: 24px;
+                color: #999999;
+                span {
+                    color: #587dfc;
+                }
+            }
+        }
+        .btn__alert-num {
+            font-size: 60px;
+            font-family:
+                PingFangSC-Semibold,
+                PingFang SC;
+            font-weight: 600;
+            color: #31005d;
+            line-height: 84px;
+            background: linear-gradient(90deg, #c230ff 0%, #5856ff 100%);
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin: 10px 0 20px 0;
+        }
+        .tips2 {
+            font-size: 24px;
+            font-family:
+                PingFangSC-Regular,
+                PingFang SC;
+            font-weight: 400;
+            color: #999999;
+            text-align: center;
+        }
+        .btn__alert-step {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px auto;
+        }
+        .btn__alert-total {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            .total__icon {
+                width: 28px;
+                height: 28px;
+                background: img-url('/jinbi.png') left top no-repeat;
+                background-size: 100% 100%;
+                margin-right: 10px;
+            }
+            .total__charge {
+                font-size: 22px;
+                font-family:
+                    PingFangSC-Semibold,
+                    PingFang SC;
+                font-weight: 600;
+                color: #b53d00;
+                margin-left: 30px;
+            }
+        }
+        .btns {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .btn__alert-btn1 {
+                width: 180px;
+                height: 88px;
+                background: #f1f1f1;
+                border-radius: 30px;
+                font-size: 28px;
+                font-family:
+                    PingFangSC-Semibold,
+                    PingFang SC;
+                font-weight: 600;
+                color: #666666;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+        .btn__alert-btn2 {
+            width: 400px;
+            height: 88px;
+            background: linear-gradient(90deg, #6beaf9 0%, #61ddf9 100%);
+            box-shadow: inset 0px 0px 20px 0px #ffffff;
+            border-radius: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 20px;
+            color: #fff;
+        }
+    }
+}
+.help__user-warp {
+    .center-content {
+        width: 700px;
+        height: 900px;
+    }
+    .help-rule {
+        .nav-title {
+            font-size: 30px;
+            font-family:
+                PingFangSC-Semibold,
+                PingFang SC;
+            font-weight: 600;
+            color: #333333;
+            text-align: center;
+        }
+        .rule-content {
+            box-sizing: border-box;
+
+            .r-title {
+                font-size: 30px;
+                color: #666;
+                font-weight: 500;
+                margin: 20px 0;
+                position: relative;
+                box-sizing: border-box;
+                padding-left: 20px;
+                &::after {
+                    content: '';
+                    position: absolute;
+                    left: 0;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    width: 8px;
+                    height: 30px;
+                    background: #ffb870;
+                    border-radius: 10px;
+                }
+            }
+            p {
+                font-size: 26px;
+                color: #666;
+                font-weight: 400;
+                line-height: 50px;
+            }
+        }
+    }
+}
+.help__warp {
+    .center-content {
+        height: 650px;
+    }
+    .help-rule {
+        .nav-title {
+            font-size: 30px;
+            font-family:
+                PingFangSC-Semibold,
+                PingFang SC;
+            font-weight: 600;
+            color: #333333;
+            text-align: center;
+        }
+        .rule-content {
+            box-sizing: border-box;
+
+            .r-title {
+                font-size: 30px;
+                color: #666;
+                font-weight: 500;
+                margin: 20px 0;
+                position: relative;
+                box-sizing: border-box;
+                padding-left: 20px;
+                &::after {
+                    content: '';
+                    position: absolute;
+                    left: 0;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    width: 8px;
+                    height: 30px;
+                    background: #ffb870;
+                    border-radius: 10px;
+                }
+            }
+            p {
+                font-size: 26px;
+                color: #666;
+                font-weight: 400;
+                line-height: 50px;
+            }
+        }
+    }
+}
+
+.numlist__warp {
+    height: 100vh;
+    overflow-y: auto;
+    background: #f8f8f9;
+    box-sizing: border-box;
+    padding: 40px 30px;
+    ul {
+        li {
+            width: 690px;
+            height: 180px;
+            background: #ffffff;
+            border-radius: 30px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+            padding: 40px;
+            .numlist__left {
+                .numlist__num {
+                    font-size: 50px;
+                    font-family:
+                        PingFangSC-Semibold,
+                        PingFang SC;
+                    font-weight: 600;
+                    color: #31005d;
+                    line-height: 70px;
+                    background: linear-gradient(
+                        90deg,
+                        #c230ff 0%,
+                        #5856ff 100%
+                    );
+                    background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                }
+                .numlist__time {
+                    font-size: 24px;
+                    font-family:
+                        PingFangSC-Semibold,
+                        PingFang SC;
+                    font-weight: 600;
+                    color: #5f79ea;
+                }
+            }
+            .numlist__btn {
+                width: 160px;
+                height: 70px;
+                background: linear-gradient(270deg, #9db6f9 0%, #a08bf7 100%);
+                border-radius: 20px;
+                font-size: 28px;
+                font-family:
+                    PingFangSC-Semibold,
+                    PingFang SC;
+                font-weight: 600;
+                color: #ffffff;
+                line-height: 40px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+    }
+    .nodata__div {
+        background: transparent;
+        box-sizing: border-box;
+        padding-top: 200px;
+        .nodata__div-icon {
+            width: 280px;
+            height: 280px;
+            background: img-url('/no__data.png') left top no-repeat;
+            background-size: 100% 100%;
+            margin: auto;
+        }
+        .nodata__div-text {
+            font-size: 24px;
+            font-family: PingFangTC-Regular, PingFangTC;
+            font-weight: 400;
+            color: #999999;
+            text-align: center;
+            margin-top: 20px;
+        }
+    }
+}

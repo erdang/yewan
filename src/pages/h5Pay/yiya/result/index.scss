@@ -1,0 +1,339 @@
+@use '../../../../common/yiyabase' as *;
+.manager-info {
+    box-sizing: border-box;
+    padding-top: 80px;
+    .user-div {
+        margin-bottom: 30px;
+        .amount {
+            font-size: 28px;
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            font-weight: 600;
+            padding: 0 44px;
+            color: var(--font-color);
+            .label {
+                width: 160px;
+            }
+        }
+        .tips {
+            font-size: 26px;
+            padding: 0 44px;
+            text-align: left;
+        }
+    }
+    .apply-user-info {
+        font-size: 28px;
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        height: 90px;
+        padding: 0 44px;
+        font-weight: 600;
+        background: var(--bg-color);
+        color: var(--font-color);
+        .label {
+            width: 160px;
+        }
+
+        .main {
+            width: 520px;
+            display: flex;
+            justify-content: left;
+            align-items: center;
+
+            span:nth-of-type(1) {
+                max-width: 200px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            span:nth-of-type(2) {
+                width: 200px;
+            }
+            span:nth-of-type(3) {
+                width: 160px;
+            }
+        }
+    }
+    .input-info {
+        font-size: 28px;
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        padding: 0 44px;
+        .name {
+            width: 160px;
+            font-weight: 600;
+            color: var(--font-color);
+        }
+        .uid-input {
+            input {
+                font-size: 28px;
+                font-weight: 600;
+                color: var(--font-color);
+            }
+        }
+    }
+    .money-warp {
+        box-sizing: border-box;
+        padding: 0 44px;
+        .title-money {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--font-color);
+            margin: 18px auto 28px auto;
+        }
+        .money-list {
+            ul {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;
+                li {
+                    width: 300px;
+                    height: 94px;
+                    background: #f5f5f5;
+                    border-radius: 20px;
+                    margin-bottom: 30px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    box-sizing: border-box;
+                    padding: 0 20px;
+                    border: 4px solid #f5f5f5;
+                    &.active {
+                        background: #effaff;
+                        border: 4px solid var(--font-strong-color);
+                        border-radius: 20px;
+                    }
+                    .zuan {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        .zuan-icon {
+                            width: 30px;
+                            height: 30px;
+                            background: img-url('/buz_wei/Z_bi.png')
+                                center center no-repeat;
+                            background-size: 100% 100%;
+                            margin-right: 16px;
+                        }
+                        .num {
+                            font-size: 24px;
+                            font-weight: 500;
+                            color: #222222;
+                        }
+                    }
+                    .rmb {
+                        font-size: 24px;
+                        font-weight: 500;
+                        color: #838383;
+                    }
+                }
+            }
+        }
+        .input-money {
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            width: 662px;
+            height: 94px;
+            background: #f5f5f5;
+            border-radius: 20px;
+            border: 3px solid #f5f5f5;
+            box-sizing: border-box;
+            padding: 0 30px;
+            &.active {
+                background: #effaff;
+                border: 3px solid var(--font-strong-color);
+                border-radius: 20px;
+            }
+            .zuan-icon {
+                width: 30px;
+                height: 30px;
+                background: img-url('/buz_wei/Z_bi.png') center center
+                    no-repeat;
+                background-size: 100% 100%;
+                margin-right: 16px;
+            }
+            .m-input {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                .m__price {
+                    color: #222;
+                    font-size: 28px;
+                    font-weight: 600;
+                }
+                input {
+                    font-size: 28px;
+                    font-weight: 600;
+                    color: #222222;
+                    width: 500px;
+                }
+            }
+        }
+    }
+
+    .next-btn {
+        background: linear-gradient(
+            180deg,
+            rgb(71, 191, 254) 0%,
+            rgb(107, 205, 255) 100%
+        );
+        box-shadow: 0px 10px 20px 0px rgba(80, 194, 254, 0.35);
+        width: 460px;
+        height: 90px;
+        font-size: 32px;
+        font-weight: 500;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 45px;
+        margin: 80px auto 20px auto;
+    }
+
+    .tips {
+        text-align: center;
+        font-size: 20px;
+        font-weight: 400;
+        color: var(--font-color);
+    }
+}
+
+.pay-way {
+    box-sizing: border-box;
+    padding: 0 44px;
+    display: flex;
+    justify-content: left;
+    align-items: flex-start;
+    margin: 30px 0 60px 0;
+    .title-way {
+        font-size: 28px;
+        font-weight: 500;
+        color: var(--font-color);
+
+        width: 160px;
+    }
+    .warp__ul {
+        width: 520px;
+    }
+    .way {
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        margin-bottom: 40px;
+        .w-icon_wechatH5 {
+            width: 48px;
+            height: 48px;
+            background: img-url('/buz_wei/w_icon.png') center center
+                no-repeat;
+            background-size: 100% 100%;
+            margin-right: 20px;
+        }
+        .w-icon_alipayWap {
+            width: 48px;
+            height: 48px;
+            background: img-url('/buz_wei/h5_c_a.png') center center
+                no-repeat;
+            background-size: 100% 100%;
+            margin-right: 20px;
+        }
+        .w-icon_unionPayH5 {
+            width: 48px;
+            height: 48px;
+            background: img-url('/buz_wei/h5_c_a.png') center center
+                no-repeat;
+            background-size: 100% 100%;
+            margin-right: 20px;
+        }
+        .w-text {
+            font-size: 22px;
+            font-weight: 400;
+            color: var(--bg-color);
+        }
+        width: 300px;
+        height: 94px;
+        background: #f5f5f5;
+        border-radius: 20px;
+
+        box-sizing: border-box;
+        padding: 0 20px;
+        border: 4px solid #f5f5f5;
+        &.active {
+            background: #effaff;
+            border: 4px solid var(--font-strong-color);
+            border-radius: 20px;
+        }
+    }
+}
+.w-btn {
+    background: linear-gradient(
+        180deg,
+        rgb(71, 191, 254) 0%,
+        rgb(107, 205, 255) 100%
+    );
+    box-shadow: 0px 10px 20px 0px rgba(80, 194, 254, 0.35);
+    width: 460px;
+    height: 90px;
+    font-size: 32px;
+    font-weight: 500;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 45px;
+    margin: 0 auto 20px auto;
+}
+.money__info {
+    box-sizing: border-box;
+    padding: 80px 44px;
+    .money__info-money {
+        font-size: 72px;
+        font-weight: 500;
+        color: var(--font-color);
+        text-align: center;
+        span {
+            font-size: 36px;
+            margin-right: 10px;
+        }
+    }
+    .money__info-m {
+        margin-top: 10px;
+        font-size: 26px;
+        font-weight: 400;
+        color: var(--font-color);
+        text-align: center;
+    }
+}
+.money__user {
+    box-sizing: border-box;
+    padding: 0 44px;
+    font-size: 28px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    height: 90px;
+    font-weight: 600;
+    background: var(--bg-color);
+    color: var(--font-color);
+    .label {
+        width: 160px;
+    }
+
+    .main {
+        width: 520px;
+        display: flex;
+        justify-content: left;
+        align-items: center;
+
+        span:nth-of-type(2) {
+            width: 200px;
+        }
+        span:nth-of-type(3) {
+            width: 160px;
+        }
+    }
+}

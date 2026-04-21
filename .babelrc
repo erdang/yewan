@@ -1,0 +1,51 @@
+{
+    "presets": [
+        [
+            "@babel/preset-env",
+            {
+                // 描述您为项目支持/目标的环境
+                "targets": {
+                    "chrome": "49",
+                    "ios": "10"
+                },
+                "corejs": 3, //新版本需要指定核⼼库版本
+                "useBuiltIns": "usage", //按需注⼊
+                "modules": false
+            }
+        ],
+        "@babel/preset-react"
+    ],
+    "plugins": [
+        [
+            "@babel/plugin-transform-runtime", //将 helper 和 polyfill 都改为从一个统一的地方引入，并且引入的对象和全局变量是完全隔离的 转换api  开发js类库 npm包
+            {
+                "corejs": false // 解决 helper 函数重复引入,默认就是false, 可以不设置此处
+            }
+        ],
+        [
+            "@babel/plugin-proposal-decorators",
+            {
+                "legacy": true
+            }
+        ],
+        [
+            "@babel/plugin-proposal-private-property-in-object",
+            { "loose": true }
+        ],
+        ["@babel/plugin-proposal-private-methods", { "loose": true }],
+        ["@babel/plugin-proposal-class-properties", { "loose": true }],
+        [
+            "import",
+            // {
+            //   "libraryName": "antd",
+            //   "libraryDirectory": "es",
+            //   "style": "css" // `style: true` 会加载 less 文件
+            // }
+            {
+                "libraryName": "antd-mobile",
+                "libraryDirectory": "es/components",
+                "style": false
+            }
+        ]
+    ]
+}

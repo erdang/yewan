@@ -1,0 +1,35 @@
+import './index.scss';
+
+import React, { useCallback } from 'react';
+
+const CenterOverlay = (props) => {
+    let closeWeb = useCallback(() => {
+        props.onClose();
+    }, [props]);
+    return (
+        <div className={props.className + ' l-centerOverlay'}>
+            <div className="mask" onClick={closeWeb}></div>
+            <div className="center-content">
+                {props.children}
+                <div className="close-btn" onClick={closeWeb}>
+                    <svg
+                        t="1640157205353"
+                        viewBox="0 0 1024 1024"
+                        version="1.1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        p-id="2054"
+                        width="200"
+                        height="200"
+                    >
+                        <path
+                            d="M585.412525 512.594747L973.601616 124.418586c19.600808-19.600808 19.600808-51.898182 0-71.49899l-2.120404-2.120404c-19.600808-19.600808-51.898182-19.600808-71.49899 0L511.793131 439.518384 123.61697 50.799192c-19.600808-19.600808-51.898182-19.600808-71.49899 0l-2.120404 2.120404c-20.11798 19.600808-20.11798 51.898182 0 71.49899l388.189091 388.189091L49.997576 900.783838c-19.587879 19.600808-19.587879 51.898182 0 71.49899l2.120404 2.120404c19.600808 19.600808 51.898182 19.600808 71.49899 0L511.793131 586.214141l388.189091 388.176162c19.600808 19.600808 51.898182 19.600808 71.49899 0l2.120404-2.120404c19.600808-19.600808 19.600808-51.898182 0-71.49899L585.412525 512.594747z m0 0"
+                            p-id="2055"
+                        ></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default CenterOverlay;

@@ -1,0 +1,130 @@
+@use '../../../common/yiyabase' as *;
+.sign__page {
+    box-sizing: border-box;
+    padding: 40px 0;
+
+    .rule-text {
+        span {
+            color: #6beaf9;
+        }
+    }
+    .red__span {
+        color: var(--font-strong-color);
+        font-size: 28px;
+    }
+    .adm-form-item-child-inner {
+        display: flex;
+        align-items: center;
+    }
+    .adm-tabs-content {
+        padding: 0;
+    }
+    .form__list {
+        .adm-input {
+            input {
+                padding: 0 20px;
+                width: 690px;
+                height: 88px;
+                background: #f8f8f8;
+                border-radius: 16px;
+            }
+            input::placeholder {
+                color: rgba(153, 153, 153, 1);
+            }
+        }
+    }
+    .get_tips {
+        font-size: 28px;
+        padding: 30px;
+        color: #b1acc7;
+    }
+    .adm-form {
+        border: none;
+    }
+    .adm-checkbox .adm-checkbox-icon {
+        color: #000;
+    }
+    .adm-list-body {
+        border: none;
+    }
+    .adm-form-item-label {
+        font-weight: 600;
+        font-size: 28px;
+        color: #7c7c7c;
+    }
+    .c-button {
+        width: 440px;
+        height: 100px;
+        background: var(--button-color);
+        border-radius: 50px;
+        margin: auto;
+    }
+    .b-button {
+        width: 440px;
+        height: 100px;
+        background: var(--button-color);
+        border-radius: 50px;
+        margin: 0 auto 20px auto;
+        color: #fff;
+    }
+    .adm-radio {
+        width: 330px;
+        height: 110px;
+        background: #272522;
+        border-radius: 16px;
+        border: 4px solid transparent;
+        box-sizing: border-box;
+        padding-left: 30px;
+        color: #999;
+    }
+    .adm-radio-checked {
+        background: var(--button-color);
+        border: 4px solid #fff;
+        color: #000;
+    }
+}
+
+.check__icon1 {
+    background: img-url('/cash/me_icon_zhi.png') no-repeat;
+    background-size: 100% 100%;
+    height: 50px;
+    width: 50px;
+}
+.check__icon2 {
+    background: img-url('/cash/me_icon_yhk.png') no-repeat;
+    background-size: 100% 100%;
+    height: 50px;
+    width: 50px;
+}
+.space__radio {
+    margin-left: 20px;
+}
+.w__count {
+    width: 280px;
+}
+.help__grade {
+    .center-content {
+        width: 740px;
+        height: 1200px;
+        background: transparent;
+
+        font-weight: 400;
+        font-size: 24px;
+        color: #b7aebc;
+        box-sizing: border-box;
+        padding: 0;
+        z-index: 888;
+    }
+    .close-btn {
+        z-index: 888;
+        svg {
+            fill: #000;
+        }
+    }
+    iframe {
+        height: 1200px;
+        width: 740px;
+        position: absolute;
+        z-index: 1;
+    }
+}

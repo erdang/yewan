@@ -1,0 +1,269 @@
+@use './normalize.scss';
+@mixin borderv($borderColor, $borderRadus) {
+    /* 上下左右边框 */
+    .border-top {
+        border: 0;
+        position: relative;
+    }
+
+    .border-top:before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 1px;
+        left: 0;
+        top: 0;
+        -webkit-transform-origin: 0 0;
+        transform-origin: 0 0;
+        background: $borderColor;
+    }
+
+    .border-right {
+        position: relative;
+    }
+
+    .border-right:after {
+        content: '';
+        width: 1px;
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        -webkit-transform-origin: 100% 0;
+        transform-origin: 100% 0;
+        background: $borderColor;
+    }
+
+    .border-bottom {
+        border: 0;
+        position: relative;
+    }
+
+    .border-bottom:after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 1px;
+        left: 0;
+        bottom: 0;
+        -webkit-transform-origin: 0 100%;
+        transform-origin: 0 100%;
+        background: $borderColor;
+    }
+
+    .border-left {
+        border: 0;
+        position: relative;
+    }
+
+    .border-left:before {
+        content: '';
+        position: absolute;
+        height: 100%;
+        width: 1px;
+        left: 0;
+        top: 0;
+        -webkit-transform-origin: left center;
+        transform-origin: left center;
+        background: $borderColor;
+    }
+
+    .border-all {
+        border: 0;
+        position: relative;
+    }
+
+    .border-all:before {
+        content: '';
+        box-sizing: border-box;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        font-size: 0;
+        line-height: 0;
+        border-radius: $borderRadus;
+        border: 1px solid $borderColor;
+        -webkit-transform-origin: 0 0;
+        transform-origin: 0 0;
+        background: 0 0;
+    }
+    /* 适配各种屏幕 */
+    @media only screen and (-webkit-min-device-pixel-ratio: 1.5), not all {
+        .border-top:before,
+        .border-bottom:after {
+            -webkit-transform: scaleY(0.66666667);
+            transform: scaleY(0.66666667);
+        }
+
+        .border-right:after,
+        .border-left:before {
+            -webkit-transform: scaleX(0.66666667);
+            transform: scaleX(0.66666667);
+        }
+
+        .border-all:before {
+            width: 150%;
+            height: 150%;
+            -webkit-transform: scale(0.66666667);
+            transform: scale(0.66666667);
+        }
+    }
+
+    @media only screen and (-webkit-min-device-pixel-ratio: 2), not all {
+        .border-top:before,
+        .border-bottom:after {
+            -webkit-transform: scaleY(0.5);
+            transform: scaleY(0.5);
+        }
+
+        .border-right:after,
+        .border-left:before {
+            -webkit-transform: scaleX(0.5);
+            transform: scaleX(0.5);
+        }
+
+        .border-all:before {
+            width: 200%;
+            height: 200%;
+            -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+        }
+    }
+
+    @media only screen and (-webkit-min-device-pixel-ratio: 3), not all {
+        .border-top:before,
+        .border-bottom:after {
+            -webkit-transform: scaleY(0.33333333);
+            transform: scaleY(0.33333333);
+        }
+
+        .border-right:after,
+        .border-left:before {
+            -webkit-transform: scaleX(0.33333333);
+            transform: scaleX(0.33333333);
+        }
+
+        .border-all:before {
+            width: 300%;
+            height: 300%;
+            -webkit-transform: scale(0.3326);
+            transform: scale(0.3326);
+        }
+    }
+}
+$img-url: 'https://s3.njxianyuwl.cn/static/h5_static';
+
+@function img-url($path) {
+    @return url('#{$img-url}#{$path}');
+}
+
+:root:root {
+    --adm-color-primary: linear-gradient(270deg, #9db6f9 0%, #a08bf7 100%);
+    --adm-font-size-main: 24px;
+    --adm-color-text: #000;
+    --adm-color-border: transparent;
+    --adm-color-danger: #ff4d4d;
+    --adm-color-white: #ffffff;
+    --adm-dialog-bg: #fff;
+    --adm-checkbox-bg: linear-gradient(270deg, #9db6f9 0%, #a08bf7 100%);
+    --adm-color-background: #fff;
+}
+
+:root {
+    --button-color: linear-gradient(90deg, #6beaf9 0%, #61ddf9 100%);
+    --bg-color: #fff;
+    --font-color: #000;
+    --font-tip-color: #959ab0;
+    --font-strong-color: #6beaf9;
+    --table-th-bg: #2a272f;
+    --table-border-bg: rgba(255, 255, 255, 0.7);
+    --imgUrl: '#{$img-url}';
+}
+
+.error-div {
+    color: #000;
+    .stack-div {
+        padding: 30px;
+    }
+    .error-btn {
+        text-align: center;
+        button {
+            color: #fff;
+        }
+    }
+}
+body {
+    color: var(--font-color);
+    background: #fff;
+}
+.c-button {
+    background: var(--button-color);
+    border: none;
+    height: 80px;
+}
+.out-button {
+    background: transparent;
+    border-color: #6beaf9;
+    color: var(--font-color);
+    font-size: 30px;
+}
+
+.adm-list-default .adm-list-body {
+    background: var(--bg-color);
+}
+.adm-list-body .adm-form-item-label {
+    color: var(--font-color);
+    font-size: 30px;
+}
+.adm-result {
+    background: var(--bg-color) !important;
+}
+.loading-svg {
+    background: var(--bg-color);
+}
+.adm-dialog-body {
+    background: var(--adm-dialog-bg);
+}
+.adm-dialog-body .adm-dialog-content {
+    color: #0a0d09;
+}
+.adm-dialog-footer .adm-dialog-action-row > .adm-dialog-button {
+    font-size: 30px;
+}
+.adm-list-item {
+    border-radius: 6px;
+    margin-bottom: 4px;
+}
+.adm-checkbox .adm-checkbox-icon {
+    color: #0a0d09;
+}
+.adm-button {
+    font-size: 28px;
+    font-family:
+        PingFangSC-Semibold,
+        PingFang SC;
+    font-weight: 600;
+}
+.adm-button-fill-outline {
+    color: #6beaf9;
+}
+.adm-input-element {
+    font-size: 28px;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+#app {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+}
+img {
+    content: normal !important;
+}

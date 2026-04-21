@@ -1,0 +1,49 @@
+@use '../../../../common/yiyabase.scss' as *;
+body {
+    background: transparent;
+}
+
+.rule__common-alert {
+    .center-content {
+        .close-btn {
+            svg {
+                fill: #fff;
+            }
+        }
+        width: 680px;
+        height: 600px;
+        background: #292b3c;
+        border-radius: 37px;
+        overflow-y: auto;
+        .title-icon {
+            font-size: 30px;
+            margin: 30px auto;
+            font-weight: 400;
+            color: #ffffff;
+        }
+        font-size: 24px;
+        line-height: 46px;
+        font-weight: 400;
+        color: #ffffff;
+        .rule__h1 {
+            font-size: 26px;
+            font-weight: bold;
+            color: #ffffff;
+            position: relative;
+            margin-bottom: 20px;
+            margin-top: 20px;
+            &::before {
+                content: '';
+                height: 36px;
+                width: 66px;
+                background: img-url('/star/nav_icon.png') no-repeat;
+                background-size: 100% 100%;
+                position: absolute;
+                left: 10px;
+                transform: translateX(-50%) scale(0.7);
+                top: 10px;
+                z-index: 3;
+            }
+        }
+    }
+}

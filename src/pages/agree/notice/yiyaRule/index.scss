@@ -1,0 +1,170 @@
+@use '../../../../common/yiyabase.scss' as *;
+body {
+    background: transparent;
+}
+.user-rule {
+    width: 750px;
+    height: 100vh;
+    overflow-y: auto;
+
+    .rule-top {
+        width: 750px;
+        height: 2208px;
+        overflow-y: auto;
+        box-sizing: border-box;
+        background: img-url('/buz/green_1.jpg') no-repeat;
+        background-size: 100% 100%;
+    }
+
+    .rule-real {
+        width: 750px;
+        height: 1800px;
+        overflow-y: auto;
+        box-sizing: border-box;
+        background: img-url('/zha.jpeg') no-repeat;
+        background-size: 100% 100%;
+    }
+    .rule-cheat {
+        width: 750px;
+        height: 1800px;
+        overflow-y: auto;
+        box-sizing: border-box;
+        background: img-url('/cheat.jpeg') no-repeat;
+        background-size: 100% 100%;
+    }
+    .rule-applyfor {
+        width: 750px;
+        height: 1800px;
+        overflow-y: auto;
+        box-sizing: border-box;
+        background: img-url('/buz/20220718-201435.png') no-repeat;
+        background-size: 100% 100%;
+    }
+}
+.cheap-rule {
+    width: 750px;
+    height: 100vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+    background: #1e3076;
+    .rule-cheap {
+        width: 750px;
+        height: 1200px;
+
+        box-sizing: border-box;
+        background: img-url('/buz/123.jpg') no-repeat;
+        background-size: 100% 100%;
+    }
+}
+.event-rule {
+    width: 750px;
+    height: 100vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+    background: #1e3076;
+    .rule-event {
+        width: 750px;
+        height: 100vh;
+
+        box-sizing: border-box;
+        background: img-url('/buz/456.jpeg') no-repeat;
+        background-size: 100% 100%;
+    }
+}
+.safe-rule {
+    width: 750px;
+    height: 100vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+    background: #1e3076;
+    .rule-event {
+        width: 750px;
+        height: 4338px;
+
+        box-sizing: border-box;
+        background: img-url('/buz/anquan.png') no-repeat;
+        background-size: 100% 100%;
+    }
+}
+.closeApp-rule {
+    width: 750px;
+    height: 100vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+    background: #000;
+    padding: 40px;
+    font-size: 30px;
+    line-height: 48px;
+}
+.wangzhe-rule {
+    width: 750px;
+    height: 100vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+    background: #000;
+    .rule-event {
+        width: 750px;
+        height: 2268px;
+
+        box-sizing: border-box;
+        background: img-url('/buz/wangzhe.png') no-repeat;
+        background-size: 100% 100%;
+    }
+}
+.turn-draw {
+    .drawer-content {
+        height: 1160px;
+    }
+}
+.help-rule {
+    .rule-content {
+        box-sizing: border-box;
+        padding: 30px;
+        .r-title {
+            font-size: 30px;
+            color: #000;
+            font-weight: 500;
+            margin: 10px 0;
+            position: relative;
+            box-sizing: border-box;
+            padding-left: 20px;
+            &::after {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 8px;
+                height: 30px;
+                background: #000;
+                border-radius: 10px;
+            }
+        }
+        p {
+            font-size: 26px;
+            color: #000;
+            font-weight: 400;
+            line-height: 50px;
+        }
+        .table {
+            margin-bottom: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            color: #000;
+
+            border-radius: 10px;
+        }
+        th,
+        td {
+            text-align: center;
+            border: 1px solid #000;
+            line-height: 42px;
+            font-size: 24px;
+            font-weight: 400;
+            word-break: break-all;
+            width: 20%;
+        }
+    }
+}

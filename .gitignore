@@ -1,0 +1,23 @@
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+package-lock.json
+
+.cache
+.DS_store
+.idea/
+.history
+.vscode
+
+# Output of 'npm pack'
+*.tgz
+
+.env
+.env.test
+# .npm
+
+node_modules
+dist

@@ -1,0 +1,179 @@
+@use '../../../common/yiyabase.scss' as *;
+
+.cheap-rule {
+    width: 750px;
+    height: 100vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+    background: #1e3076;
+    .rule-cheap {
+        width: 750px;
+        height: 1200px;
+
+        box-sizing: border-box;
+        background: img-url('/buz/123.jpg') no-repeat;
+        background-size: 100% 100%;
+    }
+}
+.green {
+    background: #89d0fe;
+    padding-bottom: 30px;
+    .banner {
+        width: 750px;
+        height: 522px;
+
+        background: img-url('/notice/banner.png') no-repeat;
+        background-size: 100% 100%;
+    }
+    .banner__tips {
+        width: 690px;
+        height: 276px;
+        background: #ecf8ff;
+        border-radius: 30px;
+        font-size: 25px;
+        font-family:
+            PingFangSC,
+            PingFang SC;
+        font-weight: 400;
+        color: #415e90;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+        padding: 0 30px;
+        margin: -100px auto 30px auto;
+    }
+    .one {
+        width: 690px;
+
+        background: #ecf8ff;
+        border-radius: 30px;
+        font-size: 25px;
+        font-family:
+            PingFangSC,
+            PingFang SC;
+        font-weight: 400;
+        color: #415e90;
+
+        box-sizing: border-box;
+        padding: 30px;
+        margin: 0 auto 30px auto;
+        .one__title {
+            height: 88px;
+            background: img-url('/notice/title.png') no-repeat;
+            background-size: 100% 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28px;
+            font-family:
+                PingFangSC,
+                PingFang SC;
+            font-weight: 600;
+            color: #fff;
+            margin: 0 auto 40px auto;
+        }
+    }
+}
+.user-rule {
+    .rule-cheat1 {
+        width: 750px;
+        height: 788px;
+        background: img-url('/notice/1.png') no-repeat;
+        background-size: 100% 100%;
+    }
+    .rule-cheat2 {
+        width: 750px;
+        height: 976px;
+        background: img-url('/notice/2.png') no-repeat;
+        background-size: 100% 100%;
+    }
+    .rule-cheat3 {
+        width: 750px;
+        height: 680px;
+        background: img-url('/notice/3.png') no-repeat;
+        background-size: 100% 100%;
+    }
+    .rule-cheat4 {
+        width: 750px;
+        height: 1222px;
+        background: img-url('/notice/4.png') no-repeat;
+        background-size: 100% 100%;
+    }
+    .rule-cheat5 {
+        width: 750px;
+        height: 537px;
+        background: img-url('/notice/5.png') no-repeat;
+        background-size: 100% 100%;
+    }
+}
+.kill {
+    background: #64aeff;
+    padding-bottom: 30px;
+    .banner {
+        width: 750px;
+        height: 500px;
+
+        background: img-url('/notice/kill__banner.png') no-repeat;
+        background-size: 100% 100%;
+    }
+    .banner__tips {
+        width: 690px;
+        height: 80px;
+        background: #ecf8ff;
+        border-radius: 30px;
+        font-size: 25px;
+        font-family:
+            PingFangSC,
+            PingFang SC;
+        font-weight: 400;
+        color: #415e90;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+        padding: 0 30px;
+        margin: -100px auto 30px auto;
+    }
+    .one {
+        width: 690px;
+
+        background: #ecf8ff;
+        border-radius: 30px;
+        font-size: 25px;
+        font-family:
+            PingFangSC,
+            PingFang SC;
+        font-weight: 400;
+        color: #415e90;
+
+        box-sizing: border-box;
+        padding: 30px;
+        margin: 0 auto 30px auto;
+        p {
+            margin: 16px 0;
+        }
+        .one__title {
+            height: 88px;
+            background: img-url('/notice/title.png') no-repeat;
+            background-size: 100% 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28px;
+            font-family:
+                PingFangSC,
+                PingFang SC;
+            font-weight: 600;
+            color: #fff;
+            margin: 0 auto 40px auto;
+        }
+    }
+}
+.word_pre {
+    iframe {
+        width: 750px;
+        height: 100vh;
+        border: none;
+    }
+}

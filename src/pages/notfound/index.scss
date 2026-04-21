@@ -1,0 +1,5 @@
+@use '../../common/base.scss' as *;
+body {
+    background: var(--bg-color);
+    color: var(--font-color);
+}

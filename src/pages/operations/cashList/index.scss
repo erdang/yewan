@@ -1,0 +1,163 @@
+@use '../../../common/yiyabase' as *;
+.manager-info {
+    box-sizing: border-box;
+    padding: 40px 0;
+    .title {
+        font-size: 30px;
+        color: var(--font-color);
+        font-weight: 500;
+        line-height: 80px;
+        box-sizing: border-box;
+        padding: 30px;
+    }
+    .title__info {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .title__info-icon {
+            background: img-url('/cash/zuan.png') no-repeat;
+            background-size: 100% 100%;
+            height: 42px;
+            width: 50px;
+            margin-right: 20px;
+        }
+    }
+    .title__info-text {
+        text-align: center;
+        font-size: 26px;
+        color: #999;
+    }
+    .adm-tabs-content {
+        padding: 0;
+    }
+    .tem-tab {
+        .adm-tabs-header {
+            margin-bottom: 20px;
+            font-size: 32px;
+            font-family:
+                PingFang SC-Semibold,
+                PingFang SC;
+            font-weight: 600;
+            color: #666666;
+            width: 400px;
+        }
+
+        .no__data {
+            color: #000;
+            font-size: 26px;
+            height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+    .rule-text {
+        span {
+            color: var(--font-strong-color);
+        }
+    }
+    .red__span {
+        color: var(--font-strong-color);
+        font-size: 28px;
+    }
+    .adm-form-item-child-inner {
+        display: flex;
+        align-items: center;
+    }
+    .get_tips {
+        font-size: 28px;
+        padding: 30px;
+        color: var(--font-strong-color);
+        display: none;
+    }
+}
+.livetime {
+    box-sizing: border-box;
+    padding: 30px 0;
+    .time-title {
+        font-size: 28px;
+        padding: 10px 15px;
+    }
+    .income-li {
+        border-bottom: 1px solid var(--table-border-bg);
+        border-top: 1px solid #e3e3e3;
+        font-size: 14px;
+        margin: 10px 0;
+        padding: 10px 15px;
+        font-size: 28px;
+        margin-bottom: 40px;
+    }
+    .time-table {
+        box-sizing: border-box;
+        padding: 30px;
+    }
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        color: var(--font-color);
+        .adm-empty {
+            margin: 200px auto;
+        }
+    }
+    th,
+    td {
+        text-align: center;
+        border: 1px solid var(--table-border-bg);
+        line-height: 80px;
+        height: 60px;
+        font-size: 24px;
+        font-weight: 400;
+        word-break: break-all;
+        width: 25%;
+    }
+    .t__btn {
+        width: 120px;
+        margin: auto;
+        font-size: 24px;
+        background: linear-gradient(270deg, #9db6f9 0%, #a08bf7 100%);
+    }
+    .no__data-td {
+        text-align: center;
+        font-size: 26px;
+        color: #999;
+        margin: 200px auto;
+    }
+    .start-div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 120px;
+        border-bottom: 1px solid var(--table-border-bg);
+        .start-li {
+            font-size: 28px;
+            margin-right: 40px;
+        }
+    }
+    .submit-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 30px 0;
+        button {
+            width: 80%;
+        }
+    }
+}
+.check__icon1 {
+    background: img-url('/cash/check__icon1.png') no-repeat;
+    background-size: 100% 100%;
+    height: 40px;
+    width: 40px;
+}
+.check__icon2 {
+    background: img-url('/cash/check__icon2.png') no-repeat;
+    background-size: 100% 100%;
+    height: 40px;
+    width: 40px;
+}
+.space__radio {
+    margin-left: 20px;
+}
+.w__count {
+    width: 280px;
+}

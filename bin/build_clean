@@ -1,0 +1,9 @@
+#!/bin/bash
+LANG=C
+
+for file_path in `find /data/dist -type f -a -mtime +30`
+  do
+    last_change=`date +%F_%X -r $file_path`
+    echo "[debug] [last:${last_change}] remove $file_path"
+    rm -f "${file_path}"
+done

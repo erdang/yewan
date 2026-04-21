@@ -1,0 +1,10 @@
+@use '../../../common/base.scss' as *;
+body {
+    background: var(--bg-color);
+}
+.card-img {
+    width: 750px;
+    img {
+        width: 100%;
+    }
+}

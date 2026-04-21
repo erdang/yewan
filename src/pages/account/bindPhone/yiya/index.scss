@@ -1,0 +1,71 @@
+@use '../../../../common/yiyabase.scss' as *;
+
+.reset-phone {
+    box-sizing: border-box;
+    padding: 30px 74px;
+    .adm-list-default {
+        border-top: none;
+    }
+
+    .setp1 {
+        .adm-list-item:nth-of-type(1) .adm-form-item-child-inner {
+            height: 82px;
+            background: transparent;
+            box-sizing: border-box;
+            .adm-input-element {
+                font-size: 40px;
+                font-weight: 400;
+                color: #333333;
+            }
+        }
+    }
+    .adm-form-item-child-inner {
+        height: 82px;
+        background: #f8f8f8;
+        box-sizing: border-box;
+        padding: 0 20px;
+        border-radius: 6px;
+    }
+
+    .adm-list-item:nth-of-type(2) .adm-form-item-child-inner {
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+        height: 82px;
+        background: #f8f8f8;
+        box-sizing: border-box;
+        padding: 0 20px;
+        border-radius: 6px;
+    }
+    .adm-input {
+        height: 82px;
+    }
+    .adm-list-item-content-extra {
+        height: 82px;
+        background: #f8f8f8;
+        border-top-right-radius: 6px;
+        border-bottom-right-radius: 6px;
+        button {
+            background: transparent;
+            border: none;
+            height: 82px;
+        }
+    }
+    .adm-list-item-description {
+        position: absolute;
+    }
+    .adm-list-item {
+        margin-bottom: 20px;
+    }
+    .adm-input-element::placeholder {
+        color: #999;
+    }
+    .phone-btn {
+        margin-top: 10px;
+        height: 82px;
+    }
+    .phone-from {
+        .code-input {
+            border-bottom: 1px solid var(--adm-border-color);
+        }
+    }
+}

@@ -1,0 +1,31 @@
+stages:
+    - develop
+#  - pre-online
+#  - online
+
+before_script:
+    - pwd
+
+develop:
+    stage: develop
+    resource_group: buzz_h5_build_develop
+
+    script:
+        #- ssh www@git.gxjiaman.com python -u /home/www/relase/docker_push.py buzz-mobile develop \"$CI_COMMIT_MESSAGE\"
+        - /home/gitlab-runner/nodejs/bin/npm install
+        - /home/gitlab-runner/nodejs/bin/npm run build
+#pre-online:
+#  stage: pre-online
+#  resource_group: buzz_h5_build_pre_online
+#  when: manual
+#  allow_failure: true
+#  script:
+#    - ssh www@git.gxjiaman.com python -u /home/www/relase/docker_push.py buzz-mobile pre-online \"$CI_COMMIT_MESSAGE\"
+#
+#online:
+#  stage: online
+#  resource_group: buzz_h5_build_online
+#  allow_failure: true
+#  when: manual
+#  script:1
+#    - ssh www@git.gxjiaman.com python -u /home/www/relase/docker_push.py buzz-mobile online \"$CI_COMMIT_MESSAGE\"

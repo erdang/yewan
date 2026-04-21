@@ -1,0 +1,21 @@
+{
+    "name": "ox-util",
+    "version": "0.7.0",
+    "description": "Collect some utility code snippet.",
+    "scripts": {
+        "test": "jest",
+        "babel": "babel ./src/ --out-dir ./lib",
+        "eslint": "eslint ./src/*.js ./__tests__/*.js",
+        "prettier": "prettier --write ./src/*.js ./__tests__/*.js"
+    },
+    "author": "Kai Zhang <dexbolg@gmail.com>",
+    "license": "Unlicense",
+    "jest": {
+        "verbose": true,
+        "testEnvironment": "jsdom"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.12.3",
+        "jest": "^27.2.4"
+    }
+}

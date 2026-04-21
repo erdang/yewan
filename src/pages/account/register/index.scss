@@ -1,0 +1,79 @@
+@use '../../../common/yiyabase' as *;
+@include borderv(var(--adm-border-color), 1px);
+
+.apply-page {
+    background: var(--bg-color);
+    bottom: 0;
+    box-sizing: border-box;
+    height: 100%;
+    left: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding: 100px 0 120px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    color: var(--font-color);
+}
+.apply-user-info {
+    font-size: 32px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    height: 90px;
+    padding: 0 0 0 30px;
+    background: var(--bg-color);
+    .label {
+        width: 160px;
+    }
+    .main {
+        width: 520px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        span:nth-of-type(1) {
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        span:nth-of-type(2) {
+            width: 200px;
+        }
+        span:nth-of-type(3) {
+            width: 160px;
+        }
+    }
+}
+
+.apply-form {
+    margin-top: 60px;
+
+    .adm-list-default {
+        border-top: none;
+    }
+    .o-form-tip {
+        color: var(--font-tip-color);
+        font-size: 24px;
+        margin: 0;
+        padding: 20px 30px;
+        strong {
+            color: var(--font-strong-color);
+        }
+    }
+    .rule-text {
+        span {
+            color: var(--font-strong-color);
+        }
+    }
+    .r__btn {
+        padding: 0px 24px;
+        button {
+            background: #292b3c;
+            border: none;
+            color: rgba(255, 255, 255, 0.4);
+        }
+    }
+}

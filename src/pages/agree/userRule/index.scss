@@ -1,0 +1,27 @@
+@use '../../../common/base.scss' as *;
+body {
+    background: var(--bg-color);
+}
+.user-rule {
+    padding: 30px;
+    box-sizing: border-box;
+    h1 {
+        font-size: 38px;
+        text-align: center;
+    }
+    .date-rule {
+        margin-top: 10px;
+        font-size: 24px;
+        text-align: right;
+    }
+    .rule-content {
+        h3 {
+            font-size: 28px;
+            margin: 10px 0 10px 0;
+        }
+        p {
+            font-size: 24px;
+            margin: 10px 0 10px 0;
+        }
+    }
+}

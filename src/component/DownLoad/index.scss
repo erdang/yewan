@@ -1,0 +1,91 @@
+@use '../../common/base.scss' as *;
+.down-comp {
+    width: 750px;
+    height: 100vh;
+    background: img-url('/down_bg.jpg') no-repeat;
+    background-size: cover;
+    box-sizing: border-box;
+    overflow-y: auto;
+    position: fixed;
+    z-index: 3;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+    .down-logo {
+        .logo-icon {
+            width: 130px;
+            height: 130px;
+            img {
+                width: 100%;
+                height: 100%;
+            }
+            margin: 250px auto 0 auto;
+        }
+        .logo-text {
+            font-size: 40px;
+            font-weight: 500;
+            color: #ffffff;
+            text-align: center;
+            margin-top: 32px;
+        }
+    }
+    .down-btn-open {
+        width: 580px;
+        height: 88px;
+        background: linear-gradient(90deg, #d890ff 0%, #52beff 100%);
+        border-radius: 44px;
+        font-size: 30px;
+        font-weight: 500;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        margin: 80px auto 50px auto;
+    }
+    .down-btn-d {
+        width: 580px;
+        height: 88px;
+        background: linear-gradient(90deg, #d790ff 0%, #53beff 100%);
+        border-radius: 44px;
+        font-size: 30px;
+        font-weight: 500;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        margin: auto;
+        position: relative;
+    }
+    .down-comp-tip {
+        width: 413px;
+        height: 65px;
+        font-size: 26px;
+        font-weight: 400;
+        color: #ffffff;
+        line-height: 38px;
+        opacity: 0.8;
+        margin: 40px auto 0 auto;
+    }
+}
+
+.down-mask {
+    position: fixed;
+    z-index: 3;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    .tips-icon {
+        width: 646px;
+        height: 204px;
+        background: img-url('/we_tips.png') no-repeat;
+        background-size: 100% 100%;
+        position: absolute;
+        z-index: 4;
+        right: 40px;
+        top: 40px;
+    }
+}

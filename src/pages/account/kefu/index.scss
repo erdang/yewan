@@ -1,0 +1,35 @@
+@use '../../../common/yiyabase' as *;
+@include borderv(var(--adm-border-color), 1px);
+
+.kefu {
+    box-sizing: border-box;
+    padding: 60px;
+    .kefu__logo {
+        width: 300px;
+        height: 300px;
+        background: img-url('/yeke_logo.png') no-repeat;
+        background-size: 100% 100%;
+        margin: 40px auto;
+        border-radius: 20px;
+    }
+    .kefu__text {
+        font-size: 30px;
+        font-family:
+            PingFangSC-Semibold,
+            PingFang SC;
+        font-weight: 600;
+        color: #333333;
+        text-align: center;
+    }
+    .kefu__btn {
+        width: 420px;
+        height: 76px;
+        background: linear-gradient(90deg, #6beaf9 0%, #61ddf9 100%);
+        border-radius: 16px 16px 16px 16px;
+        color: #fff;
+        font-size: 28px;
+        margin: 30px auto;
+        text-align: center;
+        display: block;
+    }
+}

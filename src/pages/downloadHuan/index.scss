@@ -1,0 +1,74 @@
+@use '../../common/base.scss' as *;
+body {
+    background: #fff;
+}
+.download-ipa {
+    box-sizing: border-box;
+    width: 100vw;
+    background: #fff;
+    height: 100vh;
+
+    .top {
+        width: 100vw;
+        height: 176px;
+        background: img-url('/top_bg_mobile.png') no-repeat;
+        background-size: 100% 100%;
+    }
+    .ipa {
+        margin-top: 300px;
+        .log-ipa {
+            width: 130px;
+            height: 130px;
+            background: url('https://s1.wuhanyunyi.top/static/h5_static/logo.png')
+                no-repeat;
+            background-size: cover;
+            margin: auto;
+        }
+        .title {
+            font-size: 40px;
+            font-weight: 500;
+            color: #333;
+            text-align: center;
+            margin-top: 30px;
+        }
+    }
+    .btn-a {
+        background: #28caad;
+        width: 300px;
+        height: 80px;
+
+        border-radius: 20px;
+        margin: 100px auto 0 auto;
+        a {
+            color: #fff;
+            display: block;
+            width: 300px;
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 32px;
+
+            font-weight: 500;
+        }
+    }
+}
+.down-mask {
+    position: fixed;
+    z-index: 3;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    .tips-icon {
+        width: 646px;
+        height: 204px;
+        background: img-url('/we_tips.png') no-repeat;
+        background-size: 100% 100%;
+        position: absolute;
+        z-index: 4;
+        right: 40px;
+        top: 40px;
+    }
+}

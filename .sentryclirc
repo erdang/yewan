@@ -1,0 +1,7 @@
+ [defaults]
+ project=suer_h5
+ org=v6_sentry
+ url=http://172.16.5.7:9011/
+
+ [auth]
+ token=2e3b3688c9c04512b9aab137169aa9f3e8151f3ebb4e4cacbb1cbbe8d3fdaf35

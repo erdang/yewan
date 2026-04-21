@@ -1,0 +1,197 @@
+@use './normalize.scss';
+@mixin borderv($borderColor, $borderRadus) {
+    /* 上下左右边框 */
+    .border-top {
+        border: 0;
+        position: relative;
+    }
+
+    .border-top:before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 1px;
+        left: 0;
+        top: 0;
+        -webkit-transform-origin: 0 0;
+        transform-origin: 0 0;
+        background: $borderColor;
+    }
+
+    .border-right {
+        position: relative;
+    }
+
+    .border-right:after {
+        content: '';
+        width: 1px;
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        -webkit-transform-origin: 100% 0;
+        transform-origin: 100% 0;
+        background: $borderColor;
+    }
+
+    .border-bottom {
+        border: 0;
+        position: relative;
+    }
+
+    .border-bottom:after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 1px;
+        left: 0;
+        bottom: 0;
+        -webkit-transform-origin: 0 100%;
+        transform-origin: 0 100%;
+        background: $borderColor;
+    }
+
+    .border-left {
+        border: 0;
+        position: relative;
+    }
+
+    .border-left:before {
+        content: '';
+        position: absolute;
+        height: 100%;
+        width: 1px;
+        left: 0;
+        top: 0;
+        -webkit-transform-origin: left center;
+        transform-origin: left center;
+        background: $borderColor;
+    }
+
+    .border-all {
+        border: 0;
+        position: relative;
+    }
+
+    .border-all:before {
+        content: '';
+        box-sizing: border-box;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        font-size: 0;
+        line-height: 0;
+        border-radius: $borderRadus;
+        border: 1px solid $borderColor;
+        -webkit-transform-origin: 0 0;
+        transform-origin: 0 0;
+        background: 0 0;
+    }
+    /* 适配各种屏幕 */
+    @media only screen and (-webkit-min-device-pixel-ratio: 1.5), not all {
+        .border-top:before,
+        .border-bottom:after {
+            -webkit-transform: scaleY(0.66666667);
+            transform: scaleY(0.66666667);
+        }
+
+        .border-right:after,
+        .border-left:before {
+            -webkit-transform: scaleX(0.66666667);
+            transform: scaleX(0.66666667);
+        }
+
+        .border-all:before {
+            width: 150%;
+            height: 150%;
+            -webkit-transform: scale(0.66666667);
+            transform: scale(0.66666667);
+        }
+    }
+
+    @media only screen and (-webkit-min-device-pixel-ratio: 2), not all {
+        .border-top:before,
+        .border-bottom:after {
+            -webkit-transform: scaleY(0.5);
+            transform: scaleY(0.5);
+        }
+
+        .border-right:after,
+        .border-left:before {
+            -webkit-transform: scaleX(0.5);
+            transform: scaleX(0.5);
+        }
+
+        .border-all:before {
+            width: 200%;
+            height: 200%;
+            -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+        }
+    }
+
+    @media only screen and (-webkit-min-device-pixel-ratio: 3), not all {
+        .border-top:before,
+        .border-bottom:after {
+            -webkit-transform: scaleY(0.33333333);
+            transform: scaleY(0.33333333);
+        }
+
+        .border-right:after,
+        .border-left:before {
+            -webkit-transform: scaleX(0.33333333);
+            transform: scaleX(0.33333333);
+        }
+
+        .border-all:before {
+            width: 300%;
+            height: 300%;
+            -webkit-transform: scale(0.3326);
+            transform: scale(0.3326);
+        }
+    }
+}
+$img-url: 'https://s3.njxianyuwl.cn/static/h5_static';
+
+@function img-url($path) {
+    @return url('#{$img-url}#{$path}');
+}
+
+:root:root {
+    --adm-color-primary: #ff4d4d;
+    --adm-font-size-main: 16px;
+    --adm-border-color: #eee;
+    --adm-color-danger: #ff4d4d;
+    --adm-color-white: #ffffff;
+}
+
+:root {
+    --bg-color: #fff;
+    --font-color: #222;
+    --font-tip-color: #959ab0;
+    --font-strong-color: #ff4d4d;
+    --table-th-bg: #fff;
+    --table-border-bg: rgba(0, 0, 0, 0.2);
+    --imgUrl: '#{$img-url}';
+}
+body {
+    color: var(--font-color);
+    background: transparent;
+}
+.loading-svg {
+    background: var(--bg-color);
+}
+
+#app {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+}
+img {
+    content: normal !important;
+}

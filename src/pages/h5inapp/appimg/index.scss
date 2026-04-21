@@ -1,0 +1,17 @@
+@use '../../../common/base' as *;
+
+.paste {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100vh;
+    div {
+        width: 720px;
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+}

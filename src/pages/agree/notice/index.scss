@@ -1,0 +1,40 @@
+@use '../../../common/base.scss' as *;
+.user-rule {
+    width: 750px;
+    height: 100vh;
+    overflow-y: auto;
+
+    .rule-top {
+        width: 750px;
+        height: 2100px;
+        overflow-y: auto;
+        box-sizing: border-box;
+        background: img-url('/buz/green_rule.png') no-repeat;
+        background-size: 100% 100%;
+    }
+
+    .rule-real {
+        width: 750px;
+        height: 1800px;
+        overflow-y: auto;
+        box-sizing: border-box;
+        background: img-url('/zha.jpeg') no-repeat;
+        background-size: 100% 100%;
+    }
+    .rule-cheat {
+        width: 750px;
+        height: 1800px;
+        overflow-y: auto;
+        box-sizing: border-box;
+        background: img-url('/cheat.jpeg') no-repeat;
+        background-size: 100% 100%;
+    }
+    .rule-applyfor {
+        width: 750px;
+        height: 1800px;
+        overflow-y: auto;
+        box-sizing: border-box;
+        background: img-url('/buz/20220718-201435.png') no-repeat;
+        background-size: 100% 100%;
+    }
+}

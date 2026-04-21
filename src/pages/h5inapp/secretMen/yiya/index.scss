@@ -1,0 +1,222 @@
+@use '../../../../common/yiyabase' as *;
+body {
+    background: transparent;
+}
+.secret {
+    // height: 100vh;
+}
+.secret_top {
+    width: 750px;
+    height: 720px;
+    background: img-url('/secretPeople/bg.png') no-repeat;
+    background-size: 100% 100%;
+    position: relative;
+    .secret_top_text {
+        width: 338px;
+        height: 130px;
+        background: img-url('/secretPeople/top_text_2.png') no-repeat;
+        background-size: 100% 100%;
+        position: absolute;
+        left: 45px;
+        top: 116px;
+    }
+    .secret_top_info {
+        width: 728px;
+        height: 254px;
+        background: img-url('/secretPeople/top_bg.png') no-repeat;
+        background-size: 100% 100%;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 276px;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        .top__info {
+            display: flex;
+            align-items: center;
+            width: 728px;
+            justify-content: space-between;
+            box-sizing: border-box;
+            padding: 0 50px 0 50px;
+            .info__mai {
+                .info__mai-text {
+                    span:nth-of-type(1) {
+                        font-size: 42px;
+                        font-family:
+                            PingFangSC-Semibold,
+                            PingFang SC;
+                        font-weight: 600;
+                        color: rgba(209, 180, 255, 1);
+                        margin-right: 10px;
+                    }
+                    span:nth-of-type(2) {
+                        font-size: 32px;
+                        font-family:
+                            PingFangSC-Semibold,
+                            PingFang SC;
+                        font-weight: 600;
+                        color: #ffffff;
+                    }
+                }
+                .info__mai-tip {
+                    font-size: 24px;
+                    font-family:
+                        PingFangSC-Regular,
+                        PingFang SC;
+                    font-weight: 400;
+                    color: rgba(255, 255, 255, 0.5);
+                    margin-top: 10px;
+                }
+            }
+            .info__mai-btn {
+                width: 200px;
+                height: 116px;
+                background: img-url('/secretPeople/botten@2x.png')
+                    no-repeat;
+                background-size: 100% 100%;
+                font-size: 28px;
+                font-family:
+                    PingFangSC-Semibold,
+                    PingFang SC;
+                font-weight: 600;
+                color: #000;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                box-sizing: border-box;
+            }
+            .put__btn {
+                width: 238px;
+                height: 116px;
+                background: img-url('/secretPeople/btn_1.png')
+                    no-repeat;
+                background-size: 100% 100%;
+                font-size: 28px;
+                font-family:
+                    PingFangSC-Semibold,
+                    PingFang SC;
+                font-weight: 600;
+                color: #ffffff;
+                display: flex;
+                justify-content: center;
+                padding-top: 26px;
+                box-sizing: border-box;
+            }
+        }
+    }
+}
+.secret_content {
+    width: 750px;
+    background: rgba(10, 13, 9, 1);
+    padding-bottom: 80px;
+    margin-top: -200px;
+    position: relative;
+    box-sizing: border-box;
+    .content_title {
+        width: 296px;
+        height: 58px;
+        background: img-url('/secretPeople/title_1.png') no-repeat;
+        background-size: 100% 100%;
+        margin: 42px auto 48px auto;
+    }
+    .content_title-2 {
+        width: 296px;
+        height: 58px;
+        background: img-url('/secretPeople/title_2.png') no-repeat;
+        background-size: 100% 100%;
+        margin: 42px auto 48px auto;
+    }
+    .content_p {
+        box-sizing: border-box;
+        padding: 0 30px;
+        font-size: 24px;
+        font-family:
+            PingFangSC-Regular,
+            PingFang SC;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.5);
+    }
+    .mar {
+        padding-bottom: 200px;
+    }
+    ul {
+        li {
+            width: 688px;
+            height: 213px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 0 auto 24px auto;
+            box-sizing: border-box;
+            padding: 22px 26px 24px 40px;
+            .g__left-title {
+                font-size: 36px;
+                font-family:
+                    PingFangSC-Semibold,
+                    PingFang SC;
+                font-weight: 600;
+                color: rgba(255, 255, 255, 1);
+            }
+            .g__left-text {
+                font-size: 24px;
+                font-family:
+                    PingFangSC-Regular,
+                    PingFang SC;
+                font-weight: 400;
+                color: rgba(255, 255, 255, 0.5);
+            }
+            .g__icon {
+                width: 220px;
+                height: 168px;
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+    }
+}
+.secret__bottom {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: 2;
+    width: 750px;
+    height: 186px;
+    background: img-url('/secretPeople/b_bg.png') no-repeat;
+    background-size: 100% 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 48px;
+    .b__time {
+        font-size: 28px;
+        font-family:
+            PingFangSC-Regular,
+            PingFang SC;
+        font-weight: 400;
+        color: #ffffff;
+    }
+    .buy__btn {
+        width: 680px;
+        height: 86px;
+        background: #d6f28f;
+        background-size: 100% 100%;
+        font-size: 28px;
+        font-family:
+            PingFangSC-Semibold,
+            PingFang SC;
+        font-weight: 600;
+        color: #000;
+        display: flex;
+        justify-content: center;
+        box-sizing: border-box;
+        align-items: center;
+        border-radius: 40px;
+    }
+}

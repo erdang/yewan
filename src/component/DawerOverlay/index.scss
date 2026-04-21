@@ -1,0 +1,55 @@
+.l-drawerOverlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+
+    .close-btn {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        width: 80px;
+        height: 80px;
+        z-index: 3;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        svg {
+            width: 20px;
+            height: 20px;
+        }
+    }
+}
+.l-mask {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.4);
+}
+.drawer-content {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: 3;
+    background: #fff;
+    width: 100%;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    height: 1100px;
+    overflow-y: auto;
+    box-sizing: border-box;
+    animation: up 0.2s ease-in-out;
+}
+@keyframes up {
+    0% {
+        transform: translateY(860px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}

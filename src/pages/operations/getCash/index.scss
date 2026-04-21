@@ -1,0 +1,289 @@
+@use '../../../common/yiyabase' as *;
+.manager-info {
+    box-sizing: border-box;
+    padding: 40px 0;
+    .title {
+        background: img-url('/cash/cash_top.png') no-repeat;
+        background-size: 100% 100%;
+
+        width: 690px;
+        height: 150px;
+        box-sizing: border-box;
+        padding: 30px;
+        margin: auto;
+        display: flex;
+        align-items: center;
+        position: relative;
+        &::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 48px;
+            background: #c3dfeb;
+            left: 50%;
+            top: 50%;
+            transform: translateX(-50%) translateY(-50%);
+        }
+    }
+    .title__info {
+        flex: 1;
+        .title__info-icon {
+            font-size: 36px;
+            color: #fff;
+            text-align: center;
+            font-weight: 800;
+        }
+        .title__info-num {
+            font-weight: 400;
+            font-size: 24px;
+            color: #666666;
+            text-align: center;
+            margin-top: 10px;
+        }
+    }
+    .title__info-text {
+        flex: 1;
+        .title__info-text1 {
+            font-size: 36px;
+            color: #fff;
+            text-align: center;
+            font-weight: 800;
+        }
+        .title__info-text2 {
+            font-weight: 400;
+            font-size: 24px;
+            color: #666666;
+            text-align: center;
+            margin-top: 10px;
+        }
+    }
+
+    .adm-tabs-content {
+        padding: 0;
+    }
+    .tem-tab {
+        .adm-tabs-header {
+            margin-bottom: 20px;
+            font-size: 32px;
+            font-family:
+                PingFang SC-Semibold,
+                PingFang SC;
+            font-weight: 600;
+            color: #666666;
+            width: 400px;
+        }
+
+        .no__data {
+            color: #000;
+            font-size: 26px;
+            height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+    .rule-text {
+        span {
+            color: var(--font-strong-color);
+        }
+    }
+    .red__span {
+        color: var(--font-strong-color);
+        font-size: 28px;
+    }
+    .adm-form-item-child-inner {
+        display: flex;
+        align-items: center;
+    }
+    .form__list {
+        .adm-input {
+            input {
+                padding: 0 20px;
+                width: 690px;
+                height: 110px;
+                background: #f8f8f8;
+                border-radius: 16px;
+            }
+            input::placeholder {
+                color: rgba(153, 153, 153, 1);
+            }
+        }
+    }
+    .get_tips {
+        font-size: 28px;
+        padding: 30px;
+        color: #b1acc7;
+    }
+    .adm-form {
+        border: none;
+    }
+    .adm-list-body {
+        border: none;
+    }
+    .adm-form-item-label {
+        font-weight: 600;
+        font-size: 24px;
+        color: #7c7c7c;
+    }
+    .c-button {
+        width: 440px;
+        height: 100px;
+        background: var(--button-color);
+        border-radius: 50px;
+        margin: auto;
+        color: #fff;
+    }
+    .adm-radio {
+        width: 330px;
+        height: 110px;
+        background: #f8f8f8;
+        border-radius: 16px;
+        border: 4px solid transparent;
+        box-sizing: border-box;
+        padding-left: 30px;
+        color: #999;
+        // font-weight: 700;
+    }
+    .adm-radio-checked {
+        background: var(--button-color);
+        border: 4px solid #fff;
+        color: #fff;
+    }
+}
+.livetime {
+    box-sizing: border-box;
+    padding: 30px 0;
+    .time-title {
+        font-size: 28px;
+        padding: 10px 15px;
+    }
+    .income-li {
+        border-bottom: 1px solid var(--table-border-bg);
+        border-top: 1px solid #e3e3e3;
+        font-size: 14px;
+        margin: 10px 0;
+        padding: 10px 15px;
+        font-size: 28px;
+        margin-bottom: 40px;
+    }
+    .time-table {
+        box-sizing: border-box;
+        padding: 30px;
+    }
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        color: var(--font-color);
+        .adm-empty {
+            margin: 200px auto;
+        }
+    }
+    th,
+    td {
+        text-align: center;
+        border: 1px solid var(--table-border-bg);
+        line-height: 80px;
+        height: 60px;
+        font-size: 24px;
+        font-weight: 400;
+        word-break: break-all;
+        width: 25%;
+    }
+    .t__btn {
+        width: 120px;
+        margin: auto;
+        font-size: 24px;
+        background: linear-gradient(270deg, #9db6f9 0%, #a08bf7 100%);
+    }
+    .no__data-td {
+        text-align: center;
+        font-size: 26px;
+        color: #999;
+        margin: 200px auto;
+    }
+    .start-div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 120px;
+        border-bottom: 1px solid var(--table-border-bg);
+        .start-li {
+            font-size: 28px;
+            margin-right: 40px;
+        }
+    }
+    .submit-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 30px 0;
+        button {
+            width: 80%;
+        }
+    }
+}
+.check__icon1 {
+    background: img-url('/cash/zhi.png') no-repeat;
+    background-size: 100% 100%;
+    height: 50px;
+    width: 50px;
+}
+.check__icon2 {
+    background: img-url('/cash/me_icon_yhk.png') no-repeat;
+    background-size: 100% 100%;
+    height: 50px;
+    width: 50px;
+}
+.space__radio {
+    margin-left: 20px;
+}
+.w__count {
+    width: 280px;
+}
+.help__user-warp {
+    .center-content {
+        width: 700px;
+        height: 900px;
+    }
+    .help-rule {
+        .nav-title {
+            font-size: 30px;
+            font-family:
+                PingFangSC-Semibold,
+                PingFang SC;
+            font-weight: 600;
+            color: #333333;
+            text-align: center;
+        }
+        .rule-content {
+            box-sizing: border-box;
+
+            .r-title {
+                font-size: 30px;
+                color: #666;
+                font-weight: 500;
+                margin: 20px 0;
+                position: relative;
+                box-sizing: border-box;
+                padding-left: 20px;
+                &::after {
+                    content: '';
+                    position: absolute;
+                    left: 0;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    width: 8px;
+                    height: 30px;
+                    background: #ffb870;
+                    border-radius: 10px;
+                }
+            }
+            p {
+                font-size: 26px;
+                color: #666;
+                font-weight: 400;
+                line-height: 50px;
+            }
+        }
+    }
+}

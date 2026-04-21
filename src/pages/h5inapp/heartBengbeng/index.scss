@@ -1,0 +1,734 @@
+@use '../../../common/yiyabase.scss' as *;
+body {
+    background: transparent;
+}
+#app {
+    overflow: hidden;
+}
+.week__full {
+    height: 100vh;
+    overflow-y: auto;
+    background: #06092d;
+}
+.weekstar {
+    .drawer-content {
+        background: transparent;
+        overflow: hidden;
+        height: 1272px;
+        .close-btn {
+            display: none;
+        }
+    }
+}
+
+.heart__warp {
+    box-sizing: border-box;
+    width: 750px;
+    height: 1272px;
+    background: img-url('/heartBengbeng/bg.png?v=1') no-repeat;
+    background-size: 100% 100%;
+    padding-top: 200px;
+    position: relative;
+
+    .heart__warp-banner {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        .rule__icon {
+            width: 150px;
+            height: 62px;
+            background: img-url('/heartBengbeng/rule_btn.png?v=1') no-repeat;
+            background-size: 100% 100%;
+            font-weight: 500;
+            font-size: 26px;
+            color: #ffffff;
+            position: absolute;
+            left: 0px;
+            top: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .rank__icon {
+            width: 150px;
+            height: 62px;
+            background: img-url('/heartBengbeng/rank_btn.png?v=1') no-repeat;
+            background-size: 100% 100%;
+            font-weight: 500;
+            font-size: 26px;
+            color: #ffffff;
+            position: absolute;
+            right: 0px;
+            top: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+    .heart__rank-warp {
+        position: absolute;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+    }
+    .tem-tab-warp {
+        width: 690px;
+        background: linear-gradient(
+            180deg,
+            rgba(255, 251, 196, 1),
+            rgba(252, 178, 232, 1)
+        );
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 20px;
+
+        position: relative;
+        box-sizing: border-box;
+        padding: 10px;
+    }
+    .tem-tab {
+        background: #7053ff;
+        border-radius: 13px;
+        box-sizing: border-box;
+        padding: 30px;
+
+        .adm-tabs-header {
+            border-bottom: none;
+
+            margin: auto;
+            width: 560px;
+            height: 80px;
+            background: #ffffff;
+            border-radius: 40px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .adm-tabs-tab-wrapper-stretch {
+            width: 190px;
+            height: 80px;
+            padding: 0;
+            .adm-tabs-tab {
+                width: 186px;
+                height: 80px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 0;
+                margin-top: 0px;
+                font-size: 26px;
+                font-family:
+                    PingFangSC-Semibold,
+                    PingFang SC;
+                font-weight: 600;
+                color: #ffffff;
+                position: relative;
+            }
+            .adm-tabs-tab-active {
+                font-size: 26px;
+                font-family:
+                    PingFangSC-Semibold,
+                    PingFang SC;
+                font-weight: 600;
+                color: #fff;
+                width: 186px;
+                height: 80px;
+
+                background: img-url('/weekStar/tab.png?v=1') no-repeat;
+                background-size: 100% 100%;
+            }
+        }
+    }
+    .heart__rank {
+        .rank__prev {
+            width: 600px;
+            height: 170px;
+
+            background: img-url('/weekStar/banner_2.png?v=1') no-repeat;
+            background-size: 100% 100%;
+            margin: 40px 0;
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            box-sizing: border-box;
+            padding: 30px;
+            .prev__info {
+                margin-left: 36px;
+                .prev__alias {
+                    font-size: 28px;
+                    font-family:
+                        PingFangSC-Semibold,
+                        PingFang SC;
+                    font-weight: 600;
+                    color: #ffe34c;
+                    width: 360px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+                .prev__tips {
+                    font-size: 22px;
+                    font-family:
+                        PingFangSC-Regular,
+                        PingFang SC;
+                    font-weight: 400;
+                    color: rgba(255, 255, 255, 0.5);
+                    margin-top: 20px;
+                }
+            }
+            .prev__pic-warp {
+                width: 160px;
+                height: 160px;
+                position: relative;
+                .prev__pic {
+                    width: 160px;
+                    height: 160px;
+
+                    background: img-url('/weekStar/fj_img_bd_1.png?v=1')
+                        no-repeat;
+                    background-size: 100% 100%;
+
+                    position: absolute;
+                    z-index: 3;
+                    left: 0px;
+                    top: 0px;
+                }
+
+                img {
+                    width: 116px;
+                    height: 116px;
+                    position: absolute;
+                    z-index: 2;
+                    left: 20px;
+                    top: 20px;
+                    border-radius: 50%;
+                }
+            }
+        }
+        width: 610px;
+
+        .rank__tab {
+            width: 610px;
+
+            margin: auto;
+
+            position: relative;
+            box-sizing: border-box;
+
+            min-height: 500px;
+            .rank__tab-content {
+                margin: auto;
+                ul {
+                    position: relative;
+                    box-sizing: border-box;
+                    padding-top: 360px;
+                    .li__nodata {
+                        font-size: 24px;
+
+                        font-weight: bold;
+                        color: #e7e7e7;
+                        text-align: center;
+                        padding-top: 160px;
+                    }
+                    li {
+                        height: 80px;
+
+                        .rank__li-pic {
+                            width: 80px;
+                            height: 80px;
+                            img {
+                                width: 100%;
+                                height: 100%;
+                                border-radius: 50%;
+                            }
+                        }
+                    }
+                    li:nth-of-type(3) ~ li {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        margin-bottom: 20px;
+                        .rank__li-index {
+                            width: 76px;
+                            text-align: left;
+                            font-size: 28px;
+
+                            font-weight: bold;
+                            color: #e7e7e7;
+                        }
+                        .rank__li-info {
+                            display: flex;
+
+                            align-items: center;
+                            width: 370px;
+                            .rank__li-pic {
+                                margin-right: 20px;
+                            }
+                            .rank__li-user {
+                                .rank__li-alias {
+                                    font-weight: 400;
+                                    color: #fff;
+                                    font-size: 24px;
+                                    width: 240px;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                    white-space: nowrap;
+                                }
+                                .rank__li-num {
+                                    font-size: 24px;
+
+                                    font-weight: 400;
+                                    color: #979797;
+                                }
+                            }
+                        }
+                        .rank__li-prev {
+                            width: 246px;
+                            text-align: center;
+                            font-size: 24px;
+
+                            font-weight: 400;
+                            color: #d9d9d9;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            p:nth-of-type(2) {
+                                width: 100px;
+                                text-align: left;
+                            }
+                        }
+                    }
+
+                    li:nth-of-type(1) {
+                        position: absolute;
+                        left: 208px;
+                        top: -20px;
+                        width: 190px;
+                        height: 288px;
+                        .rank__li-pic {
+                            width: 190px;
+                            height: 288px;
+                            background: img-url('/weekStar/1.png?v=1') no-repeat;
+                            background-size: 100% 100%;
+                            position: relative;
+                            padding: 180px 10px 0 10px;
+                            box-sizing: border-box;
+                            .li-pic {
+                                width: 122px;
+                                height: 122px;
+                                position: absolute;
+                                left: 34px;
+                                top: 39px;
+                                z-index: 2;
+                                img {
+                                    width: 100%;
+                                    height: 100%;
+                                    border-radius: 50%;
+                                }
+                            }
+                        }
+                        .rank__li-icon {
+                            width: 58px;
+                            height: 58px;
+                            background: img-url('/star/one_icon_1.png?v=1')
+                                no-repeat;
+                            background-size: 100% 100%;
+                            position: absolute;
+                            left: -20px;
+                            top: -20px;
+                        }
+                        .rank__li-alias {
+                            .li-alias-div {
+                                width: 180px;
+                                box-sizing: border-box;
+
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                                font-size: 24px;
+                                font-family:
+                                    PingFangSC-Semibold,
+                                    PingFang SC;
+                                font-weight: 600;
+                                color: #ffffff;
+
+                                text-align: center;
+                            }
+                            .li-info-div {
+                                font-size: 18px;
+                                font-family:
+                                    PingFangSC-Regular,
+                                    PingFang SC;
+                                font-weight: 400;
+                                color: #ffffff;
+                                text-align: center;
+                            }
+                        }
+                        .rank__li-num {
+                            font-weight: 400;
+                            color: #d9d9d9;
+                            font-size: 22px;
+                            text-align: center;
+                            margin-top: 10px;
+                        }
+                    }
+                    li:nth-of-type(2) {
+                        position: absolute;
+                        left: 0px;
+                        top: 40px;
+                        width: 190px;
+                        height: 287px;
+                        .rank__li-pic {
+                            width: 190px;
+                            height: 287px;
+                            background: img-url('/weekStar/2.png?v=1') no-repeat;
+                            background-size: 100% 100%;
+                            position: relative;
+                            padding: 180px 10px 0 10px;
+                            box-sizing: border-box;
+                            .li-pic {
+                                width: 122px;
+                                height: 122px;
+                                position: absolute;
+                                left: 35px;
+                                top: 40px;
+                                z-index: 2;
+                                img {
+                                    width: 100%;
+                                    height: 100%;
+                                    border-radius: 50%;
+                                }
+                            }
+                        }
+                        .rank__li-icon {
+                            width: 58px;
+                            height: 58px;
+                            background: img-url('/star/one_icon_1.png?v=1')
+                                no-repeat;
+                            background-size: 100% 100%;
+                            position: absolute;
+                            left: -20px;
+                            top: -20px;
+                        }
+                        .rank__li-alias {
+                            .li-alias-div {
+                                width: 126px;
+                                box-sizing: border-box;
+
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                                font-size: 24px;
+                                font-family:
+                                    PingFangSC-Semibold,
+                                    PingFang SC;
+                                font-weight: 600;
+                                color: #ffffff;
+                                margin: auto;
+                                text-align: center;
+                            }
+                            .li-info-div {
+                                width: 126px;
+                                font-size: 18px;
+                                font-family:
+                                    PingFangSC-Regular,
+                                    PingFang SC;
+                                font-weight: 400;
+                                color: #ffffff;
+                                text-align: center;
+                                margin: auto;
+                            }
+                        }
+                        .rank__li-num {
+                            font-weight: 400;
+                            color: #d9d9d9;
+                            font-size: 22px;
+                            text-align: center;
+                            margin-top: 10px;
+                        }
+                    }
+                    li:nth-of-type(3) {
+                        position: absolute;
+                        right: 0px;
+                        top: 40px;
+                        width: 190px;
+                        height: 286px;
+                        .rank__li-pic {
+                            width: 190px;
+                            height: 286px;
+                            background: img-url('/weekStar/3.png?v=1') no-repeat;
+                            background-size: 100% 100%;
+                            position: relative;
+                            padding: 180px 10px 0 10px;
+                            box-sizing: border-box;
+                            .li-pic {
+                                width: 122px;
+                                height: 122px;
+                                position: absolute;
+                                left: 34px;
+                                top: 40px;
+                                z-index: 2;
+                                img {
+                                    width: 100%;
+                                    height: 100%;
+                                    border-radius: 50%;
+                                }
+                            }
+                        }
+                        .rank__li-icon {
+                            width: 58px;
+                            height: 58px;
+                            background: img-url('/star/one_icon_1.png?v=1')
+                                no-repeat;
+                            background-size: 100% 100%;
+                            position: absolute;
+                            left: -20px;
+                            top: -20px;
+                        }
+                        .rank__li-alias {
+                            .li-alias-div {
+                                width: 126px;
+                                margin: auto;
+                                box-sizing: border-box;
+
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                                font-size: 24px;
+                                font-family:
+                                    PingFangSC-Semibold,
+                                    PingFang SC;
+                                font-weight: 600;
+                                color: #ffffff;
+
+                                text-align: center;
+                            }
+                            .li-info-div {
+                                width: 126px;
+                                margin: auto;
+                                font-size: 18px;
+                                font-family:
+                                    PingFangSC-Regular,
+                                    PingFang SC;
+                                font-weight: 400;
+                                color: #ffffff;
+                                text-align: center;
+                            }
+                        }
+                        .rank__li-num {
+                            font-weight: 400;
+                            color: #d9d9d9;
+                            font-size: 22px;
+                            text-align: center;
+                            margin-top: 10px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .heart__my {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        position: fixed;
+        z-index: 5;
+        left: 0;
+        bottom: 0;
+        width: 750px;
+        height: 133px;
+        background: linear-gradient(180deg, #7c77ff 0%, #472193 100%);
+        border-radius: 24px 24px 0px 0px;
+
+        .rank__li-pic {
+            width: 90px;
+            height: 90px;
+            img {
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+            }
+        }
+        .rank__li-index {
+            width: 86px;
+            text-align: center;
+            font-size: 28px;
+
+            font-weight: bold;
+            color: #e7e7e7;
+        }
+        .rank__li-info {
+            display: flex;
+
+            align-items: center;
+            width: 400px;
+            .rank__li-pic {
+                margin-right: 20px;
+            }
+            .rank__li-user {
+                .rank__li-alias {
+                    font-weight: 400;
+                    color: #fff;
+                    font-size: 28px;
+                    max-width: 240px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+                .rank__li-num {
+                    font-size: 24px;
+
+                    font-weight: 400;
+                    color: #fff;
+                }
+            }
+        }
+        .rank__li-prev {
+            width: 246px;
+            text-align: center;
+            font-size: 24px;
+            color: #fff;
+            font-weight: 400;
+        }
+    }
+}
+
+.weekstar-alert {
+    .center-content {
+        .close-btn {
+            svg {
+                fill: #fff;
+            }
+        }
+        width: 680px;
+        height: 700px;
+        background: #7053ff;
+        border-radius: 37px;
+        overflow-y: auto;
+        border: 8px solid #fff8c5;
+        .redd {
+            color: #ffca7a;
+        }
+        .rule__h1 {
+            font-size: 26px;
+            font-weight: bold;
+            color: #ffffff;
+            position: relative;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+        p {
+            font-size: 24px;
+            line-height: 46px;
+            font-weight: 400;
+            color: #ffffff;
+        }
+        .rule__warp-tab {
+            width: 606px;
+            background: linear-gradient(120deg, #dba5ee, #b9d8f6, #d8aaef);
+            border-radius: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 70px auto;
+            height: 296px;
+            .warp__tab {
+                width: 602px;
+                height: 292px;
+                background: #330f72;
+                margin: auto;
+                border-radius: 30px;
+                position: relative;
+                box-sizing: border-box;
+                padding: 30px;
+                .warp__tab-title {
+                    width: 250px;
+                    height: 80px;
+                    background:
+                        img-url('/star/rule_icon2.png?v=1?v=3') no-repeat,
+                        #330f72;
+                    background-size: 100% 100%;
+                    position: absolute;
+                    left: 50%;
+                    top: -39px;
+                    transform: translateX(-50%);
+                }
+                .warp__gift {
+                    margin: 30px auto 0 auto;
+                    ul {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        li {
+                            height: 200px;
+                            width: 140px;
+                            background: img-url('/star/g_bg.png?v=1') no-repeat;
+
+                            background-size: 100% 100%;
+                            position: relative;
+                            .li__gift {
+                                width: 80px;
+                                height: 80px;
+                                position: absolute;
+                                left: 50%;
+                                transform: translateX(-50%);
+                                top: 40px;
+                                img {
+                                    width: 100%;
+                                    height: 100%;
+                                }
+                            }
+                            .li__select {
+                                font-size: 16px;
+                                font-weight: 400;
+                                color: #000;
+                                width: 120px;
+                                height: 37px;
+                                background: #f7e158;
+                                border-radius: 20px;
+                                border: 1px solid #f7e158;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                position: absolute;
+                                left: 50%;
+                                transform: translateX(-50%);
+                                bottom: 30px;
+                            }
+                            .li__name {
+                                font-size: 14px;
+                                position: absolute;
+                                left: 50%;
+                                transform: translateX(-50%);
+                                bottom: -10px;
+                                font-weight: 400;
+                                color: #fff;
+                                width: 200px;
+                                text-align: center;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.paste {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100vh;
+    div {
+        width: 720px;
+        height: 822px;
+        background: img-url('/star/paste1.png?v=1') no-repeat;
+        background-size: 100% 100%;
+    }
+}
+.heart__warp3 {
+    padding-bottom: 80px;
+}

@@ -1,0 +1,198 @@
+@use '../../../../common/yiyabase.scss' as *;
+body {
+    background: transparent;
+}
+.paste {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: flex-end;
+    align-items: center;
+    div {
+        width: 148px;
+        height: 128px;
+    }
+}
+.black-process {
+    width: 750px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .process-bg {
+        overflow: hidden;
+        width: 730px;
+        height: 100px;
+        box-sizing: border-box;
+        padding: 0 40px;
+        background: img-url('/black_1.png') no-repeat;
+        background-size: 100% 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .process-icon19 {
+            width: 84px;
+            height: 84px;
+            background: img-url('/white_d.png') no-repeat;
+            background-size: 100% 100%;
+        }
+        .process-icon21 {
+            width: 84px;
+            height: 84px;
+            background: img-url('/black_d.png') no-repeat;
+            background-size: 100% 100%;
+        }
+        .process-info {
+            .info-name {
+                font-size: 24px;
+                font-weight: 500;
+                color: #ffffff;
+                span {
+                    font-size: 22px;
+                    font-weight: 400;
+                    color: #fff300;
+                }
+            }
+            .info-text {
+                font-size: 20px;
+                font-weight: 400;
+                color: #fffefe;
+                line-height: 24px;
+                opacity: 0.6;
+            }
+        }
+        .progress-div {
+            width: 142px;
+            height: 40px;
+            background: rgba(116, 102, 215, 0.4);
+            overflow: hidden;
+            border-radius: 20px;
+            position: relative;
+            z-index: 1;
+            .active {
+                position: absolute;
+                left: 0;
+                top: 0;
+
+                height: 40px;
+                background: #9813ff;
+                border-radius: 20px 0px 0px 20px;
+                z-index: 2;
+            }
+            .progress-num {
+                width: 142px;
+                height: 40px;
+                position: absolute;
+                left: 0;
+                top: 0;
+                z-index: 3;
+                font-size: 26px;
+
+                font-weight: 400;
+                color: #fffefe;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+        .help {
+            width: 28px;
+            height: 28px;
+            background: img-url('/guize@2x.png') no-repeat;
+            background-size: 100% 100%;
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            z-index: 2;
+        }
+    }
+}
+.northeast-boy-help {
+    font-size: 26px;
+    color: #fff;
+    p {
+        line-height: 38px;
+        margin-bottom: 20px;
+    }
+    .table {
+        margin-bottom: 20px;
+    }
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        color: #fff;
+    }
+    th,
+    td {
+        text-align: center;
+        border: 1px solid #eee;
+        line-height: 42px;
+        font-size: 24px;
+        font-weight: 400;
+        word-break: break-all;
+        width: 20%;
+    }
+    .center-content {
+        height: 800px;
+        background: #42328b;
+    }
+    .close-btn {
+        svg {
+            fill: #fff;
+        }
+    }
+}
+
+.black-result {
+    .center-content {
+        width: 500px;
+        background: #393838;
+        display: flex;
+        justify-content: center;
+
+        height: auto;
+        box-sizing: border-box;
+        padding: 40px 30px 60px 30px;
+    }
+    .black-result-conetnt {
+        width: 100%;
+        .b__icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            svg {
+                width: 160px;
+                height: 160px;
+            }
+        }
+    }
+    .b__text {
+        font-weight: 500;
+        font-size: 24px;
+        color: #fff;
+        margin: 60px 0 80px 0;
+        word-break: break-all;
+        text-align: center;
+    }
+    .close-btn {
+        svg {
+            fill: #fff;
+        }
+    }
+
+    .b__btn {
+        background: #a47f6c;
+        width: 170px;
+        height: 60px;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 600;
+        font-size: 28px;
+        color: #fff;
+        margin: auto;
+    }
+}

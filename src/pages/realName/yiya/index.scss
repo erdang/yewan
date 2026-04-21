@@ -1,0 +1,141 @@
+@use '../../../common/yiyabase' as *;
+@include borderv(var(--adm-border-color), 1px);
+
+.apply-page {
+    background: var(--bg-color);
+    bottom: 0;
+    box-sizing: border-box;
+    height: 100%;
+    left: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding: 40px 0 120px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    color: var(--font-color);
+}
+.apply-user-info {
+    font-size: 32px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    height: 90px;
+    padding: 0 0 0 30px;
+    background: var(--bg-color);
+    .label {
+        width: 160px;
+    }
+    .main {
+        width: 520px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        span:nth-of-type(1) {
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        span:nth-of-type(2) {
+            width: 200px;
+        }
+        span:nth-of-type(3) {
+            width: 160px;
+        }
+    }
+}
+
+.apply-form {
+    .form-title {
+        color: var(--font-color);
+        font-size: 32px;
+        margin: 0;
+        padding: 30px;
+    }
+    .realing {
+        width: 400px;
+        background: var(--bg-color);
+        border-radius: 20px;
+        .tips {
+            color: var(--font-color);
+            font-size: 32px;
+        }
+    }
+    .no-button {
+        padding: 0 24px;
+        box-sizing: border-box;
+    }
+    .image-up {
+        position: relative;
+        height: 280px;
+        .adm-space-item {
+            height: 248px;
+            width: 328px;
+            .adm-image-uploader-upload-button {
+                height: 248px;
+                width: 328px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .adm-image-uploader-upload-button-wrap {
+                box-sizing: none;
+            }
+            .adm-image-uploader-cell {
+                height: 248px;
+                width: 328px;
+            }
+            .adm-image {
+                height: 248px;
+                width: 328px;
+            }
+            .adm-image-uploader-cell-delete {
+                height: 60px;
+                width: 60px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                svg {
+                    height: 30px;
+                    width: 30px;
+                    position: static;
+                }
+            }
+        }
+    }
+    .image-up::after {
+        background: img-url('/340c33153f0e8d46a61af96b353feab4.png')
+            no-repeat;
+        background-size: 100% 100%;
+        height: 248px;
+        width: 328px;
+        position: absolute;
+        content: '';
+        top: 0;
+        right: 0;
+    }
+    .up-label {
+        margin-top: 20px;
+    }
+    .o-form-tip {
+        color: var(--font-tip-color);
+        font-size: 24px;
+        margin: 0;
+        padding: 20px 30px;
+        strong {
+            color: var(--font-strong-color);
+        }
+    }
+    .rule-div {
+        span {
+            color: var(--font-strong-color);
+            font-size: 28px;
+        }
+    }
+}
+.adm-modal-button-primary {
+    background: linear-gradient(270deg, #9db6f9 0%, #a08bf7 100%);
+}

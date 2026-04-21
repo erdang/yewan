@@ -1,0 +1,385 @@
+@use '../../../common/yiyabase' as *;
+.myLevel {
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+
+    .myLevel-top {
+        width: 750px;
+        background-size: 750px 760px;
+        box-sizing: border-box;
+        height: 760px;
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 1;
+        .myLevel-top-bg {
+            width: 678px;
+
+            background-size: 100% 100%;
+            height: 384px;
+            margin: 30px auto 0 auto;
+            position: relative;
+            .my_icon {
+                width: 332px;
+                height: 332px;
+                position: absolute;
+                right: 0;
+                top: 0;
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+            .now__text {
+                width: 100px;
+                height: 44px;
+                font-size: 20px;
+                font-family:
+                    PingFang SC-Regular,
+                    PingFang SC;
+                font-weight: 400;
+                color: #ffffff;
+                border-radius: 10px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-left: 6px;
+            }
+            .my_title {
+                font-size: 56px;
+                font-family:
+                    PingFang SC-Semibold,
+                    PingFang SC;
+                font-weight: 600;
+                position: absolute;
+                left: 36px;
+                top: 90px;
+                display: flex;
+                align-items: center;
+            }
+            .my_title_1 {
+                font-size: 28px;
+                font-family:
+                    PingFang SC-Regular,
+                    PingFang SC;
+                font-weight: 400;
+
+                position: absolute;
+                left: 36px;
+                top: 160px;
+            }
+        }
+
+        .level-process {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+            position: absolute;
+            left: 36px;
+            bottom: 68px;
+            .bar {
+                position: relative;
+                .bar-text {
+                    position: absolute;
+                    left: 0;
+                    top: -46px;
+                    font-size: 20px;
+                    font-weight: 400;
+                    display: flex;
+                    justify-content: left;
+                    align-items: center;
+                    width: 600px;
+
+                    span:nth-of-type(1) {
+                        font-size: 36px;
+                        font-weight: 500;
+                    }
+                    span:nth-of-type(2) {
+                        margin: 0 3px;
+                    }
+                    .jiasu_icon {
+                        width: 66px;
+                        height: 26px;
+                        background: img-url('/myLevel_buz/jiasu.png') no-repeat;
+                        background-size: 100% 100%;
+                    }
+                }
+                .level-bar {
+                    width: 480px;
+                    height: 22px;
+                    background: rgba(255, 255, 255, 0.5);
+                    border-radius: 120px 120px 120px 120px;
+                    overflow: hidden;
+                    position: relative;
+                    .active {
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+
+                        height: 22px;
+
+                        border-radius: 120px;
+                    }
+                }
+            }
+        }
+    }
+    .myLevel-content {
+        height: 1600px;
+        width: 750px;
+        background: linear-gradient(149deg, #1e2033 0%, #0d0e13 100%);
+        box-shadow:
+            inset 0px 1px 0px 0px #60758f,
+            0px -2px 32px 2px rgba(21, 20, 16, 0.1);
+        border-radius: 20px 20px 0px 0px;
+        border-radius: 20px;
+        margin: 60px auto 0 auto;
+        box-sizing: border-box;
+        position: absolute;
+        left: 0;
+        top: 400px;
+        z-index: 2;
+        .title {
+            font-size: 32px;
+            font-family:
+                PingFang SC-Semibold,
+                PingFang SC;
+            font-weight: 600;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px rgba(255, 255, 255, 0.5) dashed;
+            height: 100px;
+            box-sizing: border-box;
+            padding-left: 48px;
+            .title_right {
+                margin-left: 20px;
+                font-size: 24px;
+                font-family:
+                    PingFang SC-Regular,
+                    PingFang SC;
+                font-weight: 400;
+                color: rgba(255, 255, 255, 0.5);
+            }
+        }
+        .title-2 {
+            font-size: 32px;
+            font-family:
+                PingFang SC-Semibold,
+                PingFang SC;
+            font-weight: 600;
+            color: #ffffff;
+            box-sizing: border-box;
+            padding-left: 48px;
+            margin: 64px 0;
+        }
+        .icon-ul {
+            ul {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                li {
+                    width: 180px;
+                    margin-top: 40px;
+                    .icon_bg {
+                        width: 104px;
+                        height: 104px;
+                        background: #313657;
+                        border-radius: 32px 32px 32px 32px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        margin: auto;
+                        .svg_warp {
+                            width: 56px;
+                            height: 56px;
+                        }
+                    }
+                    .icon_text {
+                        text-align: center;
+                        font-size: 24px;
+                        font-family:
+                            PingFang SC-Regular,
+                            PingFang SC;
+                        font-weight: 400;
+                        color: rgba(221, 221, 221, 0.4);
+                        margin-top: 10px;
+                    }
+                    .icon_text_1 {
+                        text-align: center;
+                        font-size: 20px;
+                        font-family:
+                            PingFang SC-Regular,
+                            PingFang SC;
+                        font-weight: 400;
+                        color: rgba(221, 221, 221, 0.4);
+                        margin-top: 10px;
+                    }
+                    &.active {
+                        .icon_text {
+                            color: rgba(221, 221, 221, 1);
+                        }
+                        .icon_text_1 {
+                            color: rgba(221, 221, 221, 1);
+                        }
+                    }
+                }
+            }
+        }
+        .level-ul {
+            margin-top: 40px;
+            box-sizing: border-box;
+            padding-left: 48px;
+            padding-right: 48px;
+            ul {
+                li {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    width: 644px;
+                    margin-bottom: 50px;
+                    .li-text {
+                        width: 136px;
+                        height: 64px;
+
+                        border-radius: 16px 16px 16px 16px;
+                        font-size: 28px;
+                        font-family:
+                            PingFang SC-Medium,
+                            PingFang SC;
+                        font-weight: 500;
+                        color: #ffffff;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                    .li-info {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        .info-icon-1 {
+                            width: 96px;
+                            height: 96px;
+                            background: rgba(62, 63, 67, 0.5);
+                            border-radius: 32px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            .svg_warp {
+                                width: 56px;
+                                height: 56px;
+                            }
+                        }
+
+                        .info-text {
+                            margin-left: 26px;
+                            .info-text-1 {
+                                font-size: 28px;
+                                font-family:
+                                    PingFang SC-Medium,
+                                    PingFang SC;
+                                font-weight: 500;
+                                color: #ffffff;
+                            }
+                            .info-text-2 {
+                                font-size: 20px;
+                                font-family:
+                                    PingFang SC-Regular,
+                                    PingFang SC;
+                                font-weight: 400;
+                                color: #dddddd;
+                                margin-top: 12px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+.myLevel-more {
+    .no-more {
+        .no-more-icon1 {
+            width: 304px;
+            height: 200px;
+            background: img-url('/level_no.png') no-repeat;
+            background-size: 100% 100%;
+            margin: 100px auto 0 auto;
+        }
+        .no-more-text {
+            font-size: 28px;
+            font-weight: 400;
+            color: #aaaaaa;
+            line-height: 38px;
+            text-align: center;
+        }
+    }
+}
+.help-rule {
+    height: 100%;
+    background: #232335;
+    overflow-y: auto;
+    .rule-content {
+        box-sizing: border-box;
+        padding: 30px;
+
+        .r-title {
+            font-size: 32px;
+            color: #ffffff;
+            font-weight: 600;
+            margin: 20px 0;
+            position: relative;
+            box-sizing: border-box;
+            padding-left: 20px;
+            &::after {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 8px;
+                height: 30px;
+                background: #ffb870;
+                border-radius: 10px;
+            }
+        }
+        p {
+            font-weight: 400;
+            font-size: 26px;
+            color: #acacb7;
+            line-height: 50px;
+        }
+        .table {
+            margin-bottom: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            color: #acacb7;
+
+            border-radius: 10px;
+        }
+        th,
+        td {
+            text-align: center;
+            border: 1px solid #acacb7;
+            line-height: 42px;
+            font-size: 20px;
+            font-weight: 400;
+            word-break: break-all;
+            width: 20%;
+        }
+        .td_img {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            img {
+                width: 100px;
+                height: auto;
+            }
+        }
+    }
+}

@@ -1,0 +1,72 @@
+@use '../../common/yiyabase.scss' as *;
+.ls-tab {
+    .ls-tab-header {
+        width: 750px;
+        margin: 30px auto;
+        position: relative;
+        .ls-tab-ul {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .ls-tab-ul-li {
+                width: 190px;
+                .ls-tab-ul-li-title {
+                    font-size: 18px;
+                    font-family: PingFang SC;
+                    font-weight: 500;
+                    color: #8e8f8f;
+                    text-align: center;
+                }
+                .ls-tab-ul-li-des {
+                    font-size: 18px;
+                    font-family: PingFang SC;
+                    font-weight: 500;
+                    color: #8e8f8f;
+                    text-align: center;
+                }
+                .ls-tab-ul-li-icon {
+                    background: url('//vr0.6houses.cn/static/h5_static/endYear/s_2.png')
+                        no-repeat;
+                    background-size: 100% 100%;
+                    width: 37px;
+                    height: 34px;
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    z-index: 2;
+                    transform: translateY(-50%) translateX(-50%);
+                    &.actived {
+                        background: url('//vr0.6houses.cn/static/h5_static/endYear/s_1.png')
+                            no-repeat;
+                        background-size: 100% 100%;
+                    }
+                    &.active {
+                        background: url('//vr0.6houses.cn/static/h5_static/endYear/s_1.png')
+                            no-repeat;
+                        background-size: 100% 100%;
+                        width: 47px;
+                        height: 38px;
+                    }
+                }
+                .ls-tab-ul-li-line-warp {
+                    position: relative;
+                    height: 60px;
+                    z-index: 1;
+                }
+                .ls-tab-ul-li-line {
+                    width: 200px;
+                    height: 7px;
+                    background: #ebeaeb;
+                    position: absolute;
+                    left: 82px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    z-index: 1;
+                    &.active {
+                        background: #ff6d1e;
+                    }
+                }
+            }
+        }
+    }
+}

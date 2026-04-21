@@ -1,0 +1,19 @@
+@use '../../../../common/yiyabase.scss' as *;
+body {
+    background: var(--bg-color);
+}
+.reset-phone {
+    box-sizing: border-box;
+    padding: 30px;
+    .adm-list-default {
+        border: none;
+    }
+    .phone-btn {
+        margin-top: 80px;
+    }
+    .phone-from {
+        .code-input {
+            border-bottom: 1px solid var(--adm-border-color);
+        }
+    }
+}

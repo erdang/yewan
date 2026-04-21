@@ -1,0 +1,953 @@
+diff --git a/es/components/image-uploader/image-uploader.d.ts b/es/components/image-uploader/image-uploader.d.ts
+index 95e49dba03114097211c7394862c039bcec4874b..8171201460a9734d6e84a17b752dad1d8bb55b69 100644
+--- a/es/components/image-uploader/image-uploader.d.ts
++++ b/es/components/image-uploader/image-uploader.d.ts
+@@ -1,45 +1,55 @@
+-import React, { FC, InputHTMLAttributes } from 'react';
+-import { NativeProps } from '../../utils/native-props';
+-import type { ImageProps } from '../image';
+-import { GridProps } from '../grid';
+-export declare type TaskStatus = 'pending' | 'fail' | 'success';
++import React, { FC, InputHTMLAttributes } from "react";
++import { NativeProps } from "../../utils/native-props";
++import type { ImageProps } from "../image";
++import { GridProps } from "../grid";
++export declare type TaskStatus = "pending" | "fail" | "success";
+ export interface ImageUploadItem {
+-    key?: string | number;
+-    url: string;
+-    thumbnailUrl?: string;
+-    extra?: any;
++  key?: string | number;
++  url: string;
++  thumbnailUrl?: string;
++  extra?: any;
+ }
+ declare type Task = {
+-    id: number;
+-    url?: string;
+-    file: File;
+-    status: TaskStatus;
++  id: number;
++  url?: string;
++  file: File;
++  status: TaskStatus;
+ };
+-export declare type UploadTask = Pick<Task, 'id' | 'status'>;
++export declare type UploadTask = Pick<Task, "id" | "status">;
+ export declare type ImageUploaderProps = {
+-    defaultValue?: ImageUploadItem[];
+-    value?: ImageUploadItem[];
+-    columns?: GridProps['columns'];
+-    onChange?: (items: ImageUploadItem[]) => void;
+-    onUploadQueueChange?: (tasks: UploadTask[]) => void;
+-    accept?: string;
+-    multiple?: boolean;
+-    maxCount?: number;
+-    onCountExceed?: (exceed: number) => void;
+-    disableUpload?: boolean;
+-    showUpload?: boolean;
+-    deletable?: boolean;
+-    deleteIcon?: React.ReactNode;
+-    capture?: InputHTMLAttributes<unknown>['capture'];
+-    onPreview?: (index: number, item: ImageUploadItem) => void;
+-    beforeUpload?: (file: File, files: File[]) => Promise<File | null> | File | null;
+-    upload: (file: File) => Promise<ImageUploadItem>;
+-    onDelete?: (item: ImageUploadItem) => boolean | Promise<boolean> | void;
+-    preview?: boolean;
+-    showFailed?: boolean;
+-    imageFit?: ImageProps['fit'];
+-    children?: React.ReactNode;
+-    renderItem?: (originNode: React.ReactElement, file: ImageUploadItem, fileList: ImageUploadItem[]) => React.ReactNode;
+-} & NativeProps<'--cell-size' | '--gap' | '--gap-vertical' | '--gap-horizontal'>;
++  defaultValue?: ImageUploadItem[];
++  value?: ImageUploadItem[];
++  columns?: GridProps["columns"];
++  onChange?: (items: ImageUploadItem[]) => void;
++  onUploadQueueChange?: (tasks: UploadTask[]) => void;
++  accept?: string;
++  multiple?: boolean;
++  maxCount?: number;
++  onCountExceed?: (exceed: number) => void;
++  disableUpload?: boolean;
++  showUpload?: boolean;
++  deletable?: boolean;
++  deleteIcon?: React.ReactNode;
++  capture?: InputHTMLAttributes<unknown>["capture"];
++  onPreview?: (index: number, item: ImageUploadItem) => void;
++  beforeUpload?: (
++    file: File,
++    files: File[]
++  ) => Promise<File | null> | File | null;
++  clickFn?: () => {};
++  upload: (file: File) => Promise<ImageUploadItem>;
++  onDelete?: (item: ImageUploadItem) => boolean | Promise<boolean> | void;
++  preview?: boolean;
++  showFailed?: boolean;
++  imageFit?: ImageProps["fit"];
++  children?: React.ReactNode;
++  renderItem?: (
++    originNode: React.ReactElement,
++    file: ImageUploadItem,
++    fileList: ImageUploadItem[]
++  ) => React.ReactNode;
++} & NativeProps<
++  "--cell-size" | "--gap" | "--gap-vertical" | "--gap-horizontal"
++>;
+ export declare const ImageUploader: FC<ImageUploaderProps>;
+ export {};
+diff --git a/es/components/image-uploader/image-uploader.js b/es/components/image-uploader/image-uploader.js
+index 90a65e10ca72b5b49abba65ffee2b071ea580ae7..6e3b51c2b2b7b6ab43b304e6eb84e0b70e82533f 100644
+--- a/es/components/image-uploader/image-uploader.js
++++ b/es/components/image-uploader/image-uploader.js
+@@ -1,40 +1,36 @@
+ import { __awaiter } from "tslib";
+-import React, { useRef, useState } from 'react';
+-import { AddOutline, CloseOutline } from 'antd-mobile-icons';
+-import { mergeProps } from '../../utils/with-default-props';
+-import ImageViewer from '../image-viewer';
+-import PreviewItem from './preview-item';
+-import { usePropsValue } from '../../utils/use-props-value';
+-import { useIsomorphicLayoutEffect, useUnmount, useSize } from 'ahooks';
+-import Space from '../space';
+-import { withNativeProps } from '../../utils/native-props';
+-import { measureCSSLength } from '../../utils/measure-css-length';
+-import { useConfig } from '../config-provider';
+-import Grid from '../grid';
++import React, { useRef, useState } from "react";
++import { AddOutline, CloseOutline } from "antd-mobile-icons";
++import { mergeProps } from "../../utils/with-default-props";
++import ImageViewer from "../image-viewer";
++import PreviewItem from "./preview-item";
++import { usePropsValue } from "../../utils/use-props-value";
++import { useIsomorphicLayoutEffect, useUnmount, useSize } from "ahooks";
++import Space from "../space";
++import { withNativeProps } from "../../utils/native-props";
++import { measureCSSLength } from "../../utils/measure-css-length";
++import { useConfig } from "../config-provider";
++import Grid from "../grid";
+ const classPrefix = `adm-image-uploader`;
+ const defaultProps = {
+   disableUpload: false,
+   deletable: true,
+   deleteIcon: React.createElement(CloseOutline, {
+-    className: `${classPrefix}-cell-delete-icon`
++    className: `${classPrefix}-cell-delete-icon`,
+   }),
+   showUpload: true,
+   multiple: false,
+   maxCount: 0,
+   defaultValue: [],
+-  accept: 'image/*',
++  accept: "image/*",
+   preview: true,
+   showFailed: true,
+-  imageFit: 'cover'
++  imageFit: "cover",
+ };
+-export const ImageUploader = p => {
+-  const {
+-    locale
+-  } = useConfig();
++export const ImageUploader = (p) => {
++  const { locale } = useConfig();
+   const props = mergeProps(defaultProps, p);
+-  const {
+-    columns
+-  } = props;
++  const { columns } = props;
+   const [value, setValue] = usePropsValue(props);
+   const [tasks, setTasks] = useState([]);
+   const containerRef = useRef(null);
+@@ -45,58 +41,67 @@ export const ImageUploader = p => {
+     const gapMeasure = gapMeasureRef.current;
+     if (columns && containerSize && gapMeasure) {
+       const width = containerSize.width;
+-      const gap = measureCSSLength(window.getComputedStyle(gapMeasure).getPropertyValue('height'));
++      const gap = measureCSSLength(
++        window.getComputedStyle(gapMeasure).getPropertyValue("height")
++      );
+       setCellSize((width - gap * (columns - 1)) / columns);
+     }
+-  }, [containerSize === null || containerSize === void 0 ? void 0 : containerSize.width]);
++  }, [
++    containerSize === null || containerSize === void 0
++      ? void 0
++      : containerSize.width,
++  ]);
+   const style = {
+-    '--cell-size': cellSize + 'px'
++    "--cell-size": cellSize + "px",
+   };
+   useIsomorphicLayoutEffect(() => {
+-    setTasks(prev => prev.filter(task => {
+-      if (task.url === undefined) return true;
+-      return !value.some(fileItem => fileItem.url === task.url);
+-    }));
++    setTasks((prev) =>
++      prev.filter((task) => {
++        if (task.url === undefined) return true;
++        return !value.some((fileItem) => fileItem.url === task.url);
++      })
++    );
+   }, [value]);
+   useIsomorphicLayoutEffect(() => {
+     var _a;
+-    (_a = props.onUploadQueueChange) === null || _a === void 0 ? void 0 : _a.call(props, tasks.map(item => ({
+-      id: item.id,
+-      status: item.status
+-    })));
++    (_a = props.onUploadQueueChange) === null || _a === void 0
++      ? void 0
++      : _a.call(
++          props,
++          tasks.map((item) => ({
++            id: item.id,
++            status: item.status,
++          }))
++        );
+   }, [tasks]);
+   const idCountRef = useRef(0);
+-  const {
+-    maxCount,
+-    onPreview,
+-    renderItem
+-  } = props;
++  const { maxCount, onPreview, renderItem } = props;
+   function processFile(file, fileList) {
+     return __awaiter(this, void 0, void 0, function* () {
+-      const {
+-        beforeUpload
+-      } = props;
++      const { beforeUpload } = props;
+       let transformedFile = file;
+-      transformedFile = yield beforeUpload === null || beforeUpload === void 0 ? void 0 : beforeUpload(file, fileList);
++      transformedFile = yield beforeUpload === null || beforeUpload === void 0
++        ? void 0
++        : beforeUpload(file, fileList);
+       return transformedFile;
+     });
+   }
+   function getFinalTasks(tasks) {
+-    return props.showFailed ? tasks : tasks.filter(task => task.status !== 'fail');
++    return props.showFailed
++      ? tasks
++      : tasks.filter((task) => task.status !== "fail");
+   }
+   function onChange(e) {
+     var _a;
+     return __awaiter(this, void 0, void 0, function* () {
+       e.persist();
+-      const {
+-        files: rawFiles
+-      } = e.target;
++      const { files: rawFiles } = e.target;
+       if (!rawFiles) return;
+       let files = [].slice.call(rawFiles);
+-      e.target.value = ''; // HACK: fix the same file doesn't trigger onChange
++      e.target.value = ""; // HACK: fix the same file doesn't trigger onChange
+       if (props.beforeUpload) {
+-        const postFiles = files.map(file => processFile(file, files));
+-        yield Promise.all(postFiles).then(filesList => {
++        const postFiles = files.map((file) => processFile(file, files));
++        yield Promise.all(postFiles).then((filesList) => {
+           files = filesList.filter(Boolean);
+         });
+       }
+@@ -107,70 +112,83 @@ export const ImageUploader = p => {
+         const exceed = value.length + files.length - maxCount;
+         if (exceed > 0) {
+           files = files.slice(0, files.length - exceed);
+-          (_a = props.onCountExceed) === null || _a === void 0 ? void 0 : _a.call(props, exceed);
++          (_a = props.onCountExceed) === null || _a === void 0
++            ? void 0
++            : _a.call(props, exceed);
+         }
+       }
+-      const newTasks = files.map(file => ({
++      const newTasks = files.map((file) => ({
+         id: idCountRef.current++,
+-        status: 'pending',
+-        file
++        status: "pending",
++        file,
+       }));
+-      setTasks(prev => [...getFinalTasks(prev), ...newTasks]);
++      setTasks((prev) => [...getFinalTasks(prev), ...newTasks]);
+       const newVal = [];
+-      yield Promise.all(newTasks.map((currentTask, index) => __awaiter(this, void 0, void 0, function* () {
+-        try {
+-          const result = yield props.upload(currentTask.file);
+-          newVal[index] = result;
+-          setTasks(prev => {
+-            return prev.map(task => {
+-              if (task.id === currentTask.id) {
+-                return Object.assign(Object.assign({}, task), {
+-                  status: 'success',
+-                  url: result.url
++      yield Promise.all(
++        newTasks.map((currentTask, index) =>
++          __awaiter(this, void 0, void 0, function* () {
++            try {
++              const result = yield props.upload(currentTask.file);
++              newVal[index] = result;
++              setTasks((prev) => {
++                return prev.map((task) => {
++                  if (task.id === currentTask.id) {
++                    return Object.assign(Object.assign({}, task), {
++                      status: "success",
++                      url: result.url,
++                    });
++                  }
++                  return task;
+                 });
+-              }
+-              return task;
+-            });
+-          });
+-        } catch (e) {
+-          setTasks(prev => {
+-            return prev.map(task => {
+-              if (task.id === currentTask.id) {
+-                return Object.assign(Object.assign({}, task), {
+-                  status: 'fail'
++              });
++            } catch (e) {
++              setTasks((prev) => {
++                return prev.map((task) => {
++                  if (task.id === currentTask.id) {
++                    return Object.assign(Object.assign({}, task), {
++                      status: "fail",
++                    });
++                  }
++                  return task;
+                 });
+-              }
+-              return task;
+-            });
+-          });
+-          throw e;
+-        }
+-      }))).catch(error => console.error(error));
+-      setValue(prev => prev.concat(newVal));
++              });
++              throw e;
++            }
++          })
++        )
++      ).catch((error) => console.error(error));
++      setValue((prev) => prev.concat(newVal));
+     });
+   }
+   const imageViewerHandlerRef = useRef(null);
+   function previewImage(index) {
+     imageViewerHandlerRef.current = ImageViewer.Multi.show({
+-      images: value.map(fileItem => fileItem.url),
++      images: value.map((fileItem) => fileItem.url),
+       defaultIndex: index,
+       onClose: () => {
+         imageViewerHandlerRef.current = null;
+-      }
++      },
+     });
+   }
+   useUnmount(() => {
+     var _a;
+-    (_a = imageViewerHandlerRef.current) === null || _a === void 0 ? void 0 : _a.close();
++    (_a = imageViewerHandlerRef.current) === null || _a === void 0
++      ? void 0
++      : _a.close();
+   });
+   const finalTasks = getFinalTasks(tasks);
+-  const showUpload = props.showUpload && (maxCount === 0 || value.length + finalTasks.length < maxCount);
++  const showUpload =
++    props.showUpload &&
++    (maxCount === 0 || value.length + finalTasks.length < maxCount);
+   const renderImages = () => {
+     return value.map((fileItem, index) => {
+       var _a, _b;
+       const originNode = React.createElement(PreviewItem, {
+         key: (_a = fileItem.key) !== null && _a !== void 0 ? _a : index,
+-        url: (_b = fileItem.thumbnailUrl) !== null && _b !== void 0 ? _b : fileItem.url,
++        url:
++          (_b = fileItem.thumbnailUrl) !== null && _b !== void 0
++            ? _b
++            : fileItem.url,
+         deletable: props.deletable,
+         deleteIcon: props.deleteIcon,
+         imageFit: props.imageFit,
+@@ -180,64 +198,110 @@ export const ImageUploader = p => {
+           }
+           onPreview && onPreview(index, fileItem);
+         },
+-        onDelete: () => __awaiter(void 0, void 0, void 0, function* () {
+-          var _c;
+-          const canDelete = yield (_c = props.onDelete) === null || _c === void 0 ? void 0 : _c.call(props, fileItem);
+-          if (canDelete === false) return;
+-          setValue(value.filter((x, i) => i !== index));
+-        })
++        onDelete: () =>
++          __awaiter(void 0, void 0, void 0, function* () {
++            var _c;
++            const canDelete = yield (_c = props.onDelete) === null ||
++            _c === void 0
++              ? void 0
++              : _c.call(props, fileItem);
++            if (canDelete === false) return;
++            setValue(value.filter((x, i) => i !== index));
++          }),
+       });
+       return renderItem ? renderItem(originNode, fileItem, value) : originNode;
+     });
+   };
+-  const contentNode = React.createElement(React.Fragment, null, renderImages(), tasks.map(task => {
+-    if (!props.showFailed && task.status === 'fail') {
+-      return null;
+-    }
+-    return React.createElement(PreviewItem, {
+-      key: task.id,
+-      file: task.file,
+-      deletable: task.status !== 'pending',
+-      deleteIcon: props.deleteIcon,
+-      status: task.status,
+-      imageFit: props.imageFit,
+-      onDelete: () => {
+-        setTasks(tasks.filter(x => x.id !== task.id));
++  const contentNode = React.createElement(
++    React.Fragment,
++    null,
++    renderImages(),
++    tasks.map((task) => {
++      if (!props.showFailed && task.status === "fail") {
++        return null;
+       }
+-    });
+-  }), React.createElement("div", {
+-    className: `${classPrefix}-upload-button-wrap`,
+-    style: showUpload ? undefined : {
+-      display: 'none'
+-    }
+-  }, props.children || React.createElement("span", {
+-    className: `${classPrefix}-cell ${classPrefix}-upload-button`,
+-    role: 'button',
+-    "aria-label": locale.ImageUploader.upload
+-  }, React.createElement("span", {
+-    className: `${classPrefix}-upload-button-icon`
+-  }, React.createElement(AddOutline, null))), !props.disableUpload && React.createElement("input", {
+-    capture: props.capture,
+-    accept: props.accept,
+-    multiple: props.multiple,
+-    type: 'file',
+-    className: `${classPrefix}-input`,
+-    onChange: onChange,
+-    "aria-hidden": true
+-  })));
+-  return withNativeProps(props, React.createElement("div", {
+-    className: classPrefix,
+-    ref: containerRef
+-  }, columns ? React.createElement(Grid, {
+-    className: `${classPrefix}-grid`,
+-    columns: columns,
+-    style: style
+-  }, React.createElement("div", {
+-    className: `${classPrefix}-gap-measure`,
+-    ref: gapMeasureRef
+-  }), contentNode.props.children) : React.createElement(Space, {
+-    className: `${classPrefix}-space`,
+-    wrap: true,
+-    block: true
+-  }, contentNode.props.children)));
++      return React.createElement(PreviewItem, {
++        key: task.id,
++        file: task.file,
++        deletable: task.status !== "pending",
++        deleteIcon: props.deleteIcon,
++        status: task.status,
++        imageFit: props.imageFit,
++        onDelete: () => {
++          setTasks(tasks.filter((x) => x.id !== task.id));
++        },
++      });
++    }),
++    React.createElement(
++      "div",
++      {
++        className: `${classPrefix}-upload-button-wrap`,
++        style: showUpload
++          ? undefined
++          : {
++              display: "none",
++            },
++      },
++      props.children ||
++        React.createElement(
++          "span",
++          {
++            className: `${classPrefix}-cell ${classPrefix}-upload-button`,
++            role: "button",
++            "aria-label": locale.ImageUploader.upload,
++          },
++          React.createElement(
++            "span",
++            {
++              className: `${classPrefix}-upload-button-icon`,
++            },
++            React.createElement(AddOutline, null)
++          )
++        ),
++      !props.disableUpload &&
++        React.createElement("input", {
++          capture: props.capture,
++          accept: props.accept,
++          multiple: props.multiple,
++          type: "file",
++          className: `${classPrefix}-input`,
++          onChange: onChange,
++          onClick: props.clickFn,
++          "aria-hidden": true,
++        })
++    )
++  );
++  return withNativeProps(
++    props,
++    React.createElement(
++      "div",
++      {
++        className: classPrefix,
++        ref: containerRef,
++      },
++      columns
++        ? React.createElement(
++            Grid,
++            {
++              className: `${classPrefix}-grid`,
++              columns: columns,
++              style: style,
++            },
++            React.createElement("div", {
++              className: `${classPrefix}-gap-measure`,
++              ref: gapMeasureRef,
++            }),
++            contentNode.props.children
++          )
++        : React.createElement(
++            Space,
++            {
++              className: `${classPrefix}-space`,
++              wrap: true,
++              block: true,
++            },
++            contentNode.props.children
++          )
++    )
++  );
+ };
+diff --git a/es/components/tabs/tabs.js b/es/components/tabs/tabs.js
+index 771c4cbac1243ff99388d069964ceee60ab2534a..adea6077eae44873aa46a1f977834076bd0d8145 100644
+--- a/es/components/tabs/tabs.js
++++ b/es/components/tabs/tabs.js
+@@ -1,25 +1,25 @@
+-import React, { isValidElement, useRef } from 'react';
+-import classNames from 'classnames';
+-import { useSpring, animated } from '@react-spring/web';
+-import { withNativeProps } from '../../utils/native-props';
+-import { usePropsValue } from '../../utils/use-props-value';
+-import { bound } from '../../utils/bound';
+-import { useThrottleFn, useIsomorphicLayoutEffect } from 'ahooks';
+-import { useMutationEffect } from '../../utils/use-mutation-effect';
+-import { useResizeEffect } from '../../utils/use-resize-effect';
+-import { mergeProps } from '../../utils/with-default-props';
+-import { useIsomorphicUpdateLayoutEffect } from '../../utils/use-isomorphic-update-layout-effect';
+-import { ShouldRender } from '../../utils/should-render';
+-import { traverseReactNode } from '../../utils/traverse-react-node';
++import React, { isValidElement, useRef } from "react";
++import classNames from "classnames";
++import { useSpring, animated } from "@react-spring/web";
++import { withNativeProps } from "../../utils/native-props";
++import { usePropsValue } from "../../utils/use-props-value";
++import { bound } from "../../utils/bound";
++import { useThrottleFn, useIsomorphicLayoutEffect } from "ahooks";
++import { useMutationEffect } from "../../utils/use-mutation-effect";
++import { useResizeEffect } from "../../utils/use-resize-effect";
++import { mergeProps } from "../../utils/with-default-props";
++import { useIsomorphicUpdateLayoutEffect } from "../../utils/use-isomorphic-update-layout-effect";
++import { ShouldRender } from "../../utils/should-render";
++import { traverseReactNode } from "../../utils/traverse-react-node";
+ const classPrefix = `adm-tabs`;
+ export const Tab = () => {
+   return null;
+ };
+ const defaultProps = {
+-  activeLineMode: 'auto',
+-  stretch: true
++  activeLineMode: "auto",
++  stretch: true,
+ };
+-export const Tabs = p => {
++export const Tabs = (p) => {
+   var _a;
+   const props = mergeProps(defaultProps, p);
+   const tabListContainerRef = useRef(null);
+@@ -30,7 +30,7 @@ export const Tabs = p => {
+   traverseReactNode(props.children, (child, index) => {
+     if (!isValidElement(child)) return;
+     const key = child.key;
+-    if (typeof key !== 'string') return;
++    if (typeof key !== "string") return;
+     if (index === 0) {
+       firstActiveKey = key;
+     }
+@@ -39,42 +39,39 @@ export const Tabs = p => {
+   });
+   const [activeKey, setActiveKey] = usePropsValue({
+     value: props.activeKey,
+-    defaultValue: (_a = props.defaultActiveKey) !== null && _a !== void 0 ? _a : firstActiveKey,
+-    onChange: v => {
++    defaultValue:
++      (_a = props.defaultActiveKey) !== null && _a !== void 0
++        ? _a
++        : firstActiveKey,
++    onChange: (v) => {
+       var _a;
+       if (v === null) return;
+-      (_a = props.onChange) === null || _a === void 0 ? void 0 : _a.call(props, v);
+-    }
++      (_a = props.onChange) === null || _a === void 0
++        ? void 0
++        : _a.call(props, v);
++    },
+   });
+-  const [{
+-    x,
+-    width
+-  }, api] = useSpring(() => ({
++  const [{ x, width }, api] = useSpring(() => ({
+     x: 0,
+     width: 0,
+     config: {
+       tension: 300,
+-      clamp: true
+-    }
++      clamp: true,
++    },
+   }));
+-  const [{
+-    scrollLeft
+-  }, scrollApi] = useSpring(() => ({
++  const [{ scrollLeft }, scrollApi] = useSpring(() => ({
+     scrollLeft: 0,
+     config: {
+       tension: 300,
+-      clamp: true
+-    }
++      clamp: true,
++    },
+   }));
+-  const [{
+-    leftMaskOpacity,
+-    rightMaskOpacity
+-  }, maskApi] = useSpring(() => ({
++  const [{ leftMaskOpacity, rightMaskOpacity }, maskApi] = useSpring(() => ({
+     leftMaskOpacity: 0,
+     rightMaskOpacity: 0,
+     config: {
+-      clamp: true
+-    }
++      clamp: true,
++    },
+   }));
+   function animate(immediate = false) {
+     const container = tabListContainerRef.current;
+@@ -84,7 +81,7 @@ export const Tabs = p => {
+       api.start({
+         x: 0,
+         width: 0,
+-        immediate: true
++        immediate: true,
+       });
+       return;
+     }
+@@ -102,10 +99,10 @@ export const Tabs = p => {
+     const activeLineWidth = activeLine.offsetWidth;
+     let x = 0;
+     let width = 0;
+-    if (props.activeLineMode === 'auto') {
++    if (props.activeLineMode === "auto") {
+       x = activeTabLeft;
+       width = activeTabWidth;
+-    } else if (props.activeLineMode === 'full') {
++    } else if (props.activeLineMode === "full") {
+       x = activeTabWrapperLeft;
+       width = activeTabWrapperWidth;
+     } else {
+@@ -114,17 +111,21 @@ export const Tabs = p => {
+     api.start({
+       x,
+       width,
+-      immediate
++      immediate,
+     });
+     const maxScrollDistance = containerScrollWidth - containerWidth;
+     if (maxScrollDistance <= 0) return;
+-    const nextScrollLeft = bound(activeTabLeft - (containerWidth - activeTabWidth) / 2, 0, containerScrollWidth - containerWidth);
++    const nextScrollLeft = bound(
++      activeTabLeft - (containerWidth - activeTabWidth) / 2,
++      0,
++      containerScrollWidth - containerWidth
++    );
+     scrollApi.start({
+       scrollLeft: nextScrollLeft,
+       from: {
+-        scrollLeft: containerScrollLeft
++        scrollLeft: containerScrollLeft,
+       },
+-      immediate
++      immediate,
+     });
+   }
+   useIsomorphicLayoutEffect(() => {
+@@ -136,98 +137,153 @@ export const Tabs = p => {
+   useResizeEffect(() => {
+     animate(!x.isAnimating);
+   }, tabListContainerRef);
+-  useMutationEffect(() => {
+-    animate(!x.isAnimating);
+-  }, tabListContainerRef, {
+-    subtree: true,
+-    childList: true,
+-    characterData: true
+-  });
+-  const {
+-    run: updateMask
+-  } = useThrottleFn((immediate = false) => {
+-    const container = tabListContainerRef.current;
+-    if (!container) return;
+-    const scrollLeft = container.scrollLeft;
+-    const showLeftMask = scrollLeft > 0;
+-    const showRightMask = scrollLeft + container.offsetWidth < container.scrollWidth;
+-    maskApi.start({
+-      leftMaskOpacity: showLeftMask ? 1 : 0,
+-      rightMaskOpacity: showRightMask ? 1 : 0,
+-      immediate
+-    });
+-  }, {
+-    wait: 100,
+-    trailing: true,
+-    leading: true
+-  });
+-  useIsomorphicLayoutEffect(() => {
+-    updateMask(true);
+-  }, []);
+-  return withNativeProps(props, React.createElement("div", {
+-    className: classPrefix
+-  }, React.createElement("div", {
+-    className: `${classPrefix}-header`
+-  }, React.createElement(animated.div, {
+-    className: classNames(`${classPrefix}-header-mask`, `${classPrefix}-header-mask-left`),
+-    style: {
+-      opacity: leftMaskOpacity
+-    }
+-  }), React.createElement(animated.div, {
+-    className: classNames(`${classPrefix}-header-mask`, `${classPrefix}-header-mask-right`),
+-    style: {
+-      opacity: rightMaskOpacity
+-    }
+-  }), React.createElement(animated.div, {
+-    className: `${classPrefix}-tab-list`,
+-    ref: tabListContainerRef,
+-    scrollLeft: scrollLeft,
+-    onScroll: updateMask,
+-    role: 'tablist'
+-  }, React.createElement(animated.div, {
+-    ref: activeLineRef,
+-    className: `${classPrefix}-tab-line`,
+-    style: {
+-      width: props.activeLineMode === 'fixed' ? 'var(--fixed-active-line-width, 30px)' : width,
+-      x
++  useMutationEffect(
++    () => {
++      animate(!x.isAnimating);
++    },
++    tabListContainerRef,
++    {
++      subtree: true,
++      childList: true,
++      characterData: true,
+     }
+-  }), panes.map(pane => withNativeProps(pane.props, React.createElement("div", {
+-    key: pane.key,
+-    className: classNames(`${classPrefix}-tab-wrapper`, {
+-      [`${classPrefix}-tab-wrapper-stretch`]: props.stretch
+-    })
+-  }, React.createElement("div", {
+-    onClick: () => {
+-      const {
+-        key
+-      } = pane;
+-      if (pane.props.disabled) return;
+-      if (key === undefined || key === null) {
+-        return;
+-      }
+-      setActiveKey(key.toString());
++  );
++  const { run: updateMask } = useThrottleFn(
++    (immediate = false) => {
++      const container = tabListContainerRef.current;
++      if (!container) return;
++      const scrollLeft = container.scrollLeft;
++      const showLeftMask = scrollLeft > 0;
++      const showRightMask =
++        scrollLeft + container.offsetWidth < container.scrollWidth;
++      maskApi.start({
++        leftMaskOpacity: showLeftMask ? 1 : 0,
++        rightMaskOpacity: showRightMask ? 1 : 0,
++        immediate,
++      });
+     },
+-    className: classNames(`${classPrefix}-tab`, {
+-      [`${classPrefix}-tab-active`]: pane.key === activeKey,
+-      [`${classPrefix}-tab-disabled`]: pane.props.disabled
+-    }),
+-    role: 'tab',
+-    "aria-selected": pane.key === activeKey
+-  }, pane.props.title)))))), panes.map(pane => {
+-    if (pane.props.children === undefined) {
+-      return null;
++    {
++      wait: 100,
++      trailing: true,
++      leading: true,
+     }
+-    const active = pane.key === activeKey;
+-    return React.createElement(ShouldRender, {
+-      key: pane.key,
+-      active: active,
+-      forceRender: pane.props.forceRender,
+-      destroyOnClose: pane.props.destroyOnClose
+-    }, React.createElement("div", {
+-      className: `${classPrefix}-content`,
+-      style: {
+-        display: active ? 'block' : 'none'
+-      }
+-    }, pane.props.children));
+-  })));
++  );
++  useIsomorphicLayoutEffect(() => {
++    updateMask(true);
++  }, []);
++  return withNativeProps(
++    props,
++    React.createElement(
++      "div",
++      {
++        className: classPrefix,
++      },
++      React.createElement(
++        "div",
++        {
++          className: `${classPrefix}-header`,
++        },
++        React.createElement(animated.div, {
++          className: classNames(
++            `${classPrefix}-header-mask`,
++            `${classPrefix}-header-mask-left`
++          ),
++          style: {
++            opacity: leftMaskOpacity,
++          },
++        }),
++        React.createElement(animated.div, {
++          className: classNames(
++            `${classPrefix}-header-mask`,
++            `${classPrefix}-header-mask-right`
++          ),
++          style: {
++            opacity: rightMaskOpacity,
++          },
++        }),
++        React.createElement(
++          animated.div,
++          {
++            className: `${classPrefix}-tab-list`,
++            ref: tabListContainerRef,
++            scrollLeft: scrollLeft,
++            style: props.styles,
++            onScroll: updateMask,
++            role: "tablist",
++          },
++          React.createElement(animated.div, {
++            ref: activeLineRef,
++            className: `${classPrefix}-tab-line`,
++            style: {
++              width:
++                props.activeLineMode === "fixed"
++                  ? "var(--fixed-active-line-width, 30px)"
++                  : width,
++              x,
++            },
++          }),
++          panes.map((pane) =>
++            withNativeProps(
++              pane.props,
++              React.createElement(
++                "div",
++                {
++                  key: pane.key,
++                  className: classNames(`${classPrefix}-tab-wrapper`, {
++                    [`${classPrefix}-tab-wrapper-stretch`]: props.stretch,
++                  }),
++                },
++                React.createElement(
++                  "div",
++                  {
++                    onClick: () => {
++                      const { key } = pane;
++                      if (pane.props.disabled) return;
++                      if (key === undefined || key === null) {
++                        return;
++                      }
++                      setActiveKey(key.toString());
++                    },
++                    style: pane.key === activeKey ? props.active : {},
++                    className: classNames(`${classPrefix}-tab`, {
++                      [`${classPrefix}-tab-active`]: pane.key === activeKey,
++                      [`${classPrefix}-tab-disabled`]: pane.props.disabled,
++                    }),
++                    role: "tab",
++                    "aria-selected": pane.key === activeKey,
++                  },
++                  pane.props.title
++                )
++              )
++            )
++          )
++        )
++      ),
++      panes.map((pane) => {
++        if (pane.props.children === undefined) {
++          return null;
++        }
++        const active = pane.key === activeKey;
++        return React.createElement(
++          ShouldRender,
++          {
++            key: pane.key,
++            active: active,
++            forceRender: pane.props.forceRender,
++            destroyOnClose: pane.props.destroyOnClose,
++          },
++          React.createElement(
++            "div",
++            {
++              className: `${classPrefix}-content`,
++              style: {
++                display: active ? "block" : "none",
++              },
++            },
++            pane.props.children
++          )
++        );
++      })
++    )
++  );
+ };

@@ -1,0 +1,51 @@
+@use '../../common/base.scss' as *;
+.my-level {
+    background: var(--bg-color);
+    padding: 40px;
+    padding: 19px 20px;
+    h1 {
+        font-size: 32px;
+        font-weight: 400;
+        color: var(--font-color);
+
+        &::before {
+            margin: 0 10px 0 0;
+            vertical-align: middle;
+            content: '';
+            width: 34px;
+            height: 31px;
+            background: img-url('/money_icon.png') no-repeat;
+            background-size: cover;
+            display: inline-block;
+        }
+    }
+    .tip {
+        padding: 0 40px;
+        font-size: 24px;
+        color: var(--font-tip-color);
+    }
+    table {
+        width: 100%;
+        table-layout: fixed;
+        border-collapse: collapse;
+        border: 1px solid var(--table-border-bg);
+        margin-top: 40px;
+        th {
+            height: 70px;
+            font-size: 28px;
+            font-weight: 300;
+            background: var(--table-th-bg);
+            color: var(--font-color);
+            vertical-align: middle;
+            text-align: center;
+            letter-spacing: 4px;
+            border: 1px solid var(--table-border-bg);
+        }
+        td {
+            border: 1px solid var(--table-border-bg);
+            padding: 20px;
+            text-align: center;
+            font-size: 28px;
+        }
+    }
+}
