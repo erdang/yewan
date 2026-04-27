@@ -125,11 +125,22 @@ const RankTemplate = ({ ticket }) => {
         setShowRule(true);
     }, []);
 
-    const toPayFn = useCallback((event) => {
-        let price = event.currentTarget.dataset.price;
+    const toPayFn = useCallback(
+        (event) => {
+            let price = event.currentTarget.dataset.price;
 
-        appGate.openToPay({ money: price });
-    }, []);
+            appGate
+                .openToPay({
+                    money: price,
+                })
+                .then((d) => {
+                    if (d === '1') {
+                        getInfo();
+                    }
+                });
+        },
+        [getInfo],
+    );
 
     const timeLineFn = useCallback(
         (event) => {

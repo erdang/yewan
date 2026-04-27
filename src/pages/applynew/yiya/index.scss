@@ -1,4 +1,3 @@
-// @use '../../../common/yiyabase';
 @use '../../../common/yiyabase' as *;
 @include borderv(var(--adm-border-color), 1px);
 body {

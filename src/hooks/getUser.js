@@ -9,7 +9,7 @@ const useGetUserInfo = (ticket) => {
                 token: ticket,
             })
             .then((e) => {
-                if (e.flag === '001') {
+                if (e.code === '200') {
                     setInfo(e.content);
                 }
             });

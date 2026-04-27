@@ -66,7 +66,7 @@
         .logo {
             width: 70px;
             height: 70px;
-            background: img-url('/buz/buz_logo.png') no-repeat;
+            background: img-url('/yeke_logo.png') no-repeat;
             background-size: 100% 100%;
             border-radius: 50%;
         }
@@ -126,8 +126,8 @@
                         .zuan-icon {
                             width: 40px;
                             height: 40px;
-                            background: img-url('/buz_wei/Z_bi.png')
-                                center center no-repeat;
+                            background: img-url('/jinbi.png') center center
+                                no-repeat;
                             background-size: 100% 100%;
                             margin-right: 16px;
                         }
@@ -164,8 +164,7 @@
             .zuan-icon {
                 width: 30px;
                 height: 30px;
-                background: img-url('/buz_wei/Z_bi.png') center center
-                    no-repeat;
+                background: img-url('/buz_wei/Z_bi.png') center center no-repeat;
                 background-size: 100% 100%;
                 margin-right: 16px;
             }
@@ -206,31 +205,31 @@
             .w-icon_wechatH5 {
                 width: 48px;
                 height: 48px;
-                background: img-url('/buz_wei/w_icon.png') center
-                    center no-repeat;
+                background: img-url('/buz_wei/w_icon.png') center center
+                    no-repeat;
                 background-size: 100% 100%;
                 margin-right: 20px;
             }
             .w-icon_wechatPub {
                 width: 48px;
                 height: 48px;
-                background: img-url('/buz_wei/w_icon.png') center
-                    center no-repeat;
+                background: img-url('/me_icon_wechat.png') center center
+                    no-repeat;
                 background-size: 100% 100%;
                 margin-right: 20px;
             }
             .w-icon_alipayWap {
                 width: 48px;
                 height: 48px;
-                background: img-url('/buz_wei/h5_c_a.png') center
-                    center no-repeat;
+                background: img-url('/buz_wei/h5_c_a.png') center center
+                    no-repeat;
                 background-size: 100% 100%;
                 margin-right: 20px;
             }
             .w-text {
                 font-size: 22px;
                 font-weight: 400;
-                color: var(--bg-color);
+                color: #222222;
             }
             width: 240px;
             height: 64px;

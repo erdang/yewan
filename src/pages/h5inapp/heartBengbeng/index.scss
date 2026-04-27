@@ -25,16 +25,46 @@ body {
     box-sizing: border-box;
     width: 750px;
     height: 1272px;
-    background: img-url('/heartBengbeng/bg.png?v=1') no-repeat;
+    background: img-url('/heartBengbeng/bg.png?v=2') no-repeat;
     background-size: 100% 100%;
     padding-top: 200px;
     position: relative;
-
+    .heart__title {
+        width: 352px;
+        height: 117px;
+        background: img-url('/heartBengbeng/bg_title.png?v=1') no-repeat;
+        background-size: 100% 100%;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 83px;
+    }
     .heart__warp-banner {
         position: absolute;
         width: 100%;
         height: 100%;
         z-index: 2;
+        .money__icon {
+            width: 150px;
+            height: 62px;
+            background: img-url('/heartBengbeng/rule_btn.png?v=1') no-repeat;
+            background-size: 100% 100%;
+            font-weight: 500;
+            font-size: 26px;
+            color: #ffffff;
+            position: absolute;
+            left: 0px;
+            bottom: 320px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            span:nth-of-type(1) {
+                width: 40px;
+                height: 40px;
+                background: img-url('/heartBengbeng/bi.png?v=1') no-repeat;
+                background-size: 100% 100%;
+            }
+        }
         .rule__icon {
             width: 150px;
             height: 62px;
@@ -64,6 +94,304 @@ body {
             display: flex;
             justify-content: center;
             align-items: center;
+            span:nth-of-type(1) {
+                width: 54px;
+                height: 62px;
+                background: img-url('/heartBengbeng/r_icon.png?v=1') no-repeat;
+                background-size: 100% 100%;
+            }
+        }
+        .ra_tips {
+            font-weight: 600;
+            font-size: 24px;
+            color: #ffffff;
+            text-align: center;
+            height: 60px;
+            line-height: 60px;
+        }
+        .users-warp {
+            width: 670px;
+            height: 121px;
+            background: img-url('/heartBengbeng/list_bg.png?v=1') no-repeat;
+            background-size: 100% 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 17px auto 30px auto;
+            .users-warp-left {
+                width: 46px;
+                height: 121px;
+                background: linear-gradient(180deg, #ff9bed 0%, #a34bff 100%);
+                box-shadow: inset 0px 0px 20px 0px rgba(255, 255, 255, 0.5);
+                border-radius: 30px 0px 0px 30px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                font-weight: 500;
+                font-size: 24px;
+                color: #ffffff;
+            }
+            .users-warp-right {
+                width: 610px;
+                overflow-x: auto;
+                ul {
+                    display: flex;
+                    justify-content: left;
+                    align-items: center;
+                    white-space: nowrap; /* 确保内联元素在一行显示 */
+                    overflow-x: auto; /* 允许水平滚动 */
+                    width: 100%; /* 容器宽度，根据需要设置 */
+                    li {
+                        margin-right: 14px;
+                        flex: 0 0 auto;
+                        .users_right-spic {
+                            width: 94px;
+                            height: 94px;
+                            border: 3px solid transparent;
+                            border-radius: 50%;
+                            img {
+                                width: 94px;
+                                height: 94px;
+                            }
+                            // border-image: linear-gradient(
+                            //     125deg,
+                            //     rgba(255, 119, 255, 1),
+                            //     rgba(255, 35, 242, 1)
+                            // );
+                        }
+                        .right-spic-icon {
+                            width: 54px;
+                            height: 24px;
+                            background: img-url('/heartBengbeng/seat_1.png?v=1')
+                                no-repeat;
+                            background-size: 100% 100%;
+                            font-weight: 600;
+                            font-size: 16px;
+                            color: #ffffff;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            margin: -20px auto 0 auto;
+                        }
+                        &.active {
+                            .users_right-spic {
+                                border: 3px solid rgba(255, 35, 242, 1);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .heart__main {
+            width: 750px;
+            height: 852px;
+            background: img-url('/heartBengbeng/lun.png?v=1') no-repeat;
+            background-size: 100% 100%;
+            .g_text {
+                font-weight: 500;
+                font-size: 26px;
+                color: #bd2e72;
+                width: 120px;
+                height: 40px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                top: 636px;
+                z-index: 2;
+            }
+            .gift_user {
+                display: flex;
+                align-items: center;
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                top: 536px;
+                width: 178px;
+                z-index: 2;
+                .g_user-1 {
+                    img {
+                        width: 86px;
+                        height: 86px;
+                        border: 2px solid gba(241, 125, 167, 1);
+                        border-radius: 50%;
+                        box-sizing: border-box;
+                    }
+                    margin-right: 6px;
+                }
+                .g_user-2 {
+                    img {
+                        width: 86px;
+                        height: 86px;
+                        border: 2px solid gba(241, 125, 167, 1);
+                        border-radius: 50%;
+                        box-sizing: border-box;
+                    }
+                }
+                .heart_icon {
+                    width: 40px;
+                    height: 34px;
+                    background: img-url('/heartBengbeng/heart_icon.png?v=1')
+                        no-repeat;
+                    background-size: 100% 100%;
+                    position: absolute;
+                    left: 50%;
+                    transform: translateX(-50%) translateY(-50%);
+                    top: 50%;
+                }
+            }
+            .gift_ul {
+                ul {
+                    li:nth-of-type(1) {
+                        position: absolute;
+                        width: 168px;
+                        height: 184px;
+                        left: 36px;
+                        top: 380px;
+                        .gift__warp {
+                            width: 168px;
+                            height: 184px;
+                            background: img-url('/heartBengbeng/g_icon.png?v=1')
+                                no-repeat;
+                            background-size: 100% 100%;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            img {
+                                width: 140px;
+                                height: 140px;
+                            }
+                        }
+                        .gift_name {
+                            width: 170px;
+                            height: 51px;
+                            background: img-url('/heartBengbeng/g_name.png?v=1')
+                                no-repeat;
+                            background-size: 100% 100%;
+                            font-weight: 500;
+                            font-size: 24px;
+                            color: #bd2e72;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            position: absolute;
+                            left: 50%;
+                            transform: translateX(-50%);
+                            bottom: 0;
+                        }
+                        .gift_label {
+                            position: absolute;
+                            left: -10px;
+                            top: 0;
+                            width: 78px;
+                            height: 40px;
+                            background: img-url('/heartBengbeng/1.png?v=1')
+                                no-repeat;
+                            background-size: 100% 100%;
+                            font-weight: 500;
+                            font-size: 24px;
+                            color: #fff;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                        }
+                        .gift_money {
+                            width: 113px;
+                            height: 39px;
+                            background: img-url('/heartBengbeng/c_bg.png?v=1')
+                                no-repeat;
+                            background-size: 100% 100%;
+                            font-weight: 500;
+                            font-size: 24px;
+                            color: #fff;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            margin: auto;
+                            span:nth-of-type(1) {
+                                width: 30px;
+                                height: 30px;
+                                background: img-url('/heartBengbeng/bi.png?v=1')
+                                    no-repeat;
+                                background-size: 100% 100%;
+                            }
+                        }
+                    }
+                }
+            }
+            .btns_warp {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                bottom: 220px;
+                display: flex;
+                justify-content: center;
+                align-self: center;
+                .btns_1 {
+                    width: 238px;
+                    height: 102px;
+                    background: img-url('/heartBengbeng/btn_1.png?v=1')
+                        no-repeat;
+                    background-size: 100% 100%;
+                    margin-right: 10px;
+                    box-sizing: border-box;
+                    padding-top: 6px;
+                    div:nth-of-type(1) {
+                        font-family: YouSheBiaoTiYuan;
+                        font-size: 30px;
+                        color: #ffffff;
+                        line-height: 49px;
+                        text-shadow: 0px 4px 0px #bb3b7d;
+                        // -webkit-text-stroke: 1px #fab6ff;
+                        text-align: center;
+                        font-style: normal;
+                        font-weight: 700;
+                    }
+                    div:nth-of-type(2) {
+                        font-weight: 400;
+                        font-size: 20px;
+                        color: rgba(255, 255, 255, 0.7);
+                        text-align: center;
+                        margin-top: -10px;
+                    }
+                }
+                .btns_2 {
+                    width: 238px;
+                    height: 102px;
+                    background: img-url('/heartBengbeng/btn_2.png?v=1')
+                        no-repeat;
+                    background-size: 100% 100%;
+                    box-sizing: border-box;
+                    padding-top: 6px;
+                    div:nth-of-type(1) {
+                        font-family: YouSheBiaoTiYuan;
+                        font-size: 30px;
+                        color: #ffffff;
+                        line-height: 49px;
+                        text-shadow: 0px 4px 0px #bb3b7d;
+                        // -webkit-text-stroke: 1px #fab6ff;
+                        text-align: center;
+                        font-style: normal;
+                        font-weight: 700;
+                    }
+                    div:nth-of-type(2) {
+                        font-weight: 400;
+                        font-size: 20px;
+                        color: rgba(255, 255, 255, 0.7);
+                        text-align: center;
+                        margin-top: -10px;
+                    }
+                }
+                .btns_1:active {
+                    opacity: 0.7;
+                }
+                .btns_2:active {
+                    opacity: 0.7;
+                }
+            }
         }
     }
     .heart__rank-warp {
@@ -71,14 +399,22 @@ body {
         z-index: 2;
         width: 100%;
         height: 100%;
+        .rank__nav {
+            box-sizing: border-box;
+            padding: 0 30px;
+            margin-top: -30px;
+            .rank__rank-icon {
+                width: 80px;
+                height: 80px;
+                background: img-url('/heartBengbeng/back.png?v=1') top center
+                    no-repeat;
+                background-size: 40px 40px;
+            }
+        }
     }
     .tem-tab-warp {
-        width: 690px;
-        background: linear-gradient(
-            180deg,
-            rgba(255, 251, 196, 1),
-            rgba(252, 178, 232, 1)
-        );
+        width: 750px;
+
         display: flex;
         justify-content: center;
         align-items: center;
@@ -86,31 +422,30 @@ body {
 
         position: relative;
         box-sizing: border-box;
-        padding: 10px;
     }
     .tem-tab {
-        background: #7053ff;
-        border-radius: 13px;
+        // background: #7053ff;
+        // border-radius: 13px;
         box-sizing: border-box;
-        padding: 30px;
+        // padding: 30px;
 
         .adm-tabs-header {
             border-bottom: none;
 
             margin: auto;
-            width: 560px;
-            height: 80px;
-            background: #ffffff;
-            border-radius: 40px;
-            background: rgba(255, 255, 255, 0.1);
+            width: 481px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 34px;
+            border: 2px solid rgba(255, 255, 255, 0.24);
         }
         .adm-tabs-tab-wrapper-stretch {
-            width: 190px;
-            height: 80px;
+            width: 160px;
+            height: 60px;
             padding: 0;
             .adm-tabs-tab {
-                width: 186px;
-                height: 80px;
+                width: 156px;
+                height: 60px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -131,465 +466,181 @@ body {
                     PingFang SC;
                 font-weight: 600;
                 color: #fff;
-                width: 186px;
-                height: 80px;
+                width: 156px;
+                height: 60px;
 
-                background: img-url('/weekStar/tab.png?v=1') no-repeat;
+                background: img-url('/heartBengbeng/tab.png?v=1') no-repeat;
                 background-size: 100% 100%;
             }
         }
     }
-    .heart__rank {
-        .rank__prev {
-            width: 600px;
-            height: 170px;
-
-            background: img-url('/weekStar/banner_2.png?v=1') no-repeat;
-            background-size: 100% 100%;
-            margin: 40px 0;
-            display: flex;
-            justify-content: left;
-            align-items: center;
+    .rank_two-warp {
+        ul {
+            position: relative;
             box-sizing: border-box;
-            padding: 30px;
-            .prev__info {
-                margin-left: 36px;
-                .prev__alias {
-                    font-size: 28px;
-                    font-family:
-                        PingFangSC-Semibold,
-                        PingFang SC;
-                    font-weight: 600;
-                    color: #ffe34c;
-                    width: 360px;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
+            li {
+                width: 716px;
+                height: 497px;
+
+                background: img-url('/heartBengbeng/rank_tab2_bg.png?v=1')
+                    center center no-repeat;
+                background-size: 750px 497px;
+                box-sizing: border-box;
+                padding-top: 128px;
+                .rank_one-alias {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    div {
+                        width: 135px;
+                        height: 40px;
+                        background: img-url('/heartBengbeng/g_name.png?v=1')
+                            no-repeat;
+                        background-size: 100% 100%;
+                        font-weight: 500;
+                        font-size: 20px;
+                        color: #bd2e72;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
                 }
-                .prev__tips {
-                    font-size: 22px;
-                    font-family:
-                        PingFangSC-Regular,
-                        PingFang SC;
-                    font-weight: 400;
-                    color: rgba(255, 255, 255, 0.5);
-                    margin-top: 20px;
+
+                .rank_one-text {
+                    width: 440px;
+                }
+                .rank_one-info {
+                    display: flex;
+                    align-items: center;
+                    width: 234px;
+                    position: relative;
+                    margin: auto;
+                    .one_info-1 {
+                        img {
+                            width: 114px;
+                            height: 114px;
+                            border: 3px solid #fff8d8;
+                            border-radius: 50%;
+                            box-sizing: border-box;
+                        }
+                        margin-right: 6px;
+                    }
+                    .one_info-2 {
+                        img {
+                            width: 114px;
+                            height: 114px;
+                            border: 3px solid #fff8d8;
+                            border-radius: 50%;
+                            box-sizing: border-box;
+                        }
+                    }
+                    .one_info-heart {
+                        width: 40px;
+                        height: 34px;
+                        background: img-url('/heartBengbeng/heart_icon.png?v=1')
+                            no-repeat;
+                        background-size: 100% 100%;
+                        position: absolute;
+                        left: 50%;
+                        transform: translateX(-50%) translateY(-50%);
+                        top: 50%;
+                    }
                 }
             }
-            .prev__pic-warp {
-                width: 160px;
-                height: 160px;
-                position: relative;
-                .prev__pic {
-                    width: 160px;
-                    height: 160px;
 
-                    background: img-url('/weekStar/fj_img_bd_1.png?v=1')
-                        no-repeat;
-                    background-size: 100% 100%;
+            .li__nodata {
+                font-size: 24px;
 
-                    position: absolute;
-                    z-index: 3;
-                    left: 0px;
-                    top: 0px;
-                }
-
-                img {
-                    width: 116px;
-                    height: 116px;
-                    position: absolute;
-                    z-index: 2;
-                    left: 20px;
-                    top: 20px;
-                    border-radius: 50%;
-                }
+                font-weight: bold;
+                color: #955274;
+                text-align: center;
+                padding-top: 360px;
             }
         }
-        width: 610px;
+    }
+    .rank_one-warp {
+        ul {
+            position: relative;
+            box-sizing: border-box;
+            li {
+                width: 716px;
+                height: 160px;
 
+                background: img-url('/heartBengbeng/rank_tab1_bg.png?v=1')
+                    no-repeat;
+                background-size: 100% 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-bottom: 20px;
+                .rank_one-text {
+                    width: 440px;
+                }
+                .rank_one-info {
+                    display: flex;
+                    align-items: center;
+                    width: 206px;
+                    position: relative;
+                    margin: auto;
+                    .one_info-1 {
+                        img {
+                            width: 100px;
+                            height: 100px;
+                            border: 3px solid #fff8d8;
+                            border-radius: 50%;
+                            box-sizing: border-box;
+                        }
+                        margin-right: 6px;
+                    }
+                    .one_info-2 {
+                        img {
+                            width: 100px;
+                            height: 100px;
+                            border: 3px solid #fff8d8;
+                            border-radius: 50%;
+                            box-sizing: border-box;
+                        }
+                    }
+                    .one_info-heart {
+                        width: 40px;
+                        height: 34px;
+                        background: img-url('/heartBengbeng/heart_icon.png?v=1')
+                            no-repeat;
+                        background-size: 100% 100%;
+                        position: absolute;
+                        left: 50%;
+                        transform: translateX(-50%) translateY(-50%);
+                        top: 50%;
+                    }
+                }
+            }
+
+            .li__nodata {
+                font-size: 24px;
+
+                font-weight: bold;
+                color: #955274;
+                text-align: center;
+                padding-top: 360px;
+            }
+        }
+    }
+    .heart__rank {
+        width: 716px;
+        margin-top: 30px;
         .rank__tab {
-            width: 610px;
+            width: 716px;
 
             margin: auto;
 
             position: relative;
             box-sizing: border-box;
 
-            min-height: 500px;
+            height: 900px;
+            overflow-y: auto;
             .rank__tab-content {
                 margin: auto;
-                ul {
-                    position: relative;
-                    box-sizing: border-box;
-                    padding-top: 360px;
-                    .li__nodata {
-                        font-size: 24px;
-
-                        font-weight: bold;
-                        color: #e7e7e7;
-                        text-align: center;
-                        padding-top: 160px;
-                    }
-                    li {
-                        height: 80px;
-
-                        .rank__li-pic {
-                            width: 80px;
-                            height: 80px;
-                            img {
-                                width: 100%;
-                                height: 100%;
-                                border-radius: 50%;
-                            }
-                        }
-                    }
-                    li:nth-of-type(3) ~ li {
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        margin-bottom: 20px;
-                        .rank__li-index {
-                            width: 76px;
-                            text-align: left;
-                            font-size: 28px;
-
-                            font-weight: bold;
-                            color: #e7e7e7;
-                        }
-                        .rank__li-info {
-                            display: flex;
-
-                            align-items: center;
-                            width: 370px;
-                            .rank__li-pic {
-                                margin-right: 20px;
-                            }
-                            .rank__li-user {
-                                .rank__li-alias {
-                                    font-weight: 400;
-                                    color: #fff;
-                                    font-size: 24px;
-                                    width: 240px;
-                                    overflow: hidden;
-                                    text-overflow: ellipsis;
-                                    white-space: nowrap;
-                                }
-                                .rank__li-num {
-                                    font-size: 24px;
-
-                                    font-weight: 400;
-                                    color: #979797;
-                                }
-                            }
-                        }
-                        .rank__li-prev {
-                            width: 246px;
-                            text-align: center;
-                            font-size: 24px;
-
-                            font-weight: 400;
-                            color: #d9d9d9;
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            p:nth-of-type(2) {
-                                width: 100px;
-                                text-align: left;
-                            }
-                        }
-                    }
-
-                    li:nth-of-type(1) {
-                        position: absolute;
-                        left: 208px;
-                        top: -20px;
-                        width: 190px;
-                        height: 288px;
-                        .rank__li-pic {
-                            width: 190px;
-                            height: 288px;
-                            background: img-url('/weekStar/1.png?v=1') no-repeat;
-                            background-size: 100% 100%;
-                            position: relative;
-                            padding: 180px 10px 0 10px;
-                            box-sizing: border-box;
-                            .li-pic {
-                                width: 122px;
-                                height: 122px;
-                                position: absolute;
-                                left: 34px;
-                                top: 39px;
-                                z-index: 2;
-                                img {
-                                    width: 100%;
-                                    height: 100%;
-                                    border-radius: 50%;
-                                }
-                            }
-                        }
-                        .rank__li-icon {
-                            width: 58px;
-                            height: 58px;
-                            background: img-url('/star/one_icon_1.png?v=1')
-                                no-repeat;
-                            background-size: 100% 100%;
-                            position: absolute;
-                            left: -20px;
-                            top: -20px;
-                        }
-                        .rank__li-alias {
-                            .li-alias-div {
-                                width: 180px;
-                                box-sizing: border-box;
-
-                                overflow: hidden;
-                                text-overflow: ellipsis;
-                                white-space: nowrap;
-                                font-size: 24px;
-                                font-family:
-                                    PingFangSC-Semibold,
-                                    PingFang SC;
-                                font-weight: 600;
-                                color: #ffffff;
-
-                                text-align: center;
-                            }
-                            .li-info-div {
-                                font-size: 18px;
-                                font-family:
-                                    PingFangSC-Regular,
-                                    PingFang SC;
-                                font-weight: 400;
-                                color: #ffffff;
-                                text-align: center;
-                            }
-                        }
-                        .rank__li-num {
-                            font-weight: 400;
-                            color: #d9d9d9;
-                            font-size: 22px;
-                            text-align: center;
-                            margin-top: 10px;
-                        }
-                    }
-                    li:nth-of-type(2) {
-                        position: absolute;
-                        left: 0px;
-                        top: 40px;
-                        width: 190px;
-                        height: 287px;
-                        .rank__li-pic {
-                            width: 190px;
-                            height: 287px;
-                            background: img-url('/weekStar/2.png?v=1') no-repeat;
-                            background-size: 100% 100%;
-                            position: relative;
-                            padding: 180px 10px 0 10px;
-                            box-sizing: border-box;
-                            .li-pic {
-                                width: 122px;
-                                height: 122px;
-                                position: absolute;
-                                left: 35px;
-                                top: 40px;
-                                z-index: 2;
-                                img {
-                                    width: 100%;
-                                    height: 100%;
-                                    border-radius: 50%;
-                                }
-                            }
-                        }
-                        .rank__li-icon {
-                            width: 58px;
-                            height: 58px;
-                            background: img-url('/star/one_icon_1.png?v=1')
-                                no-repeat;
-                            background-size: 100% 100%;
-                            position: absolute;
-                            left: -20px;
-                            top: -20px;
-                        }
-                        .rank__li-alias {
-                            .li-alias-div {
-                                width: 126px;
-                                box-sizing: border-box;
-
-                                overflow: hidden;
-                                text-overflow: ellipsis;
-                                white-space: nowrap;
-                                font-size: 24px;
-                                font-family:
-                                    PingFangSC-Semibold,
-                                    PingFang SC;
-                                font-weight: 600;
-                                color: #ffffff;
-                                margin: auto;
-                                text-align: center;
-                            }
-                            .li-info-div {
-                                width: 126px;
-                                font-size: 18px;
-                                font-family:
-                                    PingFangSC-Regular,
-                                    PingFang SC;
-                                font-weight: 400;
-                                color: #ffffff;
-                                text-align: center;
-                                margin: auto;
-                            }
-                        }
-                        .rank__li-num {
-                            font-weight: 400;
-                            color: #d9d9d9;
-                            font-size: 22px;
-                            text-align: center;
-                            margin-top: 10px;
-                        }
-                    }
-                    li:nth-of-type(3) {
-                        position: absolute;
-                        right: 0px;
-                        top: 40px;
-                        width: 190px;
-                        height: 286px;
-                        .rank__li-pic {
-                            width: 190px;
-                            height: 286px;
-                            background: img-url('/weekStar/3.png?v=1') no-repeat;
-                            background-size: 100% 100%;
-                            position: relative;
-                            padding: 180px 10px 0 10px;
-                            box-sizing: border-box;
-                            .li-pic {
-                                width: 122px;
-                                height: 122px;
-                                position: absolute;
-                                left: 34px;
-                                top: 40px;
-                                z-index: 2;
-                                img {
-                                    width: 100%;
-                                    height: 100%;
-                                    border-radius: 50%;
-                                }
-                            }
-                        }
-                        .rank__li-icon {
-                            width: 58px;
-                            height: 58px;
-                            background: img-url('/star/one_icon_1.png?v=1')
-                                no-repeat;
-                            background-size: 100% 100%;
-                            position: absolute;
-                            left: -20px;
-                            top: -20px;
-                        }
-                        .rank__li-alias {
-                            .li-alias-div {
-                                width: 126px;
-                                margin: auto;
-                                box-sizing: border-box;
-
-                                overflow: hidden;
-                                text-overflow: ellipsis;
-                                white-space: nowrap;
-                                font-size: 24px;
-                                font-family:
-                                    PingFangSC-Semibold,
-                                    PingFang SC;
-                                font-weight: 600;
-                                color: #ffffff;
-
-                                text-align: center;
-                            }
-                            .li-info-div {
-                                width: 126px;
-                                margin: auto;
-                                font-size: 18px;
-                                font-family:
-                                    PingFangSC-Regular,
-                                    PingFang SC;
-                                font-weight: 400;
-                                color: #ffffff;
-                                text-align: center;
-                            }
-                        }
-                        .rank__li-num {
-                            font-weight: 400;
-                            color: #d9d9d9;
-                            font-size: 22px;
-                            text-align: center;
-                            margin-top: 10px;
-                        }
-                    }
-                }
             }
-        }
-    }
-    .heart__my {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        position: fixed;
-        z-index: 5;
-        left: 0;
-        bottom: 0;
-        width: 750px;
-        height: 133px;
-        background: linear-gradient(180deg, #7c77ff 0%, #472193 100%);
-        border-radius: 24px 24px 0px 0px;
-
-        .rank__li-pic {
-            width: 90px;
-            height: 90px;
-            img {
-                width: 100%;
-                height: 100%;
-                border-radius: 50%;
-            }
-        }
-        .rank__li-index {
-            width: 86px;
-            text-align: center;
-            font-size: 28px;
-
-            font-weight: bold;
-            color: #e7e7e7;
-        }
-        .rank__li-info {
-            display: flex;
-
-            align-items: center;
-            width: 400px;
-            .rank__li-pic {
-                margin-right: 20px;
-            }
-            .rank__li-user {
-                .rank__li-alias {
-                    font-weight: 400;
-                    color: #fff;
-                    font-size: 28px;
-                    max-width: 240px;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                }
-                .rank__li-num {
-                    font-size: 24px;
-
-                    font-weight: 400;
-                    color: #fff;
-                }
-            }
-        }
-        .rank__li-prev {
-            width: 246px;
-            text-align: center;
-            font-size: 24px;
-            color: #fff;
-            font-weight: 400;
         }
     }
 }
@@ -597,124 +648,165 @@ body {
 .weekstar-alert {
     .center-content {
         .close-btn {
+            display: none;
             svg {
                 fill: #fff;
             }
         }
-        width: 680px;
-        height: 700px;
-        background: #7053ff;
-        border-radius: 37px;
+
         overflow-y: auto;
-        border: 8px solid #fff8c5;
-        .redd {
-            color: #ffca7a;
+        width: 538px;
+        height: 541px;
+        background: img-url('/heartBengbeng/rule_a_bg.png?v=1') no-repeat;
+        background-size: 100% 100%;
+        box-sizing: border-box;
+        // padding-top: 30px;
+        .title-icon {
+            width: 239px;
+            height: 55px;
+            background: img-url('/heartBengbeng/rule_t.png?v=1') no-repeat;
+            background-size: 100% 100%;
+            margin: 30px auto;
         }
         .rule__h1 {
+            color: #d578a5;
+            font-weight: 700;
             font-size: 26px;
-            font-weight: bold;
-            color: #ffffff;
-            position: relative;
-            margin-bottom: 20px;
-            margin-top: 20px;
         }
-        p {
-            font-size: 24px;
-            line-height: 46px;
-            font-weight: 400;
-            color: #ffffff;
-        }
-        .rule__warp-tab {
-            width: 606px;
-            background: linear-gradient(120deg, #dba5ee, #b9d8f6, #d8aaef);
-            border-radius: 30px;
+        .rule_a_btn {
+            width: 397px;
+            height: 88px;
+            background: img-url('/heartBengbeng/rule_a_btn.png?v=1') no-repeat;
+            background-size: 100% 100%;
+            margin: 30px auto;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 70px auto;
-            height: 296px;
-            .warp__tab {
-                width: 602px;
-                height: 292px;
-                background: #330f72;
-                margin: auto;
-                border-radius: 30px;
-                position: relative;
-                box-sizing: border-box;
-                padding: 30px;
-                .warp__tab-title {
-                    width: 250px;
-                    height: 80px;
-                    background:
-                        img-url('/star/rule_icon2.png?v=1?v=3') no-repeat,
-                        #330f72;
-                    background-size: 100% 100%;
-                    position: absolute;
-                    left: 50%;
-                    top: -39px;
-                    transform: translateX(-50%);
-                }
-                .warp__gift {
-                    margin: 30px auto 0 auto;
-                    ul {
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        li {
-                            height: 200px;
-                            width: 140px;
-                            background: img-url('/star/g_bg.png?v=1') no-repeat;
-
-                            background-size: 100% 100%;
-                            position: relative;
-                            .li__gift {
-                                width: 80px;
-                                height: 80px;
-                                position: absolute;
-                                left: 50%;
-                                transform: translateX(-50%);
-                                top: 40px;
-                                img {
-                                    width: 100%;
-                                    height: 100%;
-                                }
-                            }
-                            .li__select {
-                                font-size: 16px;
-                                font-weight: 400;
-                                color: #000;
-                                width: 120px;
-                                height: 37px;
-                                background: #f7e158;
-                                border-radius: 20px;
-                                border: 1px solid #f7e158;
-                                display: flex;
-                                justify-content: center;
-                                align-items: center;
-                                position: absolute;
-                                left: 50%;
-                                transform: translateX(-50%);
-                                bottom: 30px;
-                            }
-                            .li__name {
-                                font-size: 14px;
-                                position: absolute;
-                                left: 50%;
-                                transform: translateX(-50%);
-                                bottom: -10px;
-                                font-weight: 400;
-                                color: #fff;
-                                width: 200px;
-                                text-align: center;
-                            }
-                        }
-                    }
-                }
-            }
+            color: #fff;
+            font-weight: 700;
+            font-size: 26px;
         }
     }
 }
 
+.result-alert {
+    .center-content {
+        .close-btn {
+            display: none;
+            svg {
+                fill: #fff;
+            }
+        }
+
+        overflow-y: auto;
+        width: 573px;
+        height: 658px;
+        background: img-url('/heartBengbeng/r_bg.png?v=1') no-repeat;
+        background-size: 100% 100%;
+        box-sizing: border-box;
+        padding-top: 93px;
+        .r_btns {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .rule_a_btn {
+                width: 212px;
+                height: 98px;
+                background: img-url('/heartBengbeng/r_btn_2.png?v=1') no-repeat;
+                background-size: 100% 100%;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: #fff;
+                font-weight: 700;
+                font-size: 26px;
+                margin-right: 20px;
+            }
+            .rule_b_btn {
+                width: 212px;
+                height: 98px;
+                background: img-url('/heartBengbeng/r_btn-1.png?v=1') no-repeat;
+                background-size: 100% 100%;
+                display: flex;
+                flex-wrap: wrap;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                .rule_b_btn-div2 {
+                    font-weight: 600;
+                    font-size: 28px;
+                    color: #ffffff;
+                    text-align: center;
+                }
+                .rule_b_btn-div1 {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-weight: 500;
+                    font-size: 24px;
+                    color: #ffffff;
+                    span:nth-of-type(1) {
+                        width: 30px;
+                        height: 30px;
+                        background: img-url('/heartBengbeng/bi.png?v=1')
+                            no-repeat;
+                        background-size: 100% 100%;
+                        margin-right: 6px;
+                    }
+                }
+            }
+        }
+
+        .result_user {
+            display: flex;
+            align-items: center;
+            width: 234px;
+            position: relative;
+            margin: auto;
+            .result_user_user-1 {
+                img {
+                    width: 114px;
+                    height: 114px;
+                    border: 2px solid gba(241, 125, 167, 1);
+                    border-radius: 50%;
+                    box-sizing: border-box;
+                }
+                margin-right: 6px;
+            }
+            .result_user_user-2 {
+                img {
+                    width: 114px;
+                    height: 114px;
+                    border: 2px solid gba(241, 125, 167, 1);
+                    border-radius: 50%;
+                    box-sizing: border-box;
+                }
+            }
+            .r_heart_icon {
+                width: 40px;
+                height: 34px;
+                background: img-url('/heartBengbeng/heart_icon.png?v=1')
+                    no-repeat;
+                background-size: 100% 100%;
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%) translateY(-50%);
+                top: 50%;
+            }
+        }
+        .r_text1 {
+            font-size: 28px;
+            color: #bd2e72;
+            font-weight: 700;
+        }
+        .r_text2 {
+            font-weight: 400;
+            font-size: 24px;
+            color: #802b53;
+        }
+    }
+}
 .paste {
     position: relative;
     display: flex;

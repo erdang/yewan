@@ -75,13 +75,18 @@ const openPayPage = ({ amount = 0, title = '' }) => {
     });
 };
 const openToPay = ({ money = 0 }) => {
-    let callback = (data) => {};
-    callMethod({
-        method: 'appPay',
-        params: {
-            money: money,
-        },
-        callback: callback,
+    return new Promise((reslove, reject) => {
+        // VDcCK1E0U2sCYgw6UTcDNgxtW20LZVI(AmAIPFVrUzYNJlMrVjMHdVE1WmQPaQBjDWhTYwoyAWYAMQ5iBzBdMlQ6AjJRMFNtAmIMMFE1AzIMZ1trC2RSZAJsCDFVZVNvDTxTNFY0BzlRNVowDzwAOQ0(UzMKYwFn
+        let callback = (data) => {
+            reslove(data);
+        };
+        callMethod({
+            method: 'appPay',
+            params: {
+                money: money,
+            },
+            callback: callback,
+        });
     });
 };
 // sd 支付方式  商家充值支付渠道：1、支付宝 + 微信 2、银联的支付宝+微信 3、H5支付(微信H5 + 支付宝H5)

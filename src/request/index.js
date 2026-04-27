@@ -85,6 +85,7 @@ const T_FLAG = [
 
 const makeError = (error) => {
     // captureException(error);
+    console.log(error);
 
     const { response } = error;
     let errMsg = '';

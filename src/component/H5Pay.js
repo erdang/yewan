@@ -63,7 +63,7 @@ const UserInfo = ({ userInfo, ticket, info }) => {
             <section className="amount">
                 <section className="label">当前余额：</section>
                 <section>
-                    {info.coin}
+                    {userInfo.coin}
                     {moneyUnit}
                 </section>
             </section>
@@ -80,7 +80,7 @@ const PayWayContent = ({ WAY, ticket }) => {
     let [current, setCurrent] = useState(0);
     const createOrderFn = useCallback(
         ({ gatetype, token, orderid, money, ovalue, mid, src, encpass }) => {
-            return instance.post('/api/pay/createOrder', {
+            return instance.post('/api/v1/pay/createOrder', {
                 gatetype: gatetype,
                 mid: mid,
                 token: token,
@@ -102,7 +102,7 @@ const PayWayContent = ({ WAY, ticket }) => {
     const chargeFn = useCallback(() => {
         //1533360191
         createOrderFn({
-            gatetype: WAY[current].gatetype,
+            gatetype: WAY[current].type,
             token: param.token,
             orderid: param.oid,
             ovalue: param.ovalue,
@@ -120,13 +120,13 @@ const PayWayContent = ({ WAY, ticket }) => {
                     '&src=' +
                     searchParam.src;
 
-                if (WAY[current].gatetype === 'wechatH5') {
+                if (WAY[current].type === 'wechatH5') {
                     window.location.assign(
                         d.content.data.h5Url +
                             '&redirect_url=' +
                             encodeURIComponent(purl),
                     );
-                } else if (WAY[current].gatetype === 'alipayWap') {
+                } else if (WAY[current].type === 'alipayWap') {
                     var alipayFormContainer = document.createElement('div');
                     var oldOne = document.getElementById('alipay-form');
 
@@ -141,7 +141,7 @@ const PayWayContent = ({ WAY, ticket }) => {
                         var form = document.getElementById('alipaysubmit');
                         form && form.submit();
                     }, 100);
-                } else if (WAY[current].gatetype === 'unionPayH5') {
+                } else if (WAY[current].type === 'unionPayH5') {
                     window.location.assign(d.content.data.payUrl);
                 }
             }
@@ -174,13 +174,17 @@ const PayWayContent = ({ WAY, ticket }) => {
                                     'way ' + (current === index ? 'active' : '')
                                 }
                                 key={index}
-                                data-gatetype={item.gatetype}
+                                data-type={item.type}
                                 data-index={index}
                                 onClick={getPayTypeFn}
                             >
                                 <div
-                                    className={'w-icon_' + item.gatetype}
-                                ></div>
+                                    className={
+                                        'w-icon ' + ('w-icon_' + item.type)
+                                    }
+                                >
+                                    <img src={item.url} alt="" />
+                                </div>
                                 <div className="w-text"> {item.name}</div>
                             </div>
                         );
@@ -201,6 +205,7 @@ const Manager = ({ ticket, userInfo, WAY, step2Url }) => {
         return Number(searchParam.setp) || 1;
     }); //1 选择充值金额 2 支付方式 下单
     const [info, setInfo] = useState('');
+    const [payArr, setPayArr] = useState([]);
     const [money, setMoney] = useState(() => {
         return searchParam.m || '';
     });
@@ -218,6 +223,31 @@ const Manager = ({ ticket, userInfo, WAY, step2Url }) => {
             })
             .then((d) => {
                 setInfo(d.content);
+            });
+    }, [ticket]);
+    //h5传2  show_type传3 公众号
+    const getPayMethod = useCallback(() => {
+        return instance
+            .get('/api/v1/pay/getType', {
+                params: {
+                    show_type: '2',
+                    token: ticket,
+                },
+            })
+            .then((d) => {
+                d.content = [
+                    {
+                        type: 'webWeChatPay',
+                        show_type: '2',
+                        open_type: '4',
+                        use_type: '2',
+                        name: '微信',
+                        url: 'https://s3.njxianyuwl.cn/dev/2026-04-27/8-103/1777248606231536097.png',
+                    },
+                ];
+                if (d.code === '200') {
+                    setPayArr(d.content);
+                }
             });
     }, [ticket]);
 
@@ -245,13 +275,10 @@ const Manager = ({ ticket, userInfo, WAY, step2Url }) => {
             Toast.show('请选择金额或输入金额');
             return;
         }
-        let pmoney =
-            currentIndex === '' ? money : info.azPayMoneyList[currentIndex].rmb;
+        let pmoney = currentIndex === '' ? money : info[currentIndex].money;
 
         let povalue =
-            currentIndex === ''
-                ? money * 10
-                : info.azPayMoneyList[currentIndex].coin;
+            currentIndex === '' ? money * 10 : info[currentIndex].coin;
 
         // localStorage.setItem('orderId', infoToken.content.oid);
         let url = buildURL('/' + step2Url + '/from', [
@@ -329,13 +356,20 @@ const Manager = ({ ticket, userInfo, WAY, step2Url }) => {
                 </div>
             </div>
         ),
-        2: <PayWayContent WAY={WAY} ticket={ticket}></PayWayContent>,
+        2: (
+            <PayWayContent
+                WAY={payArr}
+                ticket={ticket}
+                // payArr={payArr}
+            ></PayWayContent>
+        ),
     };
 
     useEffect(() => {
         setTitle('充值');
         getMoneyList();
-    }, [getMoneyList]);
+        getPayMethod();
+    }, [getMoneyList, getPayMethod]);
 
     useEffect(() => {
         let params = urltool.param(location.search);

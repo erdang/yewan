@@ -8,7 +8,7 @@ import urltool from 'ox-util/src/url';
 import browser from 'ox-util/src/browser';
 
 let moneyUnit = '金币';
-let appname = 'Angell';
+let appname = '椰壳';
 // const WAY = [
 //     {
 //         name: '微信支付',
@@ -25,11 +25,11 @@ const WAY_WECHAT = [
         type: '15', //公众号
         gtype: 'wechatPub', //公众号
     },
-    {
-        name: '支付宝支付',
-        gtype: 'alipayWap',
-        type: '19',
-    },
+    // {
+    //     name: '支付宝支付',
+    //     gtype: 'alipayWap',
+    //     type: '19',
+    // },
 ];
 
 const searchParam = urltool.param(window.location.search);
@@ -104,7 +104,7 @@ const Manager = ({ ticket, userInfo }) => {
             mid = '',
             cate_type,
         }) => {
-            return instance.post('/api/v1/pay/createOrder', {
+            return instance.post('/api/v1/pay/createOrderByPublic', {
                 money: money,
                 type: gatetype,
                 ovalue: ovalue,

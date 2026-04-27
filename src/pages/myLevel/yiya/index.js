@@ -110,7 +110,7 @@ const MoneyRule = () => {
             <div className="rule-content">
                 <div className="r-title">1. 如何增长财富等级？ </div>
                 <p>
-                    通过在平台内消耗金币可提升财富等级，通过财富值的累加即可解锁对应的等级权益。。
+                    通过在平台内消耗金币可提升财富等级，通过财富值的累加即可解锁对应的等级权益。
                 </p>
                 <div className="r-title"> 2. 财富等级提升规则</div>
                 <p>消耗1金币=1财富值</p>
