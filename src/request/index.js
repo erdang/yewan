@@ -30,14 +30,12 @@ const instance = axios.create({
     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
 });
 
-//http://suerdev-user.v.6.cn/
 const instanceUser = axios.create({
     baseURL: APPNAME[hostname].proBaseURL_USER,
     timeout: TIMEOUT,
     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
 });
 
-//http://suerdev-pic.v.6.cn
 const instancePic = axios.create({
     baseURL: APPNAME[hostname].proBaseURL_PIC,
     timeout: TIMEOUT_PIC,
@@ -57,6 +55,7 @@ const instanceGame = axios.create({
     baseURL: APPNAME[hostname].gameUrl,
     timeout: TIMEOUT,
     withCredentials: false,
+    'Content-Type': 'application/json;charset=UTF-8',
 });
 
 const CODE_MESSAGE = {
@@ -328,10 +327,9 @@ instanceGame.interceptors.request.use(
             let token = config.data.token ? { token: config.data.token } : {};
             config.headers = {
                 ...token,
-                'Content-Type':
-                    'application/x-www-form-urlencoded;charset=UTF-8',
+                'Content-Type': 'application/json',
             };
-            config.data = Qs.stringify(config.data);
+            // config.data = Qs.stringify(config.data);
         } else {
             let tokenv = config.params.token
                 ? { token: config.params.token }

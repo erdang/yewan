@@ -182,6 +182,11 @@ export default defineConfig(({ mode }) => {
                     changeOrigin: true,
                     // rewrite: (path) => path.replace(/^\/api\/v1/, ''),
                 },
+                '/api/activity': {
+                    target: 'https://dev-gate.njxianyuwl.cn',
+                    changeOrigin: true,
+                    // rewrite: (path) => path.replace(/^\/v2/, ''),
+                },
             },
         },
     };
