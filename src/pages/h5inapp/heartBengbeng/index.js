@@ -70,18 +70,93 @@ const Resultalert = ({
     const nextStage = stages.find((i) => i.stage === sendRelult.newStage);
     console.log(nextStage);
     let messageContent = null;
+    let btnContent = null;
     if (sendRelult.unlocked === false) {
         if (sendRelult.isFinalStage) {
             messageContent = `恭喜你们成功登顶！赠送永恒礼物，即可登上【永恒见证】头条，全服可见！`;
+            btnContent = (
+                <div className="r_btns">
+                    <div className="rule_a_btn" onClick={closeAlert}>
+                        取消
+                    </div>
+                    <div className="rule_b_btn" onClick={closeAlert}>
+                        <div className="rule_b_btn-div2" onClick={sendFn}>
+                            继续赠送
+                        </div>
+                        <div className="rule_b_btn-div1">
+                            <span></span>
+                            <span>
+                                {giftName.giftValue * sendRelult.pityRemaining}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            );
         } else if (sendRelult.firstSend) {
             messageContent = `成功登上【永恒见证】头条！珍藏此刻！`;
+            btnContent = (
+                <div className="r_btns">
+                    <div className="rule_a_btn" onClick={closeAlert}>
+                        取消
+                    </div>
+                    <div className="rule_b_btn" onClick={closeAlert}>
+                        去看看
+                    </div>
+                </div>
+            );
         } else if (currentStage + 1 < sendRelult.currentStage) {
             messageContent = null;
+            btnContent = (
+                <div className="r_btns">
+                    <div className="rule_a_btn" onClick={closeAlert}>
+                        取消
+                    </div>
+                    <div className="rule_b_btn" onClick={closeAlert}>
+                        <div className="rule_b_btn-div2" onClick={sendFn}>
+                            继续赠送
+                        </div>
+                        <div className="rule_b_btn-div1">
+                            <span></span>
+                            <span>
+                                {giftName.giftValue * sendRelult.pityRemaining}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            );
         } else {
             messageContent = `信号越来越强烈，再赠送 ${sendRelult.pityRemaining} 次，必解锁下一场景！`;
+            btnContent = (
+                <div className="r_btns">
+                    <div className="rule_a_btn" onClick={closeAlert}>
+                        取消
+                    </div>
+                    <div className="rule_b_btn" onClick={closeAlert}>
+                        <div className="rule_b_btn-div2" onClick={sendFn}>
+                            继续赠送
+                        </div>
+                        <div className="rule_b_btn-div1">
+                            <span></span>
+                            <span>
+                                {giftName.giftValue * sendRelult.pityRemaining}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            );
         }
     } else if (sendRelult.unlocked === true) {
         messageContent = `成功抵达【${nextStage.name}】触发心动头条！`;
+        btnContent = (
+            <div className="r_btns">
+                <div className="rule_a_btn" onClick={closeAlert}>
+                    取消
+                </div>
+                <div className="rule_b_btn" onClick={closeAlert}>
+                    去看看
+                </div>
+            </div>
+        );
     }
 
     return (
@@ -107,22 +182,7 @@ const Resultalert = ({
                     {messageContent}
                     {/* 恭喜你们成功登顶！赠送永恒礼物，即可登上【永恒见证】头条，全服可见！ */}
                 </div>
-                <div className="r_btns">
-                    <div className="rule_a_btn" onClick={closeAlert}>
-                        取消
-                    </div>
-                    <div className="rule_b_btn" onClick={closeAlert}>
-                        <div className="rule_b_btn-div2" onClick={sendFn}>
-                            继续赠送
-                        </div>
-                        <div className="rule_b_btn-div1">
-                            <span></span>
-                            <span>
-                                {giftName.giftValue * sendRelult.pityRemaining}
-                            </span>
-                        </div>
-                    </div>
-                </div>
+                {btnContent}
             </CenterOverlay>
         </Portal>
     );
