@@ -19,7 +19,7 @@ import { BlockLoading } from '@/component/PageLoading';
 
 let hosthome = window.location.hostname;
 let imgUrl = APPNAME[hosthome].staticUrl;
-const noImg = imgUrl + '/huodong/no_people.png';
+const noImg = imgUrl + '/no_tou.png';
 
 const searchParam = urlTool.param(window.location.search);
 const TAB = {
@@ -47,40 +47,44 @@ const RuleAlert = ({ setShow, tabKeyv, timeCurrent, status }) => {
                 <p> 1.周星榜单按照每个自然周进行结算；</p>
                 <p> 2.榜单值获取方式：</p>
                 <p> 高光榜：收到周星礼物，1金币=1高光值</p>
-                <p> 守护榜：打赏周星礼物，1金币=1守护值</p>
-                <p> 房间榜：聊天室房间内累计收到周星礼物，1金币=1人气值</p>
+                <p> 守护榜：赠送周星礼物，1金币=1守护值</p>
                 <p>
-                    3.每周结束结算上周排名，TOP1可获得榜单冠名展示，TOP前三名可获得榜单奖励
+                    房间榜：聊天时房间内累计收到周星礼物，1金币=1房间值（扩列房不计入数值）
+                </p>
+                <p>
+                    3.每周结束后结算上周排名，各榜单TOP1可获得榜单奖励，其中人气榜奖励自动下发至房主账号。
+                </p>
+                <p>
+                    4.
+                    本周周星礼物：麦克风（33金币）、告白之声（299金币）、极速闪电（1000金币）
                 </p>
                 <div className="rule__h1">奖励：</div>
                 <p className="redd"> 高光榜：</p>
-                <p>
-                    TOP1：榜单冠名7天、高光紫星头像框*7天、高光紫星气泡*7天、荣耀火焰礼物*5
-                </p>
-                <p>
-                    TOP2：高光蓝辰头像框*7天、高光蓝辰气泡*7天、荣耀火焰礼物*3
-                </p>
-                <p>
-                    TOP3：高光星菱头像框*7天、高光星菱气泡*7天、荣耀火焰礼物*1
-                </p>
+                <p>TOP1：靓号积分*2000、高光周星头像框*7天</p>
                 <p className="redd"> 守护榜：</p>
-                <p>
-                    TOP1：榜单冠名7天、守护粉冠头像框*7天、守护粉冠气泡*7天、2000靓号积分
-                </p>
-                <p> TOP2：守护粉钻头像框*7天、守护粉钻气泡*7天、1000靓号积分</p>
-                <p> TOP3：守护粉翎头像框*7天、守护粉翎气泡*7天 人气榜：</p>
+                <p>TOP1：靓号积分*2000、守护周星头像框*7天</p>
                 <p className="redd"> 房间榜：</p>
-                <p>
-                    TOP1：榜单冠名7天、房间推荐7天、1000靓号积分、荣耀火焰礼物*5
-                </p>
-                <p> TOP2：房间推荐7天、荣耀火焰礼物*3</p>
-                <p> TOP3：房间推荐7天、荣耀火焰礼物*1</p>
-
-                <p className="redd"> 奖励说明：</p>
-                <p> 荣耀火焰价值520金币，奖励自动放入背包</p>
-                <p>
-                    守护榜榜一、榜二获取靓号用户请咨询【人工客服】进行靓号更改。
-                </p>
+                <p>TOP1：靓号积分*2000、人气周星头像框*7天</p>
+                <div className="div_warp">
+                    <div className="div_one">
+                        <p className="gao_img">
+                            <img src={imgUrl + '/weekStar/gao.png'} alt="" />
+                        </p>
+                        <p className="div_one_text">高光周星头像框</p>
+                    </div>
+                    <div className="div_one">
+                        <p className="gao_img">
+                            <img src={imgUrl + '/weekStar/show.png'} alt="" />
+                        </p>
+                        <p className="div_one_text">守护周星头像框</p>
+                    </div>
+                    <div className="div_one">
+                        <p className="gao_img">
+                            <img src={imgUrl + '/weekStar/ren.png'} alt="" />
+                        </p>
+                        <p className="div_one_text">人气周星头像框</p>
+                    </div>
+                </div>
             </CenterOverlay>
         </Portal>
     );

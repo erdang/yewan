@@ -18,7 +18,7 @@ const MyLevel = ({ ticket, userInfo }) => {
     const getInfo = useCallback(() => {
         user.getUser(ticket).then((d) => {
             // d.realcoinrank = '1';
-            let real = getReal(Number(d.realcoinrank));
+            let real = getReal(Number(d.user_current_wealth_level));
             setReal(real);
             setInfo(d);
         });

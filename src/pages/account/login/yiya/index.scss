@@ -15,6 +15,25 @@
     top: 0;
     width: 100%;
     color: var(--font-color);
+    .tem-tab {
+        .adm-tabs-header {
+            margin-bottom: 20px;
+            font-size: 32px;
+            font-family:
+                PingFang SC-Semibold,
+                PingFang SC;
+            font-weight: 600;
+            color: #666666;
+            width: 750px;
+        }
+        .adm-tabs-tab-active {
+            color: #6beaf9;
+        }
+
+        .adm-tabs-tab-line {
+            background: linear-gradient(90deg, #6beaf9 0%, #61ddf9 100%);
+        }
+    }
 }
 .apply-user-info {
     font-size: 32px;

@@ -41,6 +41,7 @@ const NoticeTip = lazy(() => retry(() => import('../pages/agree/noticeTip')));
 const HeartBengbeng = lazy(() =>
     retry(() => import('../pages/h5inapp/heartBengbeng')),
 );
+const Turn = lazy(() => retry(() => import('../pages/h5inapp/turn')));
 
 //编写基本的路由路线，path为路径，component为对应渲染的组件，exact属性决定是否精准匹配
 //auth h5是否需要登录  app 每次都会去拿ticket
@@ -304,7 +305,7 @@ const M_ROUTE = [
         auth: false,
     },
     {
-        path: '/downloadHuanPai',
+        path: '/downloadYeKe',
         element: (
             <Suspense fallback={<></>}>
                 <DownloadHuan></DownloadHuan>
@@ -676,7 +677,17 @@ const APPMATE_ROUTE = [
             </Suspense>
         ),
         exact: true,
-        auth: false,
+        auth: true,
+    },
+    {
+        path: '/h5inapp/turn',
+        element: (
+            <Suspense fallback={<></>}>
+                <Turn></Turn>
+            </Suspense>
+        ),
+        exact: true,
+        auth: true,
     },
     {
         path: '/h5inapp/rankTemplate',

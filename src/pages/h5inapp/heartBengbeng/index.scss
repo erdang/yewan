@@ -45,7 +45,7 @@ body {
         height: 100%;
         z-index: 2;
         .money__icon {
-            width: 150px;
+            min-width: 150px;
             height: 62px;
             background: img-url('/heartBengbeng/rule_btn.png?v=1') no-repeat;
             background-size: 100% 100%;
@@ -59,6 +59,8 @@ body {
             justify-content: center;
             align-items: center;
             z-index: 2;
+            box-sizing: border-box;
+            padding-right: 20px;
             span:nth-of-type(1) {
                 width: 40px;
                 height: 40px;
@@ -284,6 +286,20 @@ body {
                 ul {
                     li {
                         position: relative;
+                        .gift_text2 {
+                            color: #fff;
+                            font-size: 18px;
+                            width: 172px;
+                            height: 40px;
+                            background: img-url('/heartBengbeng/gailv.png?v=1')
+                                no-repeat;
+                            background-size: 100% 100%;
+                            position: absolute;
+                            left: 0;
+                            top: 80px;
+                            z-index: 4;
+                            text-align: center;
+                        }
                         .li_suo {
                             width: 168px;
                             height: 184px;
@@ -332,7 +348,7 @@ body {
                             top: 0;
                             width: 78px;
                             height: 40px;
-                            background: img-url('/heartBengbeng/1.png?v=1')
+                            background: img-url('/heartBengbeng/jiao.png?v=1')
                                 no-repeat;
                             background-size: 100% 100%;
                             font-weight: 500;
@@ -348,7 +364,7 @@ body {
                             top: 0;
                             width: 78px;
                             height: 40px;
-                            background: img-url('/heartBengbeng/2.png?v=1')
+                            background: img-url('/heartBengbeng/jiao.png?v=1')
                                 no-repeat;
                             background-size: 100% 100%;
                             font-weight: 500;
@@ -364,7 +380,7 @@ body {
                             top: 0;
                             width: 78px;
                             height: 40px;
-                            background: img-url('/heartBengbeng/3.png?v=1')
+                            background: img-url('/heartBengbeng/jiao.png?v=1')
                                 no-repeat;
                             background-size: 100% 100%;
                             font-weight: 500;
@@ -447,6 +463,9 @@ body {
                                 background-size: 100% 100%;
                             }
                         }
+                    }
+                    .gray_c {
+                        filter: grayscale(1);
                     }
                     .activeLi {
                         .gift__warp {
@@ -700,9 +719,15 @@ body {
                         font-weight: 500;
                         font-size: 20px;
                         color: #bd2e72;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
+                        display: block;
+                        line-height: 40px;
+                        text-align: center;
+                        padding: 0 12px;
+                        box-sizing: border-box;
+                        min-width: 0;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
                     }
                 }
 
@@ -968,9 +993,9 @@ body {
             }
         }
 
-        overflow-y: auto;
-        width: 538px;
-        height: 541px;
+        overflow-y: hidden;
+        width: 688px;
+        height: 780px;
         background: img-url('/heartBengbeng/rule_a_bg.png?v=1') no-repeat;
         background-size: 100% 100%;
         box-sizing: border-box;
@@ -980,12 +1005,19 @@ body {
             height: 55px;
             background: img-url('/heartBengbeng/rule_t.png?v=1') no-repeat;
             background-size: 100% 100%;
-            margin: 30px auto;
+            margin: 60px auto 30px auto;
         }
         .rule__h1 {
             color: #d578a5;
             font-weight: 700;
             font-size: 26px;
+        }
+        .rule__div {
+            color: #d578a5;
+            font-weight: 700;
+            font-size: 26px;
+            height: 460px;
+            overflow-y: auto;
         }
         .rule_a_btn {
             width: 397px;
@@ -999,6 +1031,28 @@ body {
             color: #fff;
             font-weight: 700;
             font-size: 26px;
+        }
+        .table {
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            color: #d578a5;
+            // background: #38384d;
+            border-radius: 24px 24px 0px 0px;
+            border-radius: 10px;
+        }
+        th,
+        td {
+            text-align: center;
+            border: 1px solid #d578a5;
+            line-height: 60px;
+            font-size: 22px;
+            font-weight: 400;
+            word-break: break-all;
+            // width: 25%;
         }
     }
 }
@@ -1014,11 +1068,21 @@ body {
 
         overflow-y: auto;
         width: 573px;
-        height: 658px;
+        height: auto;
+        // min-height: 564px;
         background: img-url('/heartBengbeng/r_bg.png?v=1') no-repeat;
         background-size: 100% 100%;
         box-sizing: border-box;
         padding-top: 93px;
+        padding-bottom: 80px;
+        .r_gift_icon {
+            text-align: center;
+            img {
+                width: 150px;
+                height: 150px;
+            }
+        }
+
         .r_btns {
             display: flex;
             justify-content: center;
@@ -1032,7 +1096,7 @@ body {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                color: #fff;
+                color: #9b5479;
                 font-weight: 700;
                 font-size: 26px;
                 margin-right: 20px;
@@ -1047,8 +1111,9 @@ body {
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
+                font-weight: 600;
+                color: #ffffff;
                 .rule_b_btn-div2 {
-                    font-weight: 600;
                     font-size: 28px;
                     color: #ffffff;
                     text-align: center;
@@ -1113,11 +1178,15 @@ body {
             font-size: 28px;
             color: #bd2e72;
             font-weight: 700;
+            width: 350px;
+            margin: 30px auto;
         }
         .r_text2 {
             font-weight: 400;
             font-size: 24px;
             color: #802b53;
+            width: 420px;
+            margin: 0 auto 40px auto;
         }
     }
 }

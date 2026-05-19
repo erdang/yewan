@@ -122,7 +122,7 @@ body {
                         font-size: 36px;
                         color: #442cee;
                         text-align: center;
-                        margin-bottom: 40px;
+                        margin-bottom: 0px;
                         background: img-url('/firstCharge/star_z.png') center
                             center no-repeat;
                         background-size: 136px 69px;
@@ -148,6 +148,12 @@ body {
                             background-size: 100% 100%;
                         }
                     }
+                    .title_tips {
+                        text-align: center;
+                        margin-bottom: 30px;
+                        font-size: 24px;
+                        color: rgb(68, 44, 238, 0.6);
+                    }
 
                     .g__img {
                         width: 186px;
@@ -165,12 +171,12 @@ body {
                         position: relative;
                         .li__rote {
                             position: absolute;
-                            width: 60px;
+                            min-width: 60px;
                             height: 26px;
                             background: img-url('/firstCharge/tips.png')
                                 no-repeat;
                             background-size: 100% 100%;
-                            right: 0;
+                            right: 10px;
                             top: 10px;
                             font-weight: 400;
                             font-size: 18px;
@@ -212,7 +218,7 @@ body {
                         height: 106px;
                         background: img-url('/firstCharge/btn_3.png') no-repeat;
                         background-size: 100% 100%;
-                        margin: 50px auto 60px auto;
+                        margin: 50px auto 20px auto;
                         display: flex;
                         justify-content: center;
                         align-items: center;
@@ -225,7 +231,7 @@ body {
                         height: 106px;
                         background: img-url('/firstCharge/btn_3.png') no-repeat;
                         background-size: 100% 100%;
-                        margin: 50px auto 60px auto;
+                        margin: 50px auto 20px auto;
                         filter: grayscale(100%);
                         display: flex;
                         justify-content: center;
@@ -239,7 +245,7 @@ body {
                         height: 106px;
                         background: img-url('/firstCharge/btn_3.png') no-repeat;
                         background-size: 100% 100%;
-                        margin: 50px auto 60px auto;
+                        margin: 50px auto 20px auto;
                         display: flex;
                         justify-content: center;
                         align-items: center;
@@ -631,5 +637,34 @@ body {
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+}
+.tips_div {
+    .rule-text {
+        .adm-checkbox-icon {
+            width: 28px;
+            height: 28px;
+            border: 2px solid #c3c3c3;
+            border-radius: 4px;
+        }
+        .adm-checkbox-content {
+            font-size: 24px;
+            color: rgba(0, 0, 0, 0.4);
+            span {
+                color: #617af6;
+            }
+        }
+    }
+    .tips_checkbox {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .tips_c {
+        font-size: 24px;
+        text-align: center;
+        margin-top: 6px;
+        color: rgba(0, 0, 0, 0.4);
     }
 }

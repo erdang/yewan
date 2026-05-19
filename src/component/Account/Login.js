@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Input, Button, Tabs } from 'antd-mobile';
-import LayoutHead from '@/component/LayoutHead';
+// import LayoutHead from '@/component/LayoutHead';
 import {
     GetCodeContent,
     MobileField,
@@ -47,7 +47,7 @@ const ApplyForm = ({ defaultValue, ticket }) => {
     const onFinish = useCallback(
         (values) => {
             preFn(values).then((s) => {
-                if (s.flag === '001') {
+                if (s.code === '200') {
                     let nonce = JSON.parse(decrpt(s.content, s.iv));
                     instanceUser
                         .post('/api/v1/login', {
@@ -307,7 +307,7 @@ const LoginPage = (props) => {
 
     return (
         <div className="apply-page">
-            <LayoutHead title={'登录'} num={1} />
+            {/* <LayoutHead title={'登录'} num={1} /> */}
             <div className="tem-tab">
                 <Tabs
                     activeLineMode="fixed"

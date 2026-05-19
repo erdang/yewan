@@ -9,6 +9,8 @@ import ComTab from '@/component/comTab';
 import urlTool from 'ox-util/src/url';
 import setTitle from '@/utility/settitle.js';
 import { appGate } from '@/utility/appGate.js';
+import { Dialog, Checkbox } from 'antd-mobile';
+import ChargeRule from '@/component/Rule/ChargeRule';
 
 import instance from '@/request/index';
 import { BlockLoading } from '@/component/PageLoading';
@@ -90,20 +92,89 @@ const RuleAlert = ({ setShow, info }) => {
         </div>
     );
 };
+const RuleAlertCharege = ({ setShow, info }) => {
+    const closeAlert = useCallback(() => {
+        setShow(false);
+    }, [setShow]);
+
+    return (
+        <div className="weekstar-alert">
+            <div className="alert__title">
+                <div className="back__icon" onClick={closeAlert}>
+                    <svg
+                        t="1721626117852"
+                        viewBox="0 0 1024 1024"
+                        version="1.1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        p-id="4436"
+                        width="200"
+                        height="200"
+                    >
+                        <path
+                            d="M646.981818 889.018182c-9.309091 0-18.618182-2.327273-25.6-9.309091L276.945455 532.945455c-6.981818-6.981818-9.309091-16.290909-9.309091-25.6s4.654545-18.618182 9.309091-25.6L623.709091 137.309091c13.963636-13.963636 34.909091-13.963636 48.872727 0s13.963636 34.909091 0 48.872727L351.418182 507.345455l321.163636 321.163636c13.963636 13.963636 13.963636 34.909091 0 48.872727-6.981818 9.309091-16.290909 11.636364-25.6 11.636364z"
+                            p-id="4437"
+                        ></path>
+                    </svg>
+                </div>
+                <div className="alert__title-div">充值协议</div>
+            </div>
+            {/* <div
+                className="top__1"
+                dangerouslySetInnerHTML={{ __html: info.rule }}
+            ></div> */}
+            <div className="top__1">
+                <ChargeRule></ChargeRule>
+            </div>
+        </div>
+    );
+};
+
+const CheckboxContent = ({ value = {}, onChange, setShowRule, ruleText }) => {
+    const changeBox = useCallback(
+        (checked) => {
+            onChange?.({
+                ...value,
+                hasRule: checked,
+            });
+        },
+        [onChange, value],
+    );
+
+    const toRule = useCallback(() => {
+        setShowRule(true);
+    }, [setShowRule]);
+    return (
+        <Checkbox
+            checked={Boolean(value.hasRule)}
+            onChange={changeBox}
+            style={{
+                '--icon-size': '18px',
+                '--font-size': '14px',
+                '--gap': '6px',
+            }}
+            className="rule-text"
+        >
+            充值及代表阅读并同意,<span onClick={toRule}>{ruleText}</span>
+        </Checkbox>
+    );
+};
 
 const RankTemplate = ({ ticket }) => {
     const [showRule, setShowRule] = useState(false);
+    const [showRuleCharge, setShowRuleCharge] = useState(false);
     const [showResult, setShowResult] = useState(false);
     const [resultGift, setResultGift] = useState('');
     const [timeCurrent, setTimeCurrent] = useState(1);
     const [info, setInfo] = useState('');
-
     const [tabNode, setTabNode] = useState([]);
+    const [hasChargeRule, setHasChargeRule] = useState(false);
 
     const getInfo = useCallback(() => {
         instance
             .post('/api/v1/firstRecharge/lists', {
                 token: ticket,
+                is_ios: appGate.inAppIOS() ? 1 : 0,
+                // is_ios: 1,
             })
             .then((d) => {
                 // d.content.config[0].receive_status = '1';
@@ -127,19 +198,37 @@ const RankTemplate = ({ ticket }) => {
 
     const toPayFn = useCallback(
         (event) => {
+            if (!hasChargeRule) {
+                Dialog.alert({
+                    content: '请先勾选并同意《充值协议》',
+                    confirmText: '确定',
+                    onConfirm: () => {},
+                });
+                return false;
+            }
             let price = event.currentTarget.dataset.price;
-
+            let productid = event.currentTarget.dataset.productid;
+            let product = info.config.find((i) => i.id === productid);
+            console.log(product?.product_id);
             appGate
                 .openToPay({
+                    // money: appGate.inAppIOS() ? product?.product_id : price,
                     money: price,
+                    product_id: product?.product_id,
                 })
                 .then((d) => {
                     if (d === '1') {
-                        getInfo();
+                        Dialog.alert({
+                            content: '购买成功，快领取礼包吧～',
+                            confirmText: '确定',
+                            onConfirm: () => {
+                                getInfo();
+                            },
+                        });
                     }
                 });
         },
-        [getInfo],
+        [getInfo, hasChargeRule, info],
     );
 
     const timeLineFn = useCallback(
@@ -179,7 +268,7 @@ const RankTemplate = ({ ticket }) => {
     );
 
     useEffect(() => {
-        setTitle('首冲有礼');
+        setTitle('首充有礼');
         getInfo();
     }, [getInfo]);
 
@@ -196,6 +285,7 @@ const RankTemplate = ({ ticket }) => {
                         className="to__btn"
                         onClick={toPayFn}
                         data-price={item.discount_price}
+                        data-productid={item.id}
                     >
                         立刻购买
                         <span>原价:{item.price}元</span>
@@ -220,6 +310,7 @@ const RankTemplate = ({ ticket }) => {
                         <div>{item.title}</div>
                         <div className="li__tilte2"></div>
                     </div>
+                    <div className="title_tips">{item.desc}</div>
                     <div className="li__gwarp">
                         {item.extra.map((i, d) => {
                             return (
@@ -239,6 +330,23 @@ const RankTemplate = ({ ticket }) => {
                     </div>
 
                     {btnStatus[item.receive_status]}
+                    <div className="tips_div">
+                        <div className="tips_checkbox">
+                            <CheckboxContent
+                                value={{ hasRule: hasChargeRule }}
+                                onChange={(v) => {
+                                    setHasChargeRule(Boolean(v?.hasRule));
+                                }}
+                                ruleText={'《用户充值协议》'}
+                                type="userRule"
+                                ticket={ticket}
+                                setShowRule={setShowRuleCharge}
+                            />
+                        </div>
+                        <p className="tips_c">
+                            禁止未成年人充值消费，适度娱乐，合理消费
+                        </p>
+                    </div>
                 </li>
             );
         });
@@ -275,6 +383,12 @@ const RankTemplate = ({ ticket }) => {
             {showRule && (
                 <RuleAlert setShow={setShowRule} info={info}></RuleAlert>
             )}
+            {showRuleCharge && (
+                <RuleAlertCharege
+                    setShow={setShowRuleCharge}
+                ></RuleAlertCharege>
+            )}
+
             {showResult && (
                 <RusultAlert
                     setShow={setShowResult}

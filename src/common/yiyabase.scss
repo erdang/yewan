@@ -203,6 +203,13 @@ body {
     border: none;
     height: 80px;
 }
+.m-button {
+    background: var(--button-color);
+    border: none;
+    height: 90px;
+    width: 80%;
+    margin: auto;
+}
 .out-button {
     background: transparent;
     border-color: #6beaf9;

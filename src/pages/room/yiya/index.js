@@ -16,17 +16,15 @@ import { BadgeIcon } from '@/component/BadgeIcon';
 
 import setTitle from '@/utility/settitle';
 import instance from '@/request/index';
-import roomWebSocket from '@/utility/socket/roomWebsocket';
-import user from '@/utility/user.js';
+
 import { APPNAME } from '@/utility/appName';
 import AgoraSdk from '@/utility/agorasdk';
-import useGift from '@/hooks/gift';
+
 // import VConsole from 'vconsole';
 // /*eslint-disable*/
 // const vConsole = new VConsole();
 
 const hostname = window.location.hostname;
-const appId = '35a56de705f042b1b23664eebd3ec5c7';
 
 const IMG_URL = APPNAME[hostname].staticUrl + '/room/';
 
@@ -36,9 +34,6 @@ const IMG_URL = APPNAME[hostname].staticUrl + '/room/';
 //     charm: '0',
 //     sound: 0,
 // });
-const stripHtml = function (str) {
-    return str.replace(/<[^>]*?>/g, '');
-};
 
 const NUM_IMG = {
     0: IMG_URL + '0.png',
@@ -68,58 +63,8 @@ const ChatContent = ({ gift, info }) => {
         }
     };
 
-    const pushData = useCallback((data) => {
-        chatData.current = chatData.current.concat(data);
-        timer1.current = setTimeout(() => {
-            scrollToBottom();
-        }, 100);
-
-        if (chatData.current.length > 50) {
-            chatData.current.shift();
-        }
-    }, []);
-
-    const receive101Fn = useCallback(
-        (s) => {
-            console.log(s);
-            pushData(s);
-            setChatArr([...chatData.current]);
-        },
-        [pushData],
-    );
-
-    const receive102Fn = useCallback(
-        (s) => {
-            // console.log(s);
-            pushData(s);
-            setChatArr([...chatData.current]);
-        },
-        [pushData],
-    );
-    const receive201Fn = useCallback(
-        (s) => {
-            console.log(s);
-            pushData(s);
-            setChatArr([...chatData.current]);
-            let arr = [];
-            arr.push(s);
-            setGiftInfo(arr);
-        },
-        [pushData],
-    );
-
-    const receive123Fn = useCallback((s) => {
-        // console.log(s);
-        let arr = [];
-        s.content.msg = stripHtml(s.content.msg);
-        if (s.content.msg) {
-            arr.push(stripHtml(s.content.msg));
-            setWelInfo(arr);
-        }
-    }, []);
-
     const initFn = useCallback(() => {
-        chatData.current = [...info.sysMsg];
+        chatData.current = [...info.chatMsgList];
         setChatArr([...chatData.current]);
         timer1.current = setTimeout(() => {
             scrollToBottom();
@@ -133,13 +78,6 @@ const ChatContent = ({ gift, info }) => {
             onConfirm: () => {},
         });
     }, []);
-
-    useEffect(() => {
-        roomWebSocket.on('receive:101', receive101Fn);
-        roomWebSocket.on('receive:123', receive123Fn);
-        roomWebSocket.on('receive:102', receive102Fn);
-        roomWebSocket.on('receive:201', receive201Fn);
-    }, [receive101Fn, receive123Fn, receive102Fn, receive201Fn]);
 
     useEffect(() => {
         initFn();
@@ -156,11 +94,6 @@ const ChatContent = ({ gift, info }) => {
     let chatList = null;
 
     chatList = chatArr.map((item, index) => {
-        let giftName =
-            item.content.item &&
-            gift.filter((i) => {
-                return i.id === item.content.item;
-            });
         let listContent = {
             101: (
                 <div className="li__warp">
@@ -198,20 +131,6 @@ const ChatContent = ({ gift, info }) => {
                             <div className="info__user-alias">
                                 {item.byName}
                             </div>
-                        </div>
-                        <div className="list__info-text">
-                            赠送
-                            <span className="g__yellow">{item.to}</span>
-                            {item.content.num}个
-                            <span className="g__yellow">
-                                {giftName && giftName[0].title}
-                            </span>
-                            <span className="g__pic">
-                                <img
-                                    src={giftName && giftName[0].mpic.img}
-                                    alt=""
-                                />
-                            </span>
                         </div>
                     </div>
                 </div>
@@ -359,7 +278,6 @@ const ChatContent = ({ gift, info }) => {
 };
 
 const RoomShare = ({ ticket, userInfo, gift, changeGift }) => {
-    useGift(changeGift);
     let navigate = useNavigate();
     let [info, setInfo] = useState('');
     let [soundList, setSoundList] = useState(() => {
@@ -370,8 +288,7 @@ const RoomShare = ({ ticket, userInfo, gift, changeGift }) => {
             sound: 0,
         });
     });
-    let [seat99Info, setSeat99Info] = useState('');
-    let [seat99show, setSeat99show] = useState(false);
+
     let [showListenBtn, setShowListenBtn] = useState(false);
 
     let { roomId } = useParams();
@@ -387,159 +304,49 @@ const RoomShare = ({ ticket, userInfo, gift, changeGift }) => {
 
     const getInfo = useCallback(() => {
         instance
-            .post('/api/room/inroom', {
+            .post('/api/v1/room/inRoom', {
                 ruid: roomId,
                 ver: '2.0',
+                token: ticket,
             })
             .then((data) => {
-                setInfo(data.content);
-                let seat99Data = data.content.soundList.filter((i) => {
-                    return i.seat === '99';
-                });
-                let seatSoundData = data.content.soundList.filter((i) => {
-                    return i.seat !== '99';
-                });
-                if (seatSoundData.length > 0) {
-                    realSoundList.current.map((i, index) => {
-                        if (seatSoundData[index]) {
-                            let a = Number(seatSoundData[index].seat) - 1;
-                            realSoundList.current[a] = seatSoundData[index];
-                        }
+                if (data.code === '200') {
+                    setInfo(data.content);
+
+                    let seatSoundData = data.content.soundList.filter((i) => {
+                        return i.seat !== '99';
                     });
-                    setSoundList(realSoundList.current);
+                    if (seatSoundData.length > 0) {
+                        realSoundList.current.map((i, index) => {
+                            if (seatSoundData[index]) {
+                                let a = Number(seatSoundData[index].seat) - 1;
+                                realSoundList.current[a] = seatSoundData[index];
+                            }
+                        });
+                        setSoundList(realSoundList.current);
+                    }
                 }
-
-                let seat99Object =
-                    seat99Data.length > 0
-                        ? seat99Data[0]
-                        : {
-                              picuser: IMG_URL + 'mai_1.png',
-                              seat: '0',
-                              charm: '0',
-                          };
-                setSeat99Info(seat99Object);
             });
-    }, [roomId]);
-
-    let socketInit = useCallback(() => {
-        roomWebSocket.login({
-            data: {
-                uid: userInfo.id ? userInfo.id : userInfo.guestID,
-                encpass: ticket ? ticket : '',
-                roomid: roomId,
-            },
-        });
-        roomWebSocket.on('login.success', () => {
-            roomWebSocket.sendMsg('priv_info', {
-                encpass: ticket || '',
-            });
-        });
-        roomWebSocket.sendMsg('voice_getchannelkey');
-        roomWebSocket.on('error', (e) => {
-            console.log(e);
-        });
-        roomWebSocket.on('close', ({ code }) => {
-            if (code === 1006) {
-                user.toLogin();
-            }
-        });
-    }, [ticket, userInfo, roomId]);
-
-    const receive906Fn = useCallback((s) => {
-        //console.log(s);
-        let seat99 = s.content.filter((i) => {
-            return i.seat === '99';
-        });
-        let seatList = s.content.filter((i) => {
-            return i.seat !== '99';
-        });
-        realSoundList.current.map((i, index) => {
-            if (seatList[index]) {
-                let a = Number(seatList[index].seat) - 1;
-
-                realSoundList.current[a].seatshow =
-                    seatList[index].volume === '1';
-                //console.log(realSoundList.current[a].seatshow);
-            }
-        });
-
-        let seat99Object =
-            seat99.length > 0
-                ? seat99[0]
-                : {
-                      volume: '0',
-                  };
-        setSeat99show(seat99Object.volume === '1' ? true : false);
-        setSoundList([...realSoundList.current]);
-    }, []);
-
-    const receive905Fn = useCallback((s) => {
-        realSoundList.current = new Array(8).fill({
-            picuser: IMG_URL + 'mai_1.png',
-            seat: '0',
-            charm: '0',
-            sound: 0,
-        });
-        setSeat99Info(
-            Object.keys(s.compere).length > 0
-                ? s.compere
-                : {
-                      picuser: IMG_URL + 'mai_1.png',
-                      seat: '0',
-                      charm: '0',
-                  },
-        );
-        let seatSoundData = s.content;
-        realSoundList.current.map((i, index) => {
-            if (seatSoundData[index]) {
-                let a = Number(seatSoundData[index].seat) - 1;
-                realSoundList.current[a] = seatSoundData[index];
-            }
-        });
-        setSoundList(realSoundList.current);
-    }, []);
+    }, [roomId, ticket]);
 
     useEffect(() => {
         getInfo();
-        socketInit();
-        return () => {
-            roomWebSocket.close();
-            if (realSoundList.current) {
-                realSoundList.current = [];
-            }
-        };
-    }, [getInfo, socketInit, ticket]);
+
+        return () => {};
+    }, [getInfo, ticket]);
 
     useEffect(() => {
         AgoraSdk.init();
     }, []);
     useEffect(() => {
-        info && setTitle(info.liveinfo.title);
+        info && setTitle(info.userInfo.nickname);
     }, [info]);
 
-    const receive701Fn = useCallback(async (s) => {
-        await AgoraSdk.leaveFn();
-        await AgoraSdk.joinFn({
-            appId,
-            channel: s.content.content.channel,
-            token: s.content.content.channelKey,
-            uid: Number(s.content.content.uid),
-        });
-        AgoraSdk.AgoraRTC.onAutoplayFailed = () => {
-            setShowListenBtn(true);
-        };
-
-        setShowListenBtn(true);
-    }, []);
-
     useEffect(() => {
-        roomWebSocket.on('receive:906', receive906Fn);
-        roomWebSocket.on('receive:905', receive905Fn);
-        roomWebSocket.on('receive:701', receive701Fn);
         return () => {
             AgoraSdk.leaveFn();
         };
-    }, [receive906Fn, receive905Fn, receive701Fn]);
+    }, []);
 
     const palyFn = useCallback(() => {
         AgoraSdk.localAudioTrack && AgoraSdk.localAudioTrack.play();
@@ -595,30 +402,26 @@ const RoomShare = ({ ticket, userInfo, gift, changeGift }) => {
                 <div
                     className="room_bg"
                     style={{
-                        background:
-                            'url(' + info.background.app + ') no-repeat',
+                        background: 'url(' + info.background + ') no-repeat',
                         backgroundSize: '100% 100%',
                     }}
                 >
                     <div className="room__bg-mask">
                         <div className="room__header">
                             <div className="header__userinfo">
-                                <div className="user__pic">
-                                    <img
-                                        src={info.roominfo.uoption.picuser}
-                                        alt=""
-                                    />
+                                <div className="roomInfo">
+                                    <img src={info.roomInfo.avatar} alt="" />
                                 </div>
                                 <div className="user__info">
                                     <div className="user__alias">
-                                        {info.roominfo.alias}
+                                        {info.roomInfo.nickname}
                                     </div>
-                                    <div className="user__num">
+                                    {/* <div className="user__num">
                                         <span className="num__icon"></span>
                                         <span className="num__text">
                                             {info.heatNum}
                                         </span>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                             <div
@@ -644,46 +447,7 @@ const RoomShare = ({ ticket, userInfo, gift, changeGift }) => {
                             </div>
                         </div>
                         <div className="room__sound">
-                            <div className="sound__seat99">
-                                <div className="sound__crl">
-                                    {seat99show && (
-                                        <Fragment>
-                                            <div className="crl__1"></div>
-                                            <div className="crl__2"></div>
-                                        </Fragment>
-                                    )}
-
-                                    <div className="sound__seat99-pic">
-                                        <img src={seat99Info.picuser} alt="" />
-                                    </div>
-                                </div>
-
-                                {seat99Info.seat != '0' ? (
-                                    <div className="sound__seat99-info">
-                                        <div className="seat99__info">
-                                            <span className="seat99__info-alias">
-                                                {seat99Info.alias}
-                                            </span>
-                                            <span className="seat99__info-role"></span>
-                                        </div>
-                                        <div className="sound__seat99-heat">
-                                            <span className="heart__icon"></span>
-                                            <span className="heart__num">
-                                                {seat99Info.charm > 10000
-                                                    ? (
-                                                          seat99Info.charm /
-                                                          10000
-                                                      ).toFixed(2) + 'w'
-                                                    : seat99Info.charm}
-                                            </span>
-                                        </div>
-                                    </div>
-                                ) : (
-                                    <div className="sound__seat99-role">
-                                        主持
-                                    </div>
-                                )}
-                            </div>
+                            <div className="sound__seat99"></div>
                             <ul className="seatSound">{seatContent}</ul>
                         </div>
                         {showListenBtn && (

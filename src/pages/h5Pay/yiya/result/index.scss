@@ -114,8 +114,8 @@
                         .zuan-icon {
                             width: 30px;
                             height: 30px;
-                            background: img-url('/buz_wei/Z_bi.png')
-                                center center no-repeat;
+                            background: img-url('/buz_wei/Z_bi.png') center
+                                center no-repeat;
                             background-size: 100% 100%;
                             margin-right: 16px;
                         }
@@ -152,8 +152,7 @@
             .zuan-icon {
                 width: 30px;
                 height: 30px;
-                background: img-url('/buz_wei/Z_bi.png') center center
-                    no-repeat;
+                background: img-url('/buz_wei/Z_bi.png') center center no-repeat;
                 background-size: 100% 100%;
                 margin-right: 16px;
             }
@@ -228,24 +227,21 @@
         .w-icon_wechatH5 {
             width: 48px;
             height: 48px;
-            background: img-url('/buz_wei/w_icon.png') center center
-                no-repeat;
+            background: img-url('/buz_wei/w_icon.png') center center no-repeat;
             background-size: 100% 100%;
             margin-right: 20px;
         }
         .w-icon_alipayWap {
             width: 48px;
             height: 48px;
-            background: img-url('/buz_wei/h5_c_a.png') center center
-                no-repeat;
+            background: img-url('/buz_wei/h5_c_a.png') center center no-repeat;
             background-size: 100% 100%;
             margin-right: 20px;
         }
         .w-icon_unionPayH5 {
             width: 48px;
             height: 48px;
-            background: img-url('/buz_wei/h5_c_a.png') center center
-                no-repeat;
+            background: img-url('/buz_wei/h5_c_a.png') center center no-repeat;
             background-size: 100% 100%;
             margin-right: 20px;
         }
@@ -336,4 +332,7 @@
             width: 160px;
         }
     }
+}
+.btn_back {
+    color: #000;
 }

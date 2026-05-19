@@ -41,6 +41,44 @@ const callMethod = function (config) {
 
 var appGate = new EventEmitter();
 
+// H5 暴露给 App 的方法：App 可在 WebView 中按方法名直接调用
+const registerAppMethod = (methodName, handler) => {
+    if (!methodName || typeof handler !== 'function') {
+        return () => {};
+    }
+    window[methodName] = (args) => {
+        let payload = args;
+        if (typeof args === 'string') {
+            try {
+                payload = JSON.parse(args);
+            } catch (e) {
+                // keep raw string payload
+            }
+        }
+        handler(payload);
+    };
+    return () => {
+        if (window[methodName]) {
+            delete window[methodName];
+        }
+    };
+};
+
+// useEffect(() => {
+//     const off = appGate.registerAppMethod('onAppPayResult', (payload) => {
+//         console.log('app -> h5', payload);
+//         // 这里写你的业务逻辑
+//     });
+
+//     return () => off(); // 或 appGate.unregisterAppMethod('onAppPayResult')
+// }, []);
+
+const unregisterAppMethod = (methodName) => {
+    if (methodName && window[methodName]) {
+        delete window[methodName];
+    }
+};
+
 const openUrl = (url, type) => {
     let callback = (data) => {};
     callMethod({
@@ -74,7 +112,7 @@ const openPayPage = ({ amount = 0, title = '' }) => {
         callback: callback,
     });
 };
-const openToPay = ({ money = 0 }) => {
+const openToPay = ({ money = 0, product_id = 'cao' }) => {
     return new Promise((reslove, reject) => {
         // VDcCK1E0U2sCYgw6UTcDNgxtW20LZVI(AmAIPFVrUzYNJlMrVjMHdVE1WmQPaQBjDWhTYwoyAWYAMQ5iBzBdMlQ6AjJRMFNtAmIMMFE1AzIMZ1trC2RSZAJsCDFVZVNvDTxTNFY0BzlRNVowDzwAOQ0(UzMKYwFn
         let callback = (data) => {
@@ -84,6 +122,7 @@ const openToPay = ({ money = 0 }) => {
             method: 'appPay',
             params: {
                 money: money,
+                product_id: product_id,
             },
             callback: callback,
         });
@@ -358,6 +397,8 @@ mix(appGate, {
     openWebview,
     openProfilePage,
     openToPay,
+    registerAppMethod,
+    unregisterAppMethod,
 });
 
 export { callMethod, appGate };

@@ -18,7 +18,7 @@ const ComTab = ({ tabNode, current, timeLineFn, className }) => {
             createElement(
                 'div',
                 {
-                    className: 'ls-tab-ul-li-title',
+                    className: `ls-tab-ul-li-title ls-tab-ul-li-title_${d}`,
                 },
                 i.title,
             ),

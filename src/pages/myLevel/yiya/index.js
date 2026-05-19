@@ -269,7 +269,9 @@ const R_TITLE = {
 };
 var Level = function ({ ticket }) {
     useEffect(() => {
-        setTitle(R_TITLE[searchParam.rule].title);
+        setTitle(
+            searchParam.rule ? R_TITLE[searchParam.rule].title : '我的等级',
+        );
     }, []);
 
     if (searchParam.rule === 'help') {

@@ -26,6 +26,10 @@ import { format as formatTime } from 'ox-util/src/time';
 
 const searchParam = urlTool.param(window.location.search);
 const noTou_Img = APPNAME[window.location.hostname].staticUrl;
+const parseAmount = (value) => {
+    const num = Number(String(value ?? '').replace(/[^\d.-]/g, ''));
+    return Number.isFinite(num) ? num : 0;
+};
 
 const RuleAlert = ({ setShow, tabKeyv, timeCurrent, status }) => {
     const closeAlert = useCallback(() => {
@@ -36,13 +40,78 @@ const RuleAlert = ({ setShow, tabKeyv, timeCurrent, status }) => {
         <Portal>
             <CenterOverlay className="weekstar-alert" onClose={closeAlert}>
                 <div className="title-icon"></div>
-                <div className="rule__h1">
-                    1.解锁流程：用户向麦上嘉宾赠送场景N礼物➤概率触发解锁阶段N+1送礼资格
+                <div className="rule__div">
+                    一、活动玩法
+                    <br />
+                    1.
+                    进入活动选择麦上嘉宾，赠送对应礼物有概率解锁心动场景，当赠礼数量达到场景的保底次数，必解锁下一场景。
+                    <br />
+                    2. 场景概率如下：
+                    <br />
+                    <div className="table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th width="15%">场景</th>
+                                    <th>场景礼物</th>
+                                    <th>解锁下一场景礼物</th>
+                                    <th width="15%">保底次数</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>初遇</td>
+                                    <td>恋恋相遇（99金币）</td>
+                                    <td>同频心跳（60%）</td>
+                                    <td>5</td>
+                                </tr>
+                                <tr>
+                                    <td>同频</td>
+                                    <td>同频心跳（990金币）</td>
+                                    <td>爱恋升温（40%）</td>
+                                    <td>8</td>
+                                </tr>
+                                <tr>
+                                    <td>升温</td>
+                                    <td>爱恋升温（2990金币）</td>
+                                    <td>怦然心动（20%）</td>
+                                    <td>10</td>
+                                </tr>
+                                <tr>
+                                    <td>心动</td>
+                                    <td>怦然心动（5200金币）</td>
+                                    <td>爱的誓约（10%）</td>
+                                    <td>20</td>
+                                </tr>
+                                <tr>
+                                    <td>承诺</td>
+                                    <td>爱的誓约（8880金币）</td>
+                                    <td>命定双生（5%）</td>
+                                    <td>30</td>
+                                </tr>
+                                <tr>
+                                    <td>永恒</td>
+                                    <td colSpan={3}>命定双生（13140金币）</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    3.
+                    当成功解锁新场景时，即触发CP全站广播，并荣登心动头条-此刻心动。
+                    <br />
+                    4.
+                    每次赠送永恒场景-【命定双生】礼物时，将被记录在心动头条-永恒见证。
+                    <br />
+                    二、活动规范
+                    <br />
+                    1. 未成年人均不得参与本活动的任何付费环节。
                     <br />
                     2.
-                    双方解锁某阶段后，双方都可以赠送已解锁阶段的礼物（无需再次解锁）
+                    为维护公平健康的语音交友环境，保障全体用户的合法权益，本平台严禁任何形式的“礼物私下返现”或“礼物回收”行为；一经发现，即视为严重违规，违规者将面临永久封号及法律追责。
                     <br />
-                    3. 用户与每一位嘉宾的互动进度独立计算，互不影响。
+                    3. 活动参与过程中有任何疑问可咨询站内客服。
+                    <br />
+                    4. 本活动规则的最终解释权归【椰壳app】所有。
                 </div>
                 <div className="rule_a_btn" onClick={closeAlert}>
                     确定
@@ -61,103 +130,263 @@ const Resultalert = ({
     currentStage,
     sendRelult,
     sendFn,
+    setShowRank,
+    getProgressFn,
+    currentStatus,
+    currentStageOrigin,
+    setTabFn,
+    lastSendStage,
 }) => {
-    const closeAlert = useCallback(() => {
-        setShow(false);
-    }, [setShow]);
+    const closeAlert = useCallback(
+        (source = 'normal', withProgress = true) => {
+            setShow(false);
+            if (withProgress) {
+                getProgressFn(undefined, source);
+            }
+        },
+        [setShow, getProgressFn],
+    );
 
-    const giftName = stages.find((i) => i.stage === currentStage + 1);
-    const nextStage = stages.find((i) => i.stage === sendRelult.newStage);
-    console.log(nextStage);
+    const giftName = stages.find((i) => i.stage === currentStage + 1) || {};
+    const giftNameOrigin =
+        stages.find((i) => i.stage === currentStageOrigin + 1) || giftName;
+    const sentGift =
+        stages.find((i) => i.stage === Number(lastSendStage)) ||
+        giftNameOrigin ||
+        giftName;
+    // const nextStage = stages.find((i) => i.stage === sendRelult.newStage);
+    const nextStageJie = stages.find(
+        (i) => i.stage === sendRelult.newStage - 1,
+    );
+    const maxStage = Number(sendRelult?.maxStage || 6);
+    const isFinalSendStage =
+        sendRelult?.isFinalStage === true || Number(lastSendStage) >= maxStage;
+    const hideFinalTopMsg =
+        isFinalSendStage &&
+        Number(lastSendStage) < maxStage &&
+        sendRelult?.unlocked === false;
+    console.log(currentStage, '---', currentStatus);
+
     let messageContent = null;
     let btnContent = null;
+
     if (sendRelult.unlocked === false) {
-        if (sendRelult.isFinalStage) {
-            messageContent = `恭喜你们成功登顶！赠送永恒礼物，即可登上【永恒见证】头条，全服可见！`;
-            btnContent = (
-                <div className="r_btns">
-                    <div className="rule_a_btn" onClick={closeAlert}>
-                        取消
-                    </div>
-                    <div className="rule_b_btn" onClick={closeAlert}>
-                        <div className="rule_b_btn-div2" onClick={sendFn}>
-                            继续赠送
+        //到达当前阶段返回的是false
+        if (isFinalSendStage) {
+            if (sendRelult.firstSend) {
+                messageContent = `成功登上【永恒见证】头条！珍藏此刻！`;
+                btnContent = (
+                    <div className="r_btns">
+                        <div className="rule_a_btn" onClick={closeAlert}>
+                            取消
                         </div>
-                        <div className="rule_b_btn-div1">
-                            <span></span>
-                            <span>
-                                {giftName.giftValue * sendRelult.pityRemaining}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            );
-        } else if (sendRelult.firstSend) {
-            messageContent = `成功登上【永恒见证】头条！珍藏此刻！`;
-            btnContent = (
-                <div className="r_btns">
-                    <div className="rule_a_btn" onClick={closeAlert}>
-                        取消
-                    </div>
-                    <div className="rule_b_btn" onClick={closeAlert}>
-                        去看看
-                    </div>
-                </div>
-            );
-        } else if (currentStage + 1 < sendRelult.currentStage) {
-            messageContent = null;
-            btnContent = (
-                <div className="r_btns">
-                    <div className="rule_a_btn" onClick={closeAlert}>
-                        取消
-                    </div>
-                    <div className="rule_b_btn" onClick={closeAlert}>
-                        <div className="rule_b_btn-div2" onClick={sendFn}>
-                            继续赠送
-                        </div>
-                        <div className="rule_b_btn-div1">
-                            <span></span>
-                            <span>
-                                {giftName.giftValue * sendRelult.pityRemaining}
-                            </span>
+                        <div
+                            className="rule_b_btn"
+                            onClick={() => {
+                                closeAlert();
+                                setTabFn('2');
+
+                                setShowRank(true);
+                            }}
+                        >
+                            去看看
                         </div>
                     </div>
-                </div>
-            );
-        } else {
+                );
+            } else {
+                messageContent = hideFinalTopMsg
+                    ? null
+                    : `恭喜你们成功登顶！赠送永恒礼物，即可登上【永恒见证】头条，全服可见！`;
+                btnContent = hideFinalTopMsg ? (
+                    <div className="r_btns">
+                        <div className="rule_a_btn" onClick={closeAlert}>
+                            取消
+                        </div>
+                        <div
+                            className="rule_b_btn"
+                            onClick={() => {
+                                sendFn('continue');
+                                closeAlert('continue', false);
+                            }}
+                        >
+                            <div className="rule_b_btn-div2">继续赠送</div>
+                            <div className="rule_b_btn-div1">
+                                <span></span>
+                                <span>{giftName.giftValue}</span>
+                            </div>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="r_btns">
+                        <div className="rule_a_btn" onClick={closeAlert}>
+                            取消
+                        </div>
+                        <div
+                            className="rule_b_btn"
+                            onClick={() => {
+                                sendFn('continue', 6);
+                                closeAlert('continue', false);
+                            }}
+                        >
+                            <div className="rule_b_btn-div2">赠送</div>
+                            <div className="rule_b_btn-div1">
+                                <span></span>
+                                <span>{nextStageJie.giftValue}</span>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+        } else if (currentStageOrigin === -1) {
             messageContent = `信号越来越强烈，再赠送 ${sendRelult.pityRemaining} 次，必解锁下一场景！`;
             btnContent = (
                 <div className="r_btns">
                     <div className="rule_a_btn" onClick={closeAlert}>
                         取消
                     </div>
-                    <div className="rule_b_btn" onClick={closeAlert}>
-                        <div className="rule_b_btn-div2" onClick={sendFn}>
-                            继续赠送
-                        </div>
+                    <div
+                        className="rule_b_btn"
+                        onClick={() => {
+                            sendFn('continue');
+                            closeAlert('continue', false);
+                        }}
+                    >
+                        <div className="rule_b_btn-div2">继续赠送</div>
                         <div className="rule_b_btn-div1">
                             <span></span>
-                            <span>
-                                {giftName.giftValue * sendRelult.pityRemaining}
-                            </span>
+                            <span>{giftName.giftValue}</span>
+                        </div>
+                    </div>
+                </div>
+            );
+        } else {
+            messageContent = null;
+
+            btnContent = (
+                <div className="r_btns">
+                    <div className="rule_a_btn" onClick={closeAlert}>
+                        取消
+                    </div>
+                    <div
+                        className="rule_b_btn"
+                        onClick={() => {
+                            sendFn('continue');
+                            closeAlert('continue', false);
+                        }}
+                    >
+                        <div className="rule_b_btn-div2">继续赠送</div>
+                        <div className="rule_b_btn-div1">
+                            <span></span>
+                            <span>{giftNameOrigin.giftValue * 1}</span>
                         </div>
                     </div>
                 </div>
             );
         }
     } else if (sendRelult.unlocked === true) {
-        messageContent = `成功抵达【${nextStage.name}】触发心动头条！`;
-        btnContent = (
-            <div className="r_btns">
-                <div className="rule_a_btn" onClick={closeAlert}>
-                    取消
+        if (isFinalSendStage) {
+            if (sendRelult.firstSend) {
+                messageContent = `成功登上【永恒见证】头条！珍藏此刻！`;
+                btnContent = (
+                    <div className="r_btns">
+                        <div className="rule_a_btn" onClick={closeAlert}>
+                            取消
+                        </div>
+                        <div
+                            className="rule_b_btn"
+                            onClick={() => {
+                                closeAlert();
+                                setShowRank(true);
+                                setTabFn('2');
+                            }}
+                        >
+                            去看看
+                        </div>
+                    </div>
+                );
+            } else {
+                messageContent = hideFinalTopMsg
+                    ? null
+                    : `恭喜你们成功登顶！赠送永恒礼物，即可登上【永恒见证】头条，全服可见！`;
+                btnContent = hideFinalTopMsg ? (
+                    <div className="r_btns">
+                        <div className="rule_a_btn" onClick={closeAlert}>
+                            取消
+                        </div>
+                        <div
+                            className="rule_b_btn"
+                            onClick={() => {
+                                sendFn('continue', 6);
+                                closeAlert('continue', false);
+                            }}
+                        >
+                            <div className="rule_b_btn-div2">继续赠送</div>
+                            <div className="rule_b_btn-div1">
+                                <span></span>
+                                <span>{giftName.giftValue}</span>
+                            </div>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="r_btns">
+                        <div className="rule_a_btn" onClick={closeAlert}>
+                            取消
+                        </div>
+                        <div
+                            className="rule_b_btn"
+                            onClick={() => {
+                                sendFn('continue', 6);
+                                closeAlert('continue', false);
+                            }}
+                        >
+                            <div className="rule_b_btn-div2">赠送</div>
+                            <div className="rule_b_btn-div1">
+                                <span></span>
+                                <span>{nextStageJie.giftValue}</span>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+        } else {
+            messageContent = `成功抵达【${nextStageJie.name}】触发心动头条！`;
+            btnContent = (
+                <div className="r_btns">
+                    <div className="rule_a_btn" onClick={closeAlert}>
+                        取消
+                    </div>
+                    {currentStage === 0 ? (
+                        <div
+                            className="rule_b_btn"
+                            onClick={() => {
+                                closeAlert();
+                            }}
+                        >
+                            确定
+                        </div>
+                    ) : (
+                        <div
+                            className="rule_b_btn"
+                            onClick={() => {
+                                closeAlert();
+                                setShowRank(true);
+                                setTabFn('1');
+                            }}
+                        >
+                            去看看
+                        </div>
+                    )}
                 </div>
-                <div className="rule_b_btn" onClick={closeAlert}>
-                    去看看
-                </div>
-            </div>
-        );
+            );
+        }
     }
+
+    const btnTips = (
+        <div className="r_text1">
+            您已向 [{voiceUser[currentUser].nickname}] 成功送出 [
+            {sentGift.giftName || '--'}]
+        </div>
+    );
 
     return (
         <Portal>
@@ -167,18 +396,16 @@ const Resultalert = ({
                         <img src={infoUser && infoUser.head_img} alt="" />
                     </div>
                     <div className="result_user_user-2">
-                        <img
-                            src={currentUser && voiceUser[currentUser].avatar}
-                            alt=""
-                        />
+                        <img src={voiceUser[currentUser].avatar} alt="" />
                     </div>
                     <div className="r_heart_icon"></div>
                 </div>
-                <div className="r_text1">
-                    您已向 [{currentUser && voiceUser[currentUser].nickname}]
-                    成功送出 [{giftName.giftName}]
-                </div>
+                {btnTips}
+
                 <div className="r_text2">
+                    <div className="r_gift_icon">
+                        <img src={sentGift.giftIcon} alt="" />
+                    </div>
                     {messageContent}
                     {/* 恭喜你们成功登顶！赠送永恒礼物，即可登上【永恒见证】头条，全服可见！ */}
                 </div>
@@ -188,39 +415,19 @@ const Resultalert = ({
     );
 };
 
-const RankContent = ({ rankData, tabKey, ticket }) => {
-    const [hasMore, setHasMore] = useState(true);
-    const [data, setData] = useState(() => {
-        return rankData ? rankData.items : [];
-    });
-    const todayPage = useRef(2);
-    const loadMore = useCallback(() => {
-        return instance
-            .get('/api/activity/headlines/moment', {
-                params: {
-                    token: ticket,
-                    page: todayPage.current,
-                    pageSize: 10,
-                    activityId: 1,
-                },
-            })
-            .then((d) => {
-                if (d.code === '200') {
-                    setData((val) => [...val, ...d.content.items]);
-                    if (d.content.items.length > 0) {
-                        setHasMore(true);
-                    } else {
-                        setHasMore(false);
-                    }
-                    todayPage.current++;
-                }
-            });
-    }, [ticket]);
+const RankContent = ({
+    data,
+    tabKey,
+    hasMore,
+    currentPage,
+    loadMore,
+    initialized,
+}) => {
     const toFunction = useCallback((event) => {
         // let rid = event.currentTarget.dataset.rid;
         let uid = event.currentTarget.dataset.uid;
 
-        if (searchParam.room === 'full' && uid) {
+        if (uid) {
             appGate.openProfilePage(uid);
         }
     }, []);
@@ -228,295 +435,271 @@ const RankContent = ({ rankData, tabKey, ticket }) => {
         // let rid = event.currentTarget.dataset.rid;
         let uid = event.currentTarget.dataset.uid;
 
-        if (searchParam.room === 'full' && uid) {
+        if (uid) {
             appGate.openRoom(uid);
         }
     }, []);
 
     let liContent = null;
-    if (data && data.length === 0) {
+    if (!initialized) {
+        liContent = null;
+    } else if (data && data.length === 0) {
         liContent = <li className="li__nodata">暂无数据</li>;
     } else if (data && data.length > 0) {
-        liContent =
-            rankData &&
-            data.map((item, index) => {
-                return (
-                    <li key={index}>
+        liContent = data.map((item, index) => {
+            return (
+                <li key={index}>
+                    <div className="rank_one-info">
+                        <div
+                            className="one_info-1"
+                            onClick={
+                                item.senderInRoom ? toRoomFunction : toFunction
+                            }
+                            data-uid={item.senderRoomOwnerUid}
+                        >
+                            <img src={item.senderAvatar} alt="" />
+                        </div>
+                        <div
+                            className="one_info-2"
+                            onClick={
+                                item.receiverInRoom
+                                    ? toRoomFunction
+                                    : toFunction
+                            }
+                            data-uid={item.receiverRoomOwnerUid}
+                        >
+                            <img src={item.receiverAvatar} alt="" />
+                        </div>
+                        <div className="one_info-heart"></div>
+                    </div>
+                    <div className="rank_one-text">{item.message}</div>
+                </li>
+            );
+        });
+    }
+    return (
+        <Fragment>
+            <div className="heart__rank rank_one-warp">
+                <div className="rank__tab">
+                    <div className="rank__tab-content">
+                        <ul>{liContent}</ul>
+                        {data.length > 0 && (hasMore || currentPage > 1) && (
+                            <InfiniteScroll
+                                loadMore={loadMore}
+                                hasMore={hasMore}
+                                threshold={0}
+                            />
+                        )}
+                    </div>
+                </div>
+            </div>
+        </Fragment>
+    );
+};
+const RankThreeContent = ({
+    data,
+    tabKey,
+    hasMore,
+    currentPage,
+    loadMore,
+    initialized,
+}) => {
+    const toFunction = useCallback((event) => {
+        // let rid = event.currentTarget.dataset.rid;
+        let uid = event.currentTarget.dataset.uid;
+
+        if (uid) {
+            appGate.openProfilePage(uid);
+        }
+    }, []);
+    const toRoomFunction = useCallback((event) => {
+        // let rid = event.currentTarget.dataset.rid;
+        let uid = event.currentTarget.dataset.uid;
+
+        if (uid) {
+            appGate.openRoom(uid);
+        }
+    }, []);
+
+    let liContent = null;
+    if (!initialized) {
+        liContent = null;
+    } else if (data && data.length === 0) {
+        liContent = <li className="li__nodata">暂无数据</li>;
+    } else if (data && data.length > 0) {
+        liContent = data.map((item, index) => {
+            return (
+                <li key={index}>
+                    <div className="li_three-time">
+                        <div>
+                            {formatTime(item.lastUnlockTime * 1000, 'y-m-d')}
+                        </div>
+                        <div>已完成阶段 ({item.currentStage}/6）</div>
+                    </div>
+                    <div className="li_three-div">
                         <div className="rank_one-info">
                             <div
                                 className="one_info-1"
                                 onClick={
-                                    tabKey !== '3' ? toFunction : toRoomFunction
+                                    item.senderInRoom
+                                        ? toRoomFunction
+                                        : toFunction
                                 }
-                                data-uid={item.uid}
+                                data-uid={item.senderRoomOwnerUid}
                             >
                                 <img src={item.senderAvatar} alt="" />
                             </div>
-                            <div className="one_info-2">
+                            <div
+                                className="one_info-2"
+                                onClick={
+                                    item.receiverInRoom
+                                        ? toRoomFunction
+                                        : toFunction
+                                }
+                                data-uid={item.receiverRoomOwnerUid}
+                            >
                                 <img src={item.receiverAvatar} alt="" />
                             </div>
                             <div className="one_info-heart"></div>
                         </div>
-                        <div className="rank_one-text">{item.message}</div>
-                    </li>
-                );
-            });
-    }
-    return (
-        <Fragment>
-            {rankData && (
-                <div className="heart__rank rank_one-warp">
-                    <div className="rank__tab">
-                        <div className="rank__tab-content">
-                            <ul>{liContent}</ul>
-                            {rankData.total > 1 && (
-                                <InfiniteScroll
-                                    loadMore={loadMore}
-                                    hasMore={hasMore}
-                                    threshold={0}
-                                />
-                            )}
-                        </div>
-                    </div>
-                </div>
-            )}
-        </Fragment>
-    );
-};
-const RankThreeContent = ({ rankData, tabKey, ticket }) => {
-    const [hasMore, setHasMore] = useState(true);
-    const [data, setData] = useState(() => {
-        return rankData ? rankData.items : [];
-    });
-    const todayPage = useRef(2);
-    const loadMore = useCallback(() => {
-        return instance
-            .get('/api/activity/headlines/diary', {
-                params: {
-                    token: ticket,
-                    page: todayPage.current,
-                    pageSize: 10,
-                    activityId: 1,
-                },
-            })
-            .then((d) => {
-                if (d.code === '200') {
-                    setData((val) => [...val, ...d.content.items]);
-                    if (d.content.items.length > 0) {
-                        setHasMore(true);
-                    } else {
-                        setHasMore(false);
-                    }
-                    todayPage.current++;
-                }
-            });
-    }, [ticket]);
-    const toFunction = useCallback((event) => {
-        // let rid = event.currentTarget.dataset.rid;
-        let uid = event.currentTarget.dataset.uid;
-
-        if (searchParam.room === 'full' && uid) {
-            appGate.openProfilePage(uid);
-        }
-    }, []);
-    const toRoomFunction = useCallback((event) => {
-        // let rid = event.currentTarget.dataset.rid;
-        let uid = event.currentTarget.dataset.uid;
-
-        if (searchParam.room === 'full' && uid) {
-            appGate.openRoom(uid);
-        }
-    }, []);
-    // {
-    //     guestId: 0,
-    //                         guestName: '嘉宾',
-    //                         guestAvatar: '',
-    //                         senderId: 0,
-    //                         senderName: '送礼人',
-    //                         senderAvatar: '',
-    //                         receiverId: 0,
-    //                         receiverName: '收礼人',
-    //                         receiverAvatar: '',
-    //                         currentStage: 2,
-    //                         stageName: '阶段2',
-    //                         lastUnlockTime: 212312312312,
-    //                         roomId: 0,
-    // }
-    let liContent = null;
-    if (data && data.length === 0) {
-        liContent = <li className="li__nodata">暂无数据</li>;
-    } else if (data && data.length > 0) {
-        liContent =
-            rankData &&
-            data.map((item, index) => {
-                return (
-                    <li key={index}>
-                        <div className="li_three-time">
+                        <div className="rank_one-text">
                             <div>
-                                {formatTime(
-                                    item.lastUnlockTime * 1000,
-                                    'y-m-d',
-                                )}
+                                [{item.senderName}]<span>与</span>[
+                                {item.receiverName}]
                             </div>
-                            <div>已完成[场景]阶段 ({item.currentStage}/6）</div>
+                            <div>最近解锁：{item.stageName}</div>
                         </div>
-                        <div className="li_three-div">
-                            <div className="rank_one-info">
-                                <div
-                                    className="one_info-1"
-                                    onClick={
-                                        tabKey !== '3'
-                                            ? toFunction
-                                            : toRoomFunction
-                                    }
-                                    data-uid={item.uid}
-                                >
-                                    <img src={item.senderAvatar} alt="" />
-                                </div>
-                                <div className="one_info-2">
-                                    <img src={item.receiverAvatar} alt="" />
-                                </div>
-                                <div className="one_info-heart"></div>
-                            </div>
-                            <div className="rank_one-text">
-                                <div>
-                                    [{item.senderName}]<span>与</span>[
-                                    {item.receiverName}]
-                                </div>
-                                <div>最近解锁：{item.stageName}</div>
-                            </div>
-                        </div>
-                    </li>
-                );
-            });
+                    </div>
+                </li>
+            );
+        });
     }
     return (
         <Fragment>
-            {rankData && (
-                <div className="heart__rank rank_three-warp">
-                    <div className="rank__tab">
-                        <div className="rank__tab-content">
-                            <ul>{liContent}</ul>
-                            {rankData.total > 1 && (
-                                <InfiniteScroll
-                                    loadMore={loadMore}
-                                    hasMore={hasMore}
-                                    threshold={0}
-                                />
-                            )}
-                        </div>
+            <div className="heart__rank rank_three-warp">
+                <div className="rank__tab">
+                    <div className="rank__tab-content">
+                        <ul>{liContent}</ul>
+                        {data.length > 0 && (hasMore || currentPage > 1) && (
+                            <InfiniteScroll
+                                loadMore={loadMore}
+                                hasMore={hasMore}
+                                threshold={0}
+                            />
+                        )}
                     </div>
                 </div>
-            )}
+            </div>
         </Fragment>
     );
 };
 
-const RankTwoContent = ({ rankData, tabKey, ticket }) => {
-    const [hasMore, setHasMore] = useState(true);
-    const [data, setData] = useState(() => {
-        return rankData ? rankData.items : [];
-    });
-    const todayPage = useRef(2);
-    const loadMore = useCallback(() => {
-        return instance
-            .get('/api/activity/headlines/eternal', {
-                params: {
-                    token: ticket,
-                    page: todayPage.current,
-                    pageSize: 10,
-                    activityId: 1,
-                },
-            })
-            .then((d) => {
-                if (d.code === '200') {
-                    setData((val) => [...val, ...d.content.items]);
-                    if (d.content.items.length > 0) {
-                        setHasMore(true);
-                    } else {
-                        setHasMore(false);
-                    }
-                    todayPage.current++;
-                }
-            });
-    }, [ticket]);
+const RankTwoContent = ({
+    data,
+    tabKey,
+    hasMore,
+    currentPage,
+    loadMore,
+    initialized,
+}) => {
     const toFunction = useCallback((event) => {
         // let rid = event.currentTarget.dataset.rid;
         let uid = event.currentTarget.dataset.uid;
-
-        if (searchParam.room === 'full' && uid) {
+        if (uid) {
             appGate.openProfilePage(uid);
         }
     }, []);
     const toRoomFunction = useCallback((event) => {
         // let rid = event.currentTarget.dataset.rid;
         let uid = event.currentTarget.dataset.uid;
-
-        if (searchParam.room === 'full' && uid) {
+        if (uid) {
             appGate.openRoom(uid);
         }
     }, []);
 
     let liContent = null;
-    if (data && data.length === 0) {
+    if (!initialized) {
+        liContent = null;
+    } else if (data && data.length === 0) {
         liContent = <li className="li__nodata">暂无数据</li>;
     } else if (data && data.length > 0) {
-        liContent =
-            data &&
-            data.map((item, index) => {
-                return (
-                    <li key={index}>
-                        <div className="rank_one-info">
-                            <div
-                                className="one_info-1"
-                                onClick={
-                                    tabKey !== '3' ? toFunction : toRoomFunction
-                                }
-                                data-uid={item.uid}
-                            >
-                                <img src={item.senderAvatar} alt="" />
-                            </div>
-                            <div className="one_info-2">
-                                <img src={item.receiverAvatar} alt="" />
-                            </div>
-                            <div className="one_info-heart"></div>
+        liContent = data.map((item, index) => {
+            return (
+                <li key={index}>
+                    <div className="rank_one-info">
+                        <div
+                            className="one_info-1"
+                            onClick={
+                                item.senderInRoom ? toRoomFunction : toFunction
+                            }
+                            data-uid={item.senderRoomOwnerUid}
+                        >
+                            <img src={item.senderAvatar} alt="" />
                         </div>
-                        <div className="rank_one-alias">
-                            <div>{item.senderName}</div>
-                            <div>{item.receiverName}</div>
+                        <div
+                            className="one_info-2"
+                            onClick={
+                                item.receiverInRoom
+                                    ? toRoomFunction
+                                    : toFunction
+                            }
+                            data-uid={item.receiverRoomOwnerUid}
+                        >
+                            <img src={item.receiverAvatar} alt="" />
                         </div>
-                        <div className="rank_one-text">{item.message}</div>
-                    </li>
-                );
-            });
+                        <div className="one_info-heart"></div>
+                    </div>
+                    <div className="rank_one-alias">
+                        <div>{item.senderName}</div>
+                        <div>{item.receiverName}</div>
+                    </div>
+                    <div className="rank_one-text">{item.message}</div>
+                </li>
+            );
+        });
     }
     return (
         <Fragment>
-            {rankData && (
-                <div className="heart__rank rank_two-warp">
-                    <div className="rank__tab">
-                        <div className="rank__tab-content">
-                            <div className="rank_two-tips">
-                                你的每一次“命定双生”，都是对TA的再次承诺
-                                每次赠礼都会被见证，置顶展示
-                            </div>
-                            <ul>{liContent}</ul>
-                            {rankData.total > 1 && (
-                                <InfiniteScroll
-                                    loadMore={loadMore}
-                                    hasMore={hasMore}
-                                    threshold={0}
-                                />
-                            )}
+            <div className="heart__rank rank_two-warp">
+                <div className="rank__tab">
+                    <div className="rank__tab-content">
+                        <div className="rank_two-tips">
+                            你的每一次“命定双生”，都是对TA的再次承诺
+                            每次赠礼都会被见证，置顶展示
                         </div>
+                        <ul>{liContent}</ul>
+                        {data.length > 0 && (hasMore || currentPage > 1) && (
+                            <InfiniteScroll
+                                loadMore={loadMore}
+                                hasMore={hasMore}
+                                threshold={0}
+                            />
+                        )}
                     </div>
                 </div>
-            )}
+            </div>
         </Fragment>
     );
 };
 
+const StageName = {
+    1: '初遇',
+    2: '同频',
+    3: '升温',
+    4: '心动',
+    5: '承诺',
+    6: '永恒',
+};
 const RankTemplate = ({ ticket }) => {
+    const PAGE_SIZE = 10;
+    const buildPageState = () => ({
+        items: [],
+        page: 0,
+        hasMore: true,
+        loading: false,
+        initialized: false,
+    });
+
     const [showRule, setShowRule] = useState(false);
     const [showResult, setShowResult] = useState(false);
     const [showRank, setShowRank] = useState(false);
@@ -526,15 +709,23 @@ const RankTemplate = ({ ticket }) => {
     const [infoUser, setInfoUser] = useState('');
     const [voiceUser, setVoiceUser] = useState([]);
     const [stages, setStages] = useState([]);
-    const [currentStage, setCurrentStage] = useState(0);
+    const [currentStage, setCurrentStage] = useState(0); // li 索引
+    const [currentStageOrigin, setCurrentStageOrigin] = useState(-1); // li 索引
     const [currentUser, setCurrentUser] = useState(null);
-    const [infoRank, setInfoRank] = useState('');
-    const [infoRankTwo, setInfoRankTwo] = useState('');
-    const [infoRankThree, setInfoRankThree] = useState('');
+    const [rankingState, setRankingState] = useState({
+        1: buildPageState(),
+        2: buildPageState(),
+        3: buildPageState(),
+    });
 
     const [currentStatus, setCurrentStatus] = useState(0);
     const [currentText, setCurrentText] = useState(0);
     const [sendRelult, setSendRelult] = useState('');
+    const [lastSendStage, setLastSendStage] = useState(1);
+    const [probability, setProbability] = useState('');
+    const [btnLast, setBtnLast] = useState(false);
+    const stageRef = useRef(0);
+    const originRef = useRef(-1);
 
     const getUserInfo = useCallback(() => {
         instance
@@ -551,123 +742,27 @@ const RankTemplate = ({ ticket }) => {
         instance
             .post('/api/v1/room/getRoomVoiceLists', {
                 token: ticket,
-                room_id: searchParam.roomid,
+                room_id: searchParam.ruid,
             })
             .then((e) => {
-                e.content = [
-                    {
-                        rid: '10',
-                        uid: '49',
-                        avatar: 'https://s3.njxianyuwl.cn/dev/2026-03-31/21-103/1774965247873222536.png',
-                        nickname: '曾经的鞋子',
-                        sex: '1',
-                        volume: '2',
-                        seat: '99',
-                        seatFormat: '老板',
-                        rank: '0',
-                        avatarFrame: '',
-                        sound_wave_id: '',
-                        wheat_msg: '',
-                        wheat_img:
-                            'https://s3.njxianyuwl.cn/dev/2023-11-29/17-103ht1701249711772920315.png',
-                    },
-                    {
-                        rid: '10',
-                        uid: '61',
-                        avatar: 'https://s3.njxianyuwl.cn/dev/2026-03-31/21-103/1774965305047829391.png',
-                        nickname: '富有想象力的汉堡',
-                        sex: '2',
-                        volume: '2',
-                        seat: '88',
-                        seatFormat: '主持',
-                        rank: '0',
-                        avatarFrame: '',
-                        sound_wave_id: '',
-                        wheat_msg: '',
-                        wheat_img:
-                            'https://s3.njxianyuwl.cn/dev/2023-11-29/17-103ht1701249711772920315.png',
-                    },
-                    {
-                        rid: '10',
-                        uid: '54',
-                        avatar: 'https://s3.njxianyuwl.cn/dev/2026-03-31/21-103/1774965280005663532.png',
-                        nickname: '孤独的仙人掌',
-                        sex: '2',
-                        volume: '2',
-                        seat: '1',
-                        seatFormat: '1',
-                        rank: '0',
-                        avatarFrame: '',
-                        sound_wave_id: '',
-                        wheat_msg: '',
-                        wheat_img:
-                            'https://s3.njxianyuwl.cn/dev/2023-11-29/17-103ht1701249711772920315.png',
-                    },
-                    {
-                        rid: '10',
-                        uid: '62',
-                        avatar: 'https://s3.njxianyuwl.cn/dev/2026-03-31/21-103/1774965247873222536.png',
-                        nickname: '率真的老鼠',
-                        sex: '2',
-                        volume: '2',
-                        seat: '2',
-                        seatFormat: '2',
-                        rank: '0',
-                        avatarFrame: '',
-                        sound_wave_id: '',
-                        wheat_msg: '',
-                        wheat_img:
-                            'https://s3.njxianyuwl.cn/dev/2023-11-29/17-103ht1701249711772920315.png',
-                    },
-                    {
-                        rid: '10',
-                        uid: '50',
-                        avatar: 'https://s3.njxianyuwl.cn/dev/2026-03-31/21-103/1774965280005663532.png',
-                        nickname: '娇气的白昼',
-                        sex: '1',
-                        volume: '2',
-                        seat: '3',
-                        seatFormat: '2',
-                        rank: '0',
-                        avatarFrame: '',
-                        sound_wave_id: '',
-                        wheat_msg: '',
-                        wheat_img:
-                            'https://s3.njxianyuwl.cn/dev/2023-11-29/17-103ht1701249711772920315.png',
-                    },
-                    {
-                        rid: '10',
-                        uid: '50',
-                        avatar: 'https://s3.njxianyuwl.cn/dev/2026-03-31/21-103/1774965280005663532.png',
-                        nickname: '娇气的白昼',
-                        sex: '1',
-                        volume: '2',
-                        seat: '3',
-                        seatFormat: '2',
-                        rank: '0',
-                        avatarFrame: '',
-                        sound_wave_id: '',
-                        wheat_msg: '',
-                        wheat_img:
-                            'https://s3.njxianyuwl.cn/dev/2023-11-29/17-103ht1701249711772920315.png',
-                    },
-                    {
-                        rid: '10',
-                        uid: '50',
-                        avatar: 'https://s3.njxianyuwl.cn/dev/2026-03-31/21-103/1774965280005663532.png',
-                        nickname: '娇气的白昼',
-                        sex: '1',
-                        volume: '2',
-                        seat: '3',
-                        seatFormat: '2',
-                        rank: '0',
-                        avatarFrame: '',
-                        sound_wave_id: '',
-                        wheat_msg: '',
-                        wheat_img:
-                            'https://s3.njxianyuwl.cn/dev/2023-11-29/17-103ht1701249711772920315.png',
-                    },
-                ];
+                // e.content = [
+                //     {
+                //         rid: '10',
+                //         uid: '49',
+                //         avatar: 'https://s3.njxianyuwl.cn/dev/2026-03-31/21-103/1774965247873222536.png',
+                //         nickname: '曾经的鞋子',
+                //         sex: '1',
+                //         volume: '2',
+                //         seat: '99',
+                //         seatFormat: '老板',
+                //         rank: '0',
+                //         avatarFrame: '',
+                //         sound_wave_id: '',
+                //         wheat_msg: '',
+                //         wheat_img:
+                //             'https://s3.njxianyuwl.cn/dev/2023-11-29/17-103ht1701249711772920315.png',
+                //     },
+                // ];
                 if (e.code === '200') {
                     setVoiceUser(e.content);
                 }
@@ -684,103 +779,87 @@ const RankTemplate = ({ ticket }) => {
                 },
             })
             .then((d) => {
-                console.log(d);
+                d.content.stages.forEach((i, d) => {
+                    if (d === 0) {
+                        i.status = 2;
+                    } else if (d === 1) {
+                        i.status = 1;
+                    } else {
+                        i.status = 0;
+                    }
+                });
                 setInfo(d.content);
                 setStages(d.content.stages);
                 setCurrentStage(-1);
             });
     }, [ticket]);
 
-    const getRankInfo = useCallback(() => {
-        instanceGame
-            .get('/api/activity/headlines/moment', {
-                params: {
-                    activityId: 1,
-                    page: 1,
-                    pageSize: 10,
-                    token: ticket,
-                },
-            })
-            .then((d) => {
-                setInfoRank(d.content);
-            });
-    }, [ticket]);
-
-    const getRankInfoTwo = useCallback(() => {
-        instanceGame
-            .get('/api/activity/headlines/eternal', {
-                params: {
-                    activityId: 1,
-                    page: 1,
-                    pageSize: 10,
-                    token: ticket,
-                },
-            })
-            .then((d) => {
-                d.content = {
-                    items: [
-                        {
-                            message:
-                                '用户A送出1个心动礼物，触发了心动感应，成功解锁了与嘉宾B的恋爱进阶之路',
-                            senderAvatar: '',
-                            senderName: '用户A',
-                            receiverName: '嘉宾B',
-                            receiverAvatar: '',
-                        },
-                    ],
-                    total: 1,
-                };
-                setInfoRankTwo(d.content);
-            });
-    }, [ticket]);
-    const getRankInfoThree = useCallback(() => {
-        instanceGame
-            .get('/api/activity/headlines/diary', {
-                params: {
-                    activityId: 1,
-                    page: 1,
-                    pageSize: 10,
-                    token: ticket,
-                },
-            })
-            .then((d) => {
-                d.content = {
-                    items: [
-                        {
-                            guestId: 0,
-                            guestName: '嘉宾',
-                            guestAvatar: '',
-                            senderId: 0,
-                            senderName: '送礼人',
-                            senderAvatar: '',
-                            receiverId: 0,
-                            receiverName: '收礼人',
-                            receiverAvatar: '',
-                            currentStage: 2,
-                            stageName: '阶段2',
-                            lastUnlockTime: 212312312312,
-                            roomId: 0,
-                        },
-                    ],
-                    total: 1,
-                };
-                setInfoRankThree(d.content);
-            });
-    }, [ticket]);
-
-    const setTabFn = useCallback(
-        (key) => {
-            setTabKey(key);
-            if (key === '1') {
-                getRankInfo();
-            } else if (key === '2') {
-                getRankInfoTwo();
-            } else {
-                getRankInfoThree();
+    const fetchRankingPage = useCallback(
+        (rankingType, page, append) => {
+            const endpointMap = {
+                1: '/api/activity/headlines/moment',
+                2: '/api/activity/headlines/eternal',
+                3: '/api/activity/headlines/diary',
+            };
+            const endpoint = endpointMap[rankingType];
+            if (!endpoint) {
+                return Promise.resolve();
             }
+
+            setRankingState((prev) => ({
+                ...prev,
+                [rankingType]: {
+                    ...prev[rankingType],
+                    loading: true,
+                },
+            }));
+
+            return instanceGame
+                .get(endpoint, {
+                    params: {
+                        activityId: 1,
+                        page,
+                        pageSize: PAGE_SIZE,
+                        token: ticket,
+                    },
+                })
+                .then((d) => {
+                    if (d.code !== '200') return;
+                    const items = d?.content?.items || [];
+                    setRankingState((prev) => {
+                        const oldItems = append ? prev[rankingType].items : [];
+                        const nextItems = [...oldItems, ...items];
+                        const total = Number(d?.content?.total || 0);
+                        return {
+                            ...prev,
+                            [rankingType]: {
+                                ...prev[rankingType],
+                                items: nextItems,
+                                page,
+                                hasMore: nextItems.length < total,
+                                loading: false,
+                                initialized: true,
+                            },
+                        };
+                    });
+                })
+                .catch(() => {
+                    setRankingState((prev) => ({
+                        ...prev,
+                        [rankingType]: {
+                            ...prev[rankingType],
+                            loading: false,
+                            initialized: true,
+                        },
+                    }));
+                });
         },
-        [getRankInfo, getRankInfoTwo, getRankInfoThree],
+        [ticket],
     );
+
+    const setTabFn = useCallback((key) => {
+        setTabKey(key);
+    }, []);
     const ruleFn = useCallback((key) => {
         setShowRule(true);
     }, []);
@@ -791,12 +870,12 @@ const RankTemplate = ({ ticket }) => {
     const stagesLiFn = useCallback(
         (event) => {
             let index = event.currentTarget.dataset.index;
-            let unlocked = event.currentTarget.dataset.unlocked;
-
-            if (
-                (unlocked === 'false' && voiceUser !== null) ||
-                (unlocked === undefined && index > 0)
-            ) {
+            let status = event.currentTarget.dataset.status;
+            if (status !== '2') {
+                // 未解锁时回退到当前可赠送阶段，避免污染后续“赠送”参数
+                stageRef.current = Math.max(1, currentStatus - 1);
+                setCurrentStage(Math.max(-1, currentStatus - 2));
+                setCurrentStageOrigin(-1);
                 Dialog.alert({
                     content: '请按场景顺序解锁哦！',
                     confirmText: '确定',
@@ -804,52 +883,104 @@ const RankTemplate = ({ ticket }) => {
                 });
                 return false;
             }
-            console.log(currentStatus);
+
+            stageRef.current = info.stages[index].stage;
             setCurrentStage(Number(index));
-            setCurrentStatus(0);
+            setCurrentStageOrigin(Number(index));
+            originRef.current = Number(index);
         },
-        [voiceUser, currentStatus],
+        [info, currentStatus],
     );
 
     const getProgressFn = useCallback(
-        async (uid) => {
+        async (uid, source = 'normal') => {
             instanceGame
                 .get('/api/activity/progress', {
                     params: {
                         activityId: 1,
-                        guestId: uid,
+                        guestId: uid || voiceUser[currentUser].uid,
                         token: ticket,
                     },
                 })
                 .then((d) => {
-                    d.content.currentStage = 6;
-                    d.content.pityLimit = 8;
-                    d.content.pityCounter = 7;
+                    // d.content.currentStage = 6;
+                    // d.content.pityLimit = 8;
+                    // d.content.pityCounter = 7;
+                    // d.content.currentStage =
+                    //     d.content.currentStage > 6 ? 6 : d.content.currentStage;
+                    // console.log(d.content.currentStage);
                     if (d.code === '200') {
                         setInfo(d.content);
                         setStages(d.content.stages);
                         setCurrentStatus(d.content.currentStage);
                         setCurrentText(d.content.currentStage);
-                        setCurrentStage(d.content.currentStage - 1);
+                        setCurrentStage(d.content.currentStage - 2);
+                        stageRef.current = Math.max(
+                            1,
+                            d.content.currentStage - 1,
+                        );
+                        // setCurrentStageOrigin(-1);
+
+                        if (source === 'continue') {
+                            setCurrentStageOrigin(originRef.current);
+                            //弹窗出现  继续赠送按钮
+                        } else {
+                            setCurrentStageOrigin(-1);
+                        }
+                        // } else {
+                        //     if (stageRef.current > 0) {
+                        //         //如果点击了已经解锁的
+                        //         setCurrentStageOrigin(stageRef.current);
+                        //         stageRef.current = 0;
+                        //     } else {
+                        //         setCurrentStageOrigin(-1);
+                        //     }
+                        // }
+
+                        setProbability(d.content.unlockProbability);
+                        if (d.content.pityLimit - d.content.pityCounter === 1) {
+                            //最后一次解锁
+                            setBtnLast(true);
+                        } else {
+                            setBtnLast(false);
+                        }
                     }
                 });
         },
-        [ticket],
+        [ticket, currentUser, voiceUser],
     );
 
     const voiceUserLiFn = useCallback(
         (event) => {
             let index = event.currentTarget.dataset.index;
             let uid = event.currentTarget.dataset.suid;
+            if (uid === infoUser.uid) {
+                Dialog.alert({
+                    content: '不能选择自己哦！',
+                    confirmText: '确定',
+                    onConfirm: () => {},
+                });
+                return false;
+            }
             setCurrentUser(Number(index));
             getProgressFn(uid);
         },
-        [getProgressFn],
+        [getProgressFn, infoUser],
     );
 
     const sendFn = useCallback(
-        (event) => {
-            let quantity = event.currentTarget.dataset.quantity;
+        (eventOrSource, forcedStage) => {
+            const event =
+                typeof eventOrSource === 'string' ? null : eventOrSource;
+            let quantity = event?.currentTarget?.dataset.quantity || 1;
+            const stageToSend = Number(
+                typeof forcedStage === 'number'
+                    ? forcedStage
+                    : stageRef.current,
+            );
+            const safeStageToSend = Math.max(1, stageToSend);
+            const sendQuantity = Number(quantity) || 1;
+
             if (currentUser === null) {
                 Dialog.alert({
                     content: '请选择接收感应的CP！',
@@ -858,261 +989,158 @@ const RankTemplate = ({ ticket }) => {
                 });
                 return false;
             }
+
+            const stageConfig = stages.find(
+                (i) => Number(i.stage) === safeStageToSend,
+            );
+            const giftValue = parseAmount(stageConfig?.giftValue);
+            const currentBalance = parseAmount(infoUser?.coin);
+            const totalCost = giftValue * sendQuantity;
+            if (totalCost > 0 && currentBalance < totalCost) {
+                Dialog.alert({
+                    content: `余额不足，当前需${totalCost}，余额${currentBalance}`,
+                    confirmText: '确定',
+                    onConfirm: () => {},
+                });
+                return false;
+            }
+
             instanceGame
                 .post('/api/activity/gift/send', {
                     activityId: 1,
                     receiverId: Number(voiceUser[currentUser].uid),
                     senderId: Number(infoUser.uid),
-                    stage: currentStage + 1,
-                    quantity: Number(quantity),
+                    //  如果点击的是当前解锁的 用currentStage，如果点击已经解锁过的用currentStageOrigin
+                    // stage:
+                    //     currentStage === currentStageOrigin + 1 ||
+                    //     currentStageOrigin === -1
+                    //         ? currentStage + 1
+                    //         : currentStageOrigin + 1,
+                    stage: safeStageToSend,
+                    quantity: sendQuantity,
                     token: ticket,
+                    roomOwnerUid: Number(searchParam.ruid),
                 })
                 .then((d) => {
                     //currentStage：送礼后当前阶段
                     // maxStage：最大阶段（当前是 6）
                     // isFinalStage：是否已到最终阶段
                     // firstSend：该送礼方对该收礼方在本活动是否首次送出
-                    d.content = {
-                        unlocked: false,
-                        newStage: 2,
-                        pityRemaining: 1,
-                        broadcastMsg: '2',
-                        currentStage: 3,
-                        maxStage: 6,
-                        isFinalStage: true,
-                        firstSend: true,
-                    };
-                    setSendRelult(d.content);
-                    setShowResult(true);
+                    // d.content = {
+                    //     unlocked: false,
+                    //     newStage: 2,
+                    //     pityRemaining: 1,
+                    //     broadcastMsg: '2',
+                    //     currentStage: 3,
+                    //     maxStage: 6,
+                    //     isFinalStage: true,
+                    //     firstSend: true,
+                    // };
+                    if (d.code === '200') {
+                        setLastSendStage(safeStageToSend);
+                        setSendRelult(d.content);
+                        setShowResult(true);
+                        // 弹窗按本次实际赠送阶段展示，避免被进度阶段覆盖
+                        setCurrentStage(safeStageToSend - 1);
+                        getUserInfo();
+                    }
                 });
         },
-        [ticket, infoUser, currentUser, voiceUser, currentStage],
+        [ticket, infoUser, currentUser, stages, voiceUser, getUserInfo],
     );
 
-    const btnContent = {
-        1: (
+    // let btnContent = null;
+
+    let btnContent = null;
+    if (currentStage === -1) {
+        //初始化
+        btnContent = (
             <>
-                <div className="btns_1" data-quantity="1" onClick={sendFn}>
+                <div className="btns_1" onClick={sendFn} data-quantity="1">
                     <div>赠送1个</div>
                     <div>概率解锁</div>
                 </div>
-                <div className="btns_2" data-quantity="5" onClick={sendFn}>
+                <div className="btns_2" onClick={sendFn} data-quantity={'5'}>
                     <div>赠送5个</div>
                     <div>一键解锁</div>
                 </div>
             </>
-        ),
-        2: (
-            <>
-                {info && info.pityLimit - info.pityCounter === 1 ? (
+        );
+    } else if (currentStage > -1) {
+        if (currentStage === currentStatus - 2) {
+            // 是当前解锁的
+            if (btnLast) {
+                btnContent = (
                     <div
                         className="btns_2"
+                        onClick={sendFn}
                         data-quantity={
                             info && info.pityLimit - info.pityCounter
                         }
-                        onClick={sendFn}
                     >
                         <div>
                             赠送{info && info.pityLimit - info.pityCounter}个
                         </div>
                         <div>一键解锁</div>
                     </div>
-                ) : (
-                    <>
-                        <div
-                            className="btns_1"
-                            data-quantity="1"
-                            onClick={sendFn}
-                        >
-                            <div>赠送1个</div>
-                            <div>概率解锁</div>
-                        </div>
-                        <div
-                            className="btns_2"
-                            data-quantity={
-                                info && info.pityLimit - info.pityCounte
-                            }
-                            onClick={sendFn}
-                        >
-                            <div>
-                                赠送{info && info.pityLimit - info.pityCounter}
-                                个
+                );
+            } else {
+                if (currentStage === 5) {
+                    btnContent = (
+                        <>
+                            <div
+                                className="btns_1"
+                                onClick={sendFn}
+                                data-quantity="1"
+                            >
+                                <div>赠送1个</div>
+                                <div>荣登永恒见证</div>
                             </div>
-                            <div>一键解锁</div>
-                        </div>
-                    </>
-                )}
-            </>
-        ),
-        3: (
-            <>
-                {info && info.pityLimit - info.pityCounter === 1 ? (
-                    <div
-                        className="btns_2"
-                        data-quantity={
-                            info && info.pityLimit - info.pityCounter
-                        }
-                        onClick={sendFn}
-                    >
-                        <div>
-                            赠送{info && info.pityLimit - info.pityCounter}个
-                        </div>
-                        <div>一键解锁</div>
-                    </div>
-                ) : (
-                    <>
-                        <div
-                            className="btns_1"
-                            data-quantity="1"
-                            onClick={sendFn}
-                        >
-                            <div>赠送1个</div>
-                            <div>概率解锁</div>
-                        </div>
-                        <div
-                            className="btns_2"
-                            data-quantity={
-                                info && info.pityLimit - info.pityCounter
-                            }
-                            onClick={sendFn}
-                        >
-                            <div>
-                                赠送{info && info.pityLimit - info.pityCounter}
-                                个
+                        </>
+                    );
+                } else {
+                    btnContent = (
+                        <>
+                            <div
+                                className="btns_1"
+                                onClick={sendFn}
+                                data-quantity="1"
+                            >
+                                <div>赠送1个</div>
+                                <div>概率解锁</div>
                             </div>
-                            <div>一键解锁</div>
-                        </div>
-                    </>
-                )}
-            </>
-        ),
-        4: (
-            <>
-                {info && info.pityLimit - info.pityCounter === 1 ? (
-                    <div
-                        className="btns_2"
-                        data-quantity={
-                            info && info.pityLimit - info.pityCounter
-                        }
-                        onClick={sendFn}
-                    >
-                        <div>
-                            赠送{info && info.pityLimit - info.pityCounter}个
-                        </div>
-                        <div>一键解锁</div>
-                    </div>
-                ) : (
-                    <>
-                        <div
-                            className="btns_1"
-                            data-quantity="1"
-                            onClick={sendFn}
-                        >
-                            <div>赠送1个</div>
-                            <div>概率解锁</div>
-                        </div>
-                        <div
-                            className="btns_2"
-                            data-quantity={
-                                info && info.pityLimit - info.pityCounter
-                            }
-                            onClick={sendFn}
-                        >
-                            <div>
-                                赠送{info && info.pityLimit - info.pityCounter}
-                                个
+                            <div
+                                className="btns_2"
+                                onClick={sendFn}
+                                data-quantity={
+                                    info && info.pityLimit - info.pityCounter
+                                }
+                            >
+                                <div>
+                                    赠送
+                                    {info && info.pityLimit - info.pityCounter}
+                                    个
+                                </div>
+                                <div>一键解锁</div>
                             </div>
-                            <div>一键解锁</div>
-                        </div>
-                    </>
-                )}
-            </>
-        ),
-        5: (
-            <>
-                {info && info.pityLimit - info.pityCounter === 1 ? (
-                    <div
-                        className="btns_2"
-                        data-quantity={
-                            info && info.pityLimit - info.pityCounter
-                        }
-                        onClick={sendFn}
-                    >
-                        <div>
-                            赠送{info && info.pityLimit - info.pityCounter}个
-                        </div>
-                        <div>一键解锁</div>
-                    </div>
-                ) : (
-                    <>
-                        <div
-                            className="btns_1"
-                            data-quantity="1"
-                            onClick={sendFn}
-                        >
-                            <div>赠送1个</div>
-                            <div>概率解锁</div>
-                        </div>
-                        <div
-                            className="btns_2"
-                            data-quantity={
-                                info && info.pityLimit - info.pityCounter
-                            }
-                            onClick={sendFn}
-                        >
-                            <div>
-                                赠送{info && info.pityLimit - info.pityCounter}
-                                个
-                            </div>
-                            <div>一键解锁</div>
-                        </div>
-                    </>
-                )}
-            </>
-        ),
-        6: (
-            <>
-                {info && info.pityLimit - info.pityCounter === 1 ? (
+                        </>
+                    );
+                }
+            }
+        } else {
+            btnContent = (
+                <>
                     <div
                         className="btns_2"
                         onClick={sendFn}
-                        data-quantity={
-                            info && info.pityLimit - info.pityCounter
-                        }
+                        data-quantity={'1'}
                     >
-                        <div>
-                            赠送{info && info.pityLimit - info.pityCounter}个
-                        </div>
-                        <div>荣登永恒见证</div>
+                        <div>赠送1个</div>
                     </div>
-                ) : (
-                    <>
-                        <div
-                            className="btns_1"
-                            onClick={sendFn}
-                            data-quantity="1"
-                        >
-                            <div>赠送1个</div>
-                            <div>概率解锁</div>
-                        </div>
-                        <div
-                            className="btns_2"
-                            onClick={sendFn}
-                            data-quantity={
-                                info && info.pityLimit - info.pityCounter
-                            }
-                        >
-                            <div>
-                                赠送{info && info.pityLimit - info.pityCounter}
-                                个
-                            </div>
-                            <div>一键解锁</div>
-                        </div>
-                    </>
-                )}
-            </>
-        ),
-    };
+                </>
+            );
+        }
+    }
 
     // useEffect(() => {
     //     appGate.listen('300').then((data) => {
@@ -1130,13 +1158,49 @@ const RankTemplate = ({ ticket }) => {
     }, [getRank, getUserInfo, getUserVoice]);
 
     useEffect(() => {
-        showRank && getRankInfo();
-    }, [getRankInfo, showRank]);
+        if (!showRank) return;
+        const rankingType = Number(tabKey || '1');
+        setRankingState((prev) => ({
+            ...prev,
+            [rankingType]: buildPageState(),
+        }));
+        fetchRankingPage(rankingType, 1, false);
+    }, [showRank, tabKey, fetchRankingPage]);
+
+    const currentRankingType = Number(tabKey);
+    const currentRankingState =
+        rankingState[currentRankingType] || buildPageState();
+    const loadMoreRank = useCallback(() => {
+        if (currentRankingState.loading || !currentRankingState.hasMore) {
+            return Promise.resolve();
+        }
+        return fetchRankingPage(
+            currentRankingType,
+            currentRankingState.page + 1,
+            true,
+        );
+    }, [currentRankingState, currentRankingType, fetchRankingPage]);
 
     let mainContent = null;
     if (!info && !infoUser) {
         mainContent = <BlockLoading />;
     } else if (info && infoUser) {
+        let nameText;
+        if (currentText > 0 && currentText < 7) {
+            nameText = (
+                <div className="g_text">
+                    {currentText > 0
+                        ? stages.find((i) => i.stage === currentText - 1)
+                              .giftName
+                        : '恋恋相遇'}
+                </div>
+            );
+        } else if (currentText === 0 && currentText === 0) {
+            nameText = <div className="g_text">恋恋相遇</div>;
+        } else {
+            nameText = <div className="g_text">命定双生</div>;
+        }
+
         mainContent = (
             <Fragment>
                 {!showRank && (
@@ -1215,68 +1279,143 @@ const RankTemplate = ({ ticket }) => {
                                 <div className="gift_ul">
                                     <ul>
                                         {stages.map((item, index) => {
-                                            return (
-                                                <li
-                                                    key={index}
-                                                    data-index={index}
-                                                    onClick={
-                                                        currentStage === -1 &&
-                                                        index === 0
-                                                            ? () => {}
-                                                            : stagesLiFn
-                                                    }
-                                                    data-unlocked={
-                                                        item.unlocked
-                                                    }
-                                                    className={
-                                                        currentStatus > 0
-                                                            ? currentStatus -
-                                                                  1 ===
-                                                              index
-                                                                ? 'activeLi'
-                                                                : ''
-                                                            : currentStage ===
-                                                                    -1 &&
-                                                                index === 0
-                                                              ? 'activeLi'
-                                                              : currentStage ===
-                                                                  index
-                                                                ? 'activeLi'
-                                                                : ''
-                                                    }
-                                                >
-                                                    <div className="gift__warp">
-                                                        <img
-                                                            src={item.giftIcon}
-                                                            alt=""
-                                                        />
-                                                    </div>
-                                                    <div className="gift_name">
-                                                        {item.giftName}
-                                                    </div>
-                                                    <div
-                                                        className={
-                                                            'gift_label' +
-                                                            item.stage
+                                            let liContent = null;
+                                            if (item.status === 0) {
+                                                liContent = (
+                                                    <li
+                                                        key={index}
+                                                        data-index={index}
+                                                        onClick={stagesLiFn}
+                                                        data-status={
+                                                            item.status
+                                                        }
+                                                        // className={'gray_c'}
+                                                    >
+                                                        <div className="gift__warp"></div>
+                                                        <div className="gift_name">
+                                                            {item.giftName}
+                                                        </div>
+                                                        <div
+                                                            className={
+                                                                'gift_label' +
+                                                                item.stage
+                                                            }
+                                                        >
+                                                            {
+                                                                StageName[
+                                                                    item.stage
+                                                                ]
+                                                            }
+                                                        </div>
+
+                                                        <div className="acti_icon"></div>
+                                                        <div className="li_suo"></div>
+                                                    </li>
+                                                );
+                                            } else if (item.status === 1) {
+                                                liContent = (
+                                                    <li
+                                                        key={index}
+                                                        data-index={index}
+                                                        onClick={stagesLiFn}
+                                                        data-status={
+                                                            item.status
                                                         }
                                                     >
-                                                        {item.name}
-                                                    </div>
-                                                    <div className="gift_money">
-                                                        <span></span>
-                                                        <span>
-                                                            {item.giftValue}
-                                                        </span>
-                                                    </div>
-                                                    <div className="acti_icon"></div>
-                                                    {item.unlocked === undefined
-                                                        ? index > 0 && (
-                                                              <div className="li_suo"></div>
-                                                          )
-                                                        : !item.unlocked && (
-                                                              <div className="li_suo"></div>
-                                                          )}
-                                                </li>
+                                                        <div className="gift__warp"></div>
+                                                        <div className="gift_name">
+                                                            {item.giftName}
+                                                        </div>
+                                                        {/* 赠送$
+                                                        {
+                                                            StageName[
+                                                                currentStatus +
+                                                                    1
+                                                            ]
+                                                        } */}
+                                                        <div className="gift_text2">
+                                                            {currentStatus < 6
+                                                                ? probability
+                                                                    ? `${probability}%概率解锁`
+                                                                    : `${item.unlockProbability}%概率解锁`
+                                                                : ''}
+                                                        </div>
+                                                        <div
+                                                            className={
+                                                                'gift_label' +
+                                                                item.stage
+                                                            }
+                                                        >
+                                                            {
+                                                                StageName[
+                                                                    item.stage
+                                                                ]
+                                                            }
+                                                        </div>
+                                                        <div className="acti_icon"></div>
+                                                        <div className="li_suo"></div>
+                                                    </li>
+                                                );
+                                            } else {
+                                                liContent = (
+                                                    <li
+                                                        key={index}
+                                                        data-index={index}
+                                                        onClick={
+                                                            currentStage === -1
+                                                                ? () => {}
+                                                                : stagesLiFn
+                                                        }
+                                                        data-status={
+                                                            item.status
+                                                        }
+                                                        className={
+                                                            currentStage === -1
+                                                                ? 'activeLi'
+                                                                : currentStage ===
+                                                                    index
+                                                                  ? 'activeLi'
+                                                                  : ''
+                                                        }
+                                                    >
+                                                        <div className="gift__warp">
+                                                            <img
+                                                                src={
+                                                                    item.giftIcon
+                                                                }
+                                                                alt=""
+                                                            />
+                                                        </div>
+                                                        <div className="gift_name">
+                                                            {item.giftName}
+                                                        </div>
+                                                        <div
+                                                            className={
+                                                                'gift_label' +
+                                                                item.stage
+                                                            }
+                                                        >
+                                                            {
+                                                                StageName[
+                                                                    item.stage
+                                                                ]
+                                                            }
+                                                        </div>
+                                                        <div className="gift_money">
+                                                            <span></span>
+                                                            <span>
+                                                                {item.giftValue}
+                                                            </span>
+                                                        </div>
+                                                        <div className="acti_icon"></div>
+                                                    </li>
+                                                );
+                                            }
+
+                                            return (
+                                                <Fragment key={index}>
+                                                    {liContent}
+                                                </Fragment>
                                             );
                                         })}
                                     </ul>
@@ -1303,45 +1442,9 @@ const RankTemplate = ({ ticket }) => {
                                     </div>
                                     <div className="heart_icon"></div>
                                 </div>
-                                <div className="g_text">
-                                    {currentText > 0
-                                        ? stages.find(
-                                              (i) => i.stage === currentText,
-                                          ).giftName
-                                        : '恋恋相遇'}
-                                </div>
-                                <div className="btns_warp">
-                                    {currentStatus > 0 ? (
-                                        btnContent[currentStatus]
-                                    ) : currentStage === -1 ? (
-                                        <>
-                                            <div
-                                                className="btns_1"
-                                                data-quantity="1"
-                                                onClick={sendFn}
-                                            >
-                                                <div>赠送1个</div>
-                                                <div>概率解锁</div>
-                                            </div>
-                                            <div
-                                                className="btns_2"
-                                                data-quantity="5"
-                                                onClick={sendFn}
-                                            >
-                                                <div>赠送5个</div>
-                                                <div>一键解锁</div>
-                                            </div>
-                                        </>
-                                    ) : (
-                                        <div
-                                            className="btns_1"
-                                            data-quantity="1"
-                                            onClick={sendFn}
-                                        >
-                                            <div>赠送1个</div>
-                                        </div>
-                                    )}
-                                </div>
+                                {nameText}
+
+                                <div className="btns_warp">{btnContent}</div>
                             </div>
                         </div>
                     </Fragment>
@@ -1376,13 +1479,16 @@ const RankTemplate = ({ ticket }) => {
                                         }
                                         key="1"
                                     >
-                                        {infoRank && (
-                                            <RankContent
-                                                rankData={infoRank}
-                                                tabKey={tabKey}
-                                                ticket={ticket}
-                                            ></RankContent>
-                                        )}
+                                        <RankContent
+                                            data={rankingState[1].items}
+                                            tabKey={tabKey}
+                                            hasMore={rankingState[1].hasMore}
+                                            currentPage={rankingState[1].page}
+                                            loadMore={loadMoreRank}
+                                            initialized={
+                                                rankingState[1].initialized
+                                            }
+                                        ></RankContent>
                                     </Tabs.Tab>
                                     <Tabs.Tab
                                         title={
@@ -1392,13 +1498,16 @@ const RankTemplate = ({ ticket }) => {
                                         }
                                         key="2"
                                     >
-                                        {infoRankTwo && (
-                                            <RankTwoContent
-                                                rankData={infoRankTwo}
-                                                tabKey={tabKey}
-                                                ticket={ticket}
-                                            ></RankTwoContent>
-                                        )}
+                                        <RankTwoContent
+                                            data={rankingState[2].items}
+                                            tabKey={tabKey}
+                                            hasMore={rankingState[2].hasMore}
+                                            currentPage={rankingState[2].page}
+                                            loadMore={loadMoreRank}
+                                            initialized={
+                                                rankingState[2].initialized
+                                            }
+                                        ></RankTwoContent>
                                     </Tabs.Tab>
                                     <Tabs.Tab
                                         title={
@@ -1408,13 +1517,16 @@ const RankTemplate = ({ ticket }) => {
                                         }
                                         key="3"
                                     >
-                                        {infoRankThree && (
-                                            <RankThreeContent
-                                                rankData={infoRankThree}
-                                                tabKey={tabKey}
-                                                ticket={ticket}
-                                            ></RankThreeContent>
-                                        )}
+                                        <RankThreeContent
+                                            data={rankingState[3].items}
+                                            tabKey={tabKey}
+                                            hasMore={rankingState[3].hasMore}
+                                            currentPage={rankingState[3].page}
+                                            loadMore={loadMoreRank}
+                                            initialized={
+                                                rankingState[3].initialized
+                                            }
+                                        ></RankThreeContent>
                                     </Tabs.Tab>
                                 </Tabs>
                             </div>
@@ -1443,6 +1555,13 @@ const RankTemplate = ({ ticket }) => {
                     stages={stages}
                     sendRelult={sendRelult}
                     setShow={setShowResult}
+                    setShowRank={setShowRank}
+                    sendFn={sendFn}
+                    getProgressFn={getProgressFn}
+                    currentStatus={currentStatus}
+                    currentStageOrigin={currentStageOrigin}
+                    setTabFn={setTabFn}
+                    lastSendStage={lastSendStage}
                 ></Resultalert>
             )}
         </div>

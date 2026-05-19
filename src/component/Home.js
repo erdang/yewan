@@ -1,23 +1,23 @@
 import React, { useEffect, useCallback, useState, useRef } from 'react';
-import { Swiper, InfiniteScroll } from 'antd-mobile';
+import { InfiniteScroll } from 'antd-mobile';
 import { useNavigate } from 'react-router-dom';
 
 import instance from '@/request/index';
 
 const Home = (props) => {
-    const [bannerList, serBannerList] = useState([]);
-    const [hotList, setHotList] = useState([]);
-    const [recommendList, setRecommendList] = useState([]);
+    // const [bannerList, serBannerList] = useState([]);
+    // const [hotList, setHotList] = useState([]);
+    // const [recommendList, setRecommendList] = useState([]);
     const [roomVoiceList, setRoomVoiceList] = useState([]);
-    const [info, setInfo] = useState();
+    // const [info, setInfo] = useState();
     const [hasMore, setHasMore] = useState(true);
     const todayPage = useRef(0);
     let navigate = useNavigate();
 
-    const toPageFn = useCallback((event) => {
-        let url = event.currentTarget.dataset.url;
-        window.location.href = url;
-    }, []);
+    // const toPageFn = useCallback((event) => {
+    //     let url = event.currentTarget.dataset.url;
+    //     window.location.href = url;
+    // }, []);
 
     // const toSearchFn = useCallback(
     //     (event) => {
@@ -36,103 +36,100 @@ const Home = (props) => {
 
     const getIndex = useCallback(() => {
         instance
-            .get('/api/v1/index', {
+            .get('/api/v1/app/roomList', {
                 params: {
                     page: 1,
                 },
             })
             .then((d) => {
                 console.log(d);
-                setInfo(d.content);
-                serBannerList(d.content.bannerList);
-                setHotList(d.content.hotList);
-                setRecommendList(d.content.recommendList);
+                setRoomVoiceList(d.content.roomList);
+                // serBannerList(d.content.bannerList);
+                // setHotList(d.content.hotList);
+                // setRecommendList(d.content.recommendList);
 
                 //setRoomVoiceList(d.content.roomVoiceList);
             });
     }, []);
 
     const loadMore = useCallback(() => {
-        if (info && todayPage.current > info.page_number) {
-            return;
-        }
+        // if (info && todayPage.current > info.page_number) {
+        //     return;
+        // }
         todayPage.current++;
         return instance
-            .get('/api/v1/index', {
+            .get('/api/v1/app/roomList', {
                 params: {
                     page: todayPage.current,
                 },
             })
             .then((d) => {
                 if (d.code === '200') {
-                    if (d.content.roomVoiceList.length > 0) {
+                    if (d.content.length > 0) {
                         setHasMore(true);
                     } else {
                         setHasMore(false);
                     }
-                    setRoomVoiceList((val) => [
-                        ...val,
-                        ...d.content.roomVoiceList,
-                    ]);
+                    setRoomVoiceList((val) => [...val, ...d.content.roomList]);
                 }
             });
-    }, [info]);
+    }, []);
 
-    const verticalItems =
-        bannerList.length > 0 &&
-        bannerList.map((item, index) => (
-            <Swiper.Item key={index} onClick={toPageFn} data-url={item.jumpUrl}>
-                <div className="verticalContent">
-                    <img src={item.bannerimg} alt="" />
-                </div>
-            </Swiper.Item>
-        ));
+    // const verticalItems =
+    //     bannerList.length > 0 &&
+    //     bannerList.map((item, index) => (
+    //         <Swiper.Item key={index} onClick={toPageFn} data-url={item.jumpUrl}>
+    //             <div className="verticalContent">
+    //                 <img src={item.bannerimg} alt="" />
+    //             </div>
+    //         </Swiper.Item>
+    //     ));
 
-    const recommendContent =
-        recommendList.length > 0 &&
-        recommendList.map((item, index) => (
-            <Swiper.Item
-                key={index}
-                onClick={toRoomFn}
-                data-url={item.jumpUrl}
-                data-rid={item.uid}
-            >
-                <div className="recom-bg">
-                    <div className="recom-user">
-                        <div className="spic">
-                            <img src={item.userInfo.pos_pic} alt="" />
-                        </div>
-                        <div className="info">
-                            <div className="alias">{item.userInfo.alias}</div>
-                            <div className="type-title">{item.typeTitle}</div>
-                        </div>
-                    </div>
-                    <div className="recom-icon"></div>
-                </div>
-            </Swiper.Item>
-        ));
+    // const recommendContent =
+    //     recommendList.length > 0 &&
+    //     recommendList.map((item, index) => (
+    //         <Swiper.Item
+    //             key={index}
+    //             onClick={toRoomFn}
+    //             data-url={item.jumpUrl}
+    //             data-rid={item.uid}
+    //         >
+    //             <div className="recom-bg">
+    //                 <div className="recom-user">
+    //                     <div className="spic">
+    //                         <img src={item.userInfo.pos_pic} alt="" />
+    //                     </div>
+    //                     <div className="info">
+    //                         <div className="alias">{item.userInfo.alias}</div>
+    //                         <div className="type-title">{item.typeTitle}</div>
+    //                     </div>
+    //                 </div>
+    //                 <div className="recom-icon"></div>
+    //             </div>
+    //         </Swiper.Item>
+    //     ));
 
-    const hostConetnt =
-        hotList.length > 0 &&
-        hotList.map((item, index) => {
-            return (
-                <li
-                    key={index}
-                    onClick={toRoomFn}
-                    data-rid={item.uid}
-                    style={{
-                        backgroundImage: 'url(' + item.userInfo.pos_pic + ')',
-                        backgroundSize: '100% 100%',
-                    }}
-                >
-                    <div className="li-type">{item.typeTitle}</div>
-                    <div className="li-mask">
-                        <div className="name">{item.title}</div>
-                        <div className="num">{item.heatNum}</div>
-                    </div>
-                </li>
-            );
-        });
+    // const hostConetnt =
+    //     hotList.length > 0 &&
+    //     hotList.map((item, index) => {
+    //         return (
+    //             <li
+    //                 key={index}
+    //                 onClick={toRoomFn}
+    //                 data-rid={item.uid}
+    //                 style={{
+    //                     backgroundImage: 'url(' + item.userInfo.pos_pic + ')',
+    //                     backgroundSize: '100% 100%',
+    //                 }}
+    //             >
+    //                 <div className="li-type">{item.typeTitle}</div>
+    //                 <div className="li-mask">
+    //                     <div className="name">{item.title}</div>
+    //                     <div className="num">{item.heatNum}</div>
+    //                 </div>
+    //             </li>
+    //         );
+    //     });
 
     const VoiceConetnt =
         roomVoiceList.length > 0 &&
@@ -143,7 +140,7 @@ const Home = (props) => {
                     onClick={toRoomFn}
                     data-rid={item.uid}
                     style={{
-                        backgroundImage: 'url(' + item.userInfo.pos_pic + ')',
+                        backgroundImage: 'url(' + item.poster + ')',
                         backgroundSize: '100% 100%',
                     }}
                 >
@@ -170,7 +167,7 @@ const Home = (props) => {
                     <div className="s-text">搜索房间号/ID</div>
                 </div> */}
             </header>
-            <div className="banner-swiper">
+            {/* <div className="banner-swiper">
                 <Swiper
                     autoplay={true}
                     loop={true}
@@ -201,7 +198,7 @@ const Home = (props) => {
                 >
                     {recommendContent}
                 </Swiper>
-            </div>
+            </div> */}
             <div className="voice-list">
                 <div className="title">热门推荐</div>
                 <div className="voice-arr">

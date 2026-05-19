@@ -27,10 +27,9 @@ const DownloadIpa = () => {
                 <div className="btn-a">
                     <a
                         href={
-                            'https:' +
                             APPNAME[hostname].proBaseURL +
                             '/api/v1/app/appDownloads?channel=' +
-                            (searchParam.channel || 111)
+                            (searchParam.channel || 112)
                         }
                     >
                         立即安装
@@ -40,13 +39,7 @@ const DownloadIpa = () => {
                 <div className="btn-a">
                     <a
                         href={
-                            'itms-services://?action=download-manifest&url=' +
-                            encodeURIComponent(
-                                'https:' +
-                                    APPNAME[hostname].proBaseURL +
-                                    '/api/v1/app/appDownloads?json=plist&channel=' +
-                                    (searchParam.channel || 110),
-                            )
+                            'https://apps.apple.com/cn/app/%E6%A4%B0%E5%A3%B3/id6762315626'
                         }
                     >
                         立即安装

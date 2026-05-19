@@ -11,7 +11,7 @@ const searchParam = urlTool.param(window.location.search);
 
 const DownloadIpa = () => {
     useEffect(() => {
-        setTitle('椰壳星球');
+        setTitle('椰壳');
     }, []);
 
     return (
@@ -21,14 +21,14 @@ const DownloadIpa = () => {
             <div className="top"></div>
             <div className="ipa">
                 <div className="log-ipa"></div>
-                <div className="title">椰壳星球</div>
+                <div className="title">椰壳</div>
             </div>
             {borwer.isandroid() ? (
                 <div className="btn-a">
                     <a
                         href={
-                            'https://api.wuhanyunyi.top/api/v1/app/appDownloads?channel=' +
-                            (searchParam.channel || 110114)
+                            'https://api.njxianyuwl.cn/api/v1/app/appDownloads?channel=' +
+                            (searchParam.channel || 112)
                         }
                     >
                         立即安装
@@ -40,8 +40,8 @@ const DownloadIpa = () => {
                         href={
                             'itms-services://?action=download-manifest&url=' +
                             encodeURIComponent(
-                                'https://api.wuhanyunyi.top/api/v1/app/appDownloads?json=plist&channel=' +
-                                    (searchParam.channel || 110113),
+                                'https://api.njxianyuwl.cn/api/v1/app/appDownloads?json=plist&channel=' +
+                                    (searchParam.channel || 111),
                             )
                         }
                     >

@@ -22,8 +22,7 @@ let appname = '椰壳';
 const WAY_WECHAT = [
     {
         name: '微信支付',
-        type: '15', //公众号
-        gtype: 'wechatPub', //公众号
+        type: 'officialWeChatPay', //公众号
     },
     // {
     //     name: '支付宝支付',
@@ -43,12 +42,13 @@ const Manager = ({ ticket, userInfo }) => {
     const [currentIndex, setCurrentIndex] = useState('');
     const [currentInput, setCurrentInput] = useState(false);
     const [showBao, setShowBao] = useState(false);
-    let [current, setCurrent] = useState(0);
+    const [current, setCurrent] = useState(0);
 
     const getMoneyList = useCallback(() => {
         return instance
-            .post('/api/v1/user/getGoldConfig', {
+            .post('/api/v1/user/getGoldConfigPublic', {
                 token: ticket,
+                product_type: 3,
             })
             .then((d) => {
                 setInfo(d.content);
@@ -94,16 +94,7 @@ const Manager = ({ ticket, userInfo }) => {
     }, [uid]);
 
     const createOrderFn = useCallback(
-        ({
-            money,
-            gatetype,
-            ovalue,
-            openid,
-            token,
-            uid = '',
-            mid = '',
-            cate_type,
-        }) => {
+        ({ money, gatetype, ovalue, openid, token, uid = '', goods_id }) => {
             return instance.post('/api/v1/pay/createOrderByPublic', {
                 money: money,
                 type: gatetype,
@@ -111,8 +102,7 @@ const Manager = ({ ticket, userInfo }) => {
                 openid: openid,
                 token: token,
                 uid: uid,
-                mid: mid,
-                cate_type: cate_type,
+                goods_id: goods_id,
             });
         },
         [],
@@ -170,19 +160,18 @@ const Manager = ({ ticket, userInfo }) => {
                                 currentIndex === ''
                                     ? money
                                     : info[currentIndex].money,
-                            gatetype: gatetype,
                             ovalue:
                                 currentIndex === ''
                                     ? money * 10
                                     : info[currentIndex].number,
                             openid: searchParam.event_parma,
-                            token:
-                                gatetype === '15' || gatetype === '19'
-                                    ? ''
-                                    : ticket,
+                            token: '',
+                            gatetype: gatetype,
                             uid: s.content.uid,
-                            mid: searchParam.mid || '',
-                            cate_type: 'pay_h5',
+                            goods_id:
+                                currentIndex === ''
+                                    ? money * 10
+                                    : info[currentIndex].product_id,
                         };
                         createOrderFn(parms).then((d) => {
                             if (d.code === '200') {
@@ -194,31 +183,7 @@ const Manager = ({ ticket, userInfo }) => {
 
                                 if (gatetype === '19') {
                                     window.location.assign(d.content.param);
-                                } else if (gatetype === 'alipayWap') {
-                                    var alipayFormContainer =
-                                        document.createElement('div');
-                                    var oldOne =
-                                        document.getElementById('alipay-form');
-
-                                    if (oldOne) {
-                                        oldOne.parentNode.removeChild(oldOne);
-                                    }
-                                    alipayFormContainer.id = 'alipay-form';
-                                    alipayFormContainer.innerHTML =
-                                        d.content.data;
-                                    alipayFormContainer.style.visibility =
-                                        'hidden';
-                                    document.body.appendChild(
-                                        alipayFormContainer,
-                                    );
-                                    setTimeout(() => {
-                                        var form =
-                                            document.getElementById(
-                                                'alipaysubmit',
-                                            );
-                                        form && form.submit();
-                                    }, 100);
-                                } else if (gatetype === '15') {
+                                } else if (gatetype === 'officialWeChatPay') {
                                     let wparam = {
                                         appId: d.content.param.appId, //公众号名称，由商户传入
                                         timeStamp: d.content.param.timeStamp, //时间戳，自1970年以来的秒数
@@ -238,16 +203,7 @@ const Manager = ({ ticket, userInfo }) => {
                 });
             }
         });
-    }, [
-        money,
-        currentIndex,
-        info,
-        getById,
-        createOrderFn,
-        wechatPay,
-        ticket,
-        current,
-    ]);
+    }, [money, currentIndex, info, getById, createOrderFn, wechatPay, current]);
 
     const chargeFn = useCallback(() => {
         if (uid === '') {
@@ -390,7 +346,7 @@ const Manager = ({ ticket, userInfo }) => {
                                     onClick={getPayTypeFn}
                                 >
                                     <div
-                                        className={'w-icon_' + item.gtype}
+                                        className={'w-icon_' + item.type}
                                     ></div>
                                     <div className="w-text"> {item.name}</div>
                                 </div>

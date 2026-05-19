@@ -3,17 +3,18 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { Result, Button } from 'antd-mobile';
 
 import instance from '@/request/index';
-
+import urltool from 'ox-util/src/url';
 import browser from 'ox-util/src/browser';
+const searchParam = urltool.param(window.location.search);
 
 const Success = () => {
     useEffect(() => {}, []);
     const [infoOrder, setInfoOrder] = useState('');
     const getOrder = useCallback(() => {
         instance
-            .get('/api/pay/getOrderResult', {
+            .get('/api/v1/pay/getOrderResult', {
                 params: {
-                    orderid: localStorage.getItem('orderId'),
+                    orderid: searchParam.orderid,
                 },
             })
             .then((d) => {
@@ -41,10 +42,12 @@ const Success = () => {
             {browser.iswechat() ? null : (
                 <Button
                     block
-                    type="button"
+                    type="default"
+                    className="m-button"
                     color="primary"
                     onClick={() => {
-                        window.location.origin + '/h5Pay';
+                        window.location.href =
+                            window.location.origin + '/h5Pay';
                     }}
                 >
                     返回充值页面

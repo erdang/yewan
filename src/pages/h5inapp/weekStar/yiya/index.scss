@@ -20,6 +20,7 @@ body {
     width: 750px;
     box-sizing: border-box;
     padding-bottom: 200px;
+
     .weekstar__warp-banner {
         width: 750px;
         height: 720px;
@@ -300,8 +301,7 @@ body {
                         .rank__li-pic {
                             width: 190px;
                             height: 288px;
-                            background: img-url('/weekStar/1.png?v=1')
-                                no-repeat;
+                            background: img-url('/weekStar/1.png?v=1') no-repeat;
                             background-size: 100% 100%;
                             position: relative;
                             padding: 180px 10px 0 10px;
@@ -374,8 +374,7 @@ body {
                         .rank__li-pic {
                             width: 190px;
                             height: 287px;
-                            background: img-url('/weekStar/2.png?v=1')
-                                no-repeat;
+                            background: img-url('/weekStar/2.png?v=1') no-repeat;
                             background-size: 100% 100%;
                             position: relative;
                             padding: 180px 10px 0 10px;
@@ -450,8 +449,7 @@ body {
                         .rank__li-pic {
                             width: 190px;
                             height: 286px;
-                            background: img-url('/weekStar/3.png?v=1')
-                                no-repeat;
+                            background: img-url('/weekStar/3.png?v=1') no-repeat;
                             background-size: 100% 100%;
                             position: relative;
                             padding: 180px 10px 0 10px;
@@ -605,6 +603,21 @@ body {
         .redd {
             color: #ffca7a;
         }
+        .div_warp {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .gao_img {
+            width: 180px;
+            img {
+                width: 180px;
+                height: 180px;
+            }
+        }
+        .div_one_text {
+            text-align: center;
+        }
         .rule__h1 {
             font-size: 26px;
             font-weight: bold;
@@ -641,8 +654,7 @@ body {
                     width: 250px;
                     height: 80px;
                     background:
-                        img-url('/star/rule_icon2.png?v=1?v=3')
-                            no-repeat,
+                        img-url('/star/rule_icon2.png?v=1?v=3') no-repeat,
                         #330f72;
                     background-size: 100% 100%;
                     position: absolute;
@@ -659,8 +671,7 @@ body {
                         li {
                             height: 200px;
                             width: 140px;
-                            background: img-url('/star/g_bg.png?v=1')
-                                no-repeat;
+                            background: img-url('/star/g_bg.png?v=1') no-repeat;
 
                             background-size: 100% 100%;
                             position: relative;

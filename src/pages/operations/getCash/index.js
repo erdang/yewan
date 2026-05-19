@@ -16,11 +16,11 @@ import instance from '@/request/index';
 import setTitle from '@/utility/settitle';
 import { base64Decode } from '@/utility/crypto';
 import Base64 from 'ox-util/src/base_atob';
-import useGetUserInfo from '@/hooks/getUser';
+// import useGetUserInfo from '@/hooks/getUser';
 import { PageLoading } from '@/component/PageLoading';
 
-const ApplyForm = memo(({ ticket, defaultValue, dispatch, info }) => {
-    const uInfo = useGetUserInfo(ticket);
+const ApplyForm = memo(({ ticket, defaultValue, dispatch, info, infoData }) => {
+    // const uInfo = useGetUserInfo(ticket);
     const [form] = Form.useForm();
 
     // let navigate = useNavigate();
@@ -78,13 +78,13 @@ const ApplyForm = memo(({ ticket, defaultValue, dispatch, info }) => {
             <div className="title">
                 <div className="title__info">
                     <div className="title__info-icon">
-                        {uInfo && uInfo.diamond}
+                        {infoData && infoData.available_diamond}
                     </div>
                     <div className="title__info-num">钻石余额</div>
                 </div>
                 <div className="title__info-text">
                     <div className="title__info-text1">
-                        {uInfo && (uInfo.diamond / 10).toFixed(2)}
+                        {infoData && infoData.available_diamond / 10}
                     </div>
                     <div className="title__info-text2"> 可提现金额(元)</div>
                 </div>
@@ -378,7 +378,7 @@ const ApplyForm = memo(({ ticket, defaultValue, dispatch, info }) => {
                     </Form.Item>
 
                     <div className="get_tips">
-                        注：提现金额100元起提，仅支持10的倍数,手续费8%
+                        注：提现金额100元起提,手续费6%
                     </div>
                 </Form>
             </div>
@@ -463,6 +463,7 @@ const Manager = ({ ticket, idcardBack, idcardFront }) => {
     const [statea, dispatch] = useReducer(reducer, createInitialState());
 
     const [info, setInfo] = useState('');
+    const [infoData, setInfoData] = useState('');
 
     const getStatus = useCallback(() => {
         return instance.post('/api/v1/user/yzhUserCheck', {
@@ -488,6 +489,7 @@ const Manager = ({ ticket, idcardBack, idcardFront }) => {
                                 console.log(dataInfso);
 
                                 setInfo(dataInfso);
+                                setInfoData(d.content);
                             }
                         });
                 } else {
@@ -523,6 +525,7 @@ const Manager = ({ ticket, idcardBack, idcardFront }) => {
                         }}
                         dispatch={dispatch}
                         info={info}
+                        infoData={infoData}
                     ></ApplyForm>
                 </div>
             </Fragment>

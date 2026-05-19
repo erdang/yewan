@@ -16,6 +16,8 @@ import browser from 'ox-util/src/browser';
 import user from '@/utility/user';
 import { APPNAME } from '@/utility/appName';
 import openInstall from '@/utility/openinstall';
+import borwer from 'ox-util/src/browser';
+import { DownloadWeChaTips } from '@/component/DownloadWeChaTips';
 
 const hostname = window.location.hostname;
 
@@ -55,7 +57,7 @@ const UserInfo = ({ userInfo, ticket, info }) => {
             <div className={'apply-user-info border-bottom'}>
                 <section className="label">当前用户：</section>
                 <section className="main">
-                    <span>{userInfo.alias}</span>
+                    <span>{userInfo.nickname}</span>
                     <span>({userInfo.rid})</span>
                     <span onClick={changeUser}>更换</span>
                 </section>
@@ -74,21 +76,17 @@ const UserInfo = ({ userInfo, ticket, info }) => {
 // let weChat = '';
 
 const PayWayContent = ({ WAY, ticket }) => {
-    let params = useLocation();
-    let param = urltool.param(decodeURI(params.search));
+    const params = useLocation();
+    const param = urltool.param(decodeURI(params.search));
+    const [current, setCurrent] = useState(0);
 
-    let [current, setCurrent] = useState(0);
     const createOrderFn = useCallback(
-        ({ gatetype, token, orderid, money, ovalue, mid, src, encpass }) => {
+        ({ gatetype, token, goods_id, money }) => {
             return instance.post('/api/v1/pay/createOrder', {
-                gatetype: gatetype,
-                mid: mid,
+                type: gatetype,
                 token: token,
-                orderid: orderid,
+                goods_id: goods_id,
                 money: money,
-                ovalue: ovalue,
-                src: src,
-                encpass: encpass,
             });
         },
         [],
@@ -99,17 +97,13 @@ const PayWayContent = ({ WAY, ticket }) => {
         setCurrent(index);
     }, []);
 
+    console.log('WAY', WAY[current]);
     const chargeFn = useCallback(() => {
         //1533360191
         createOrderFn({
             gatetype: WAY[current].type,
-            token: param.token,
-            orderid: param.oid,
-            ovalue: param.ovalue,
             money: param.money,
-            mid: WAY[current].mid,
-            src: searchParam.src,
-            encpass: ticket,
+            token: ticket,
         }).then((d) => {
             if (d.code === '200') {
                 let purl =
@@ -120,13 +114,13 @@ const PayWayContent = ({ WAY, ticket }) => {
                     '&src=' +
                     searchParam.src;
 
-                if (WAY[current].type === 'wechatH5') {
+                if (WAY[current].type === 'webWeChatPay') {
                     window.location.assign(
                         d.content.data.h5Url +
                             '&redirect_url=' +
                             encodeURIComponent(purl),
                     );
-                } else if (WAY[current].type === 'alipayWap') {
+                } else if (WAY[current].type === 'webAliPay') {
                     var alipayFormContainer = document.createElement('div');
                     var oldOne = document.getElementById('alipay-form');
 
@@ -134,7 +128,7 @@ const PayWayContent = ({ WAY, ticket }) => {
                         oldOne.parentNode.removeChild(oldOne);
                     }
                     alipayFormContainer.id = 'alipay-form';
-                    alipayFormContainer.innerHTML = d.content.data;
+                    alipayFormContainer.innerHTML = d.content.param.orderStr;
                     alipayFormContainer.style.visibility = 'hidden';
                     document.body.appendChild(alipayFormContainer);
                     setTimeout(() => {
@@ -235,16 +229,16 @@ const Manager = ({ ticket, userInfo, WAY, step2Url }) => {
                 },
             })
             .then((d) => {
-                d.content = [
-                    {
-                        type: 'webWeChatPay',
-                        show_type: '2',
-                        open_type: '4',
-                        use_type: '2',
-                        name: '微信',
-                        url: 'https://s3.njxianyuwl.cn/dev/2026-04-27/8-103/1777248606231536097.png',
-                    },
-                ];
+                // d.content = [
+                //     {
+                //         type: 'webWeChatPay',
+                //         show_type: '2',
+                //         open_type: '4',
+                //         use_type: '2',
+                //         name: '微信',
+                //         url: 'https://s3.njxianyuwl.cn/dev/2026-04-27/8-103/1777248606231536097.png',
+                //     },
+                // ];
                 if (d.code === '200') {
                     setPayArr(d.content);
                 }
@@ -278,15 +272,16 @@ const Manager = ({ ticket, userInfo, WAY, step2Url }) => {
         let pmoney = currentIndex === '' ? money : info[currentIndex].money;
 
         let povalue =
-            currentIndex === '' ? money * 10 : info[currentIndex].coin;
+            currentIndex === '' ? money * 10 : info[currentIndex].number;
 
         // localStorage.setItem('orderId', infoToken.content.oid);
         let url = buildURL('/' + step2Url + '/from', [
-            'uid=' + userInfo.id,
+            'uid=' + userInfo.uid,
             'ovalue=' + povalue,
             'money=' + pmoney,
+
             'setp=2',
-            'alias=' + encodeURIComponent(userInfo.alias),
+            'alias=' + encodeURIComponent(userInfo.nickname),
         ]);
         setStep(2);
         navigate(url);
@@ -385,7 +380,12 @@ const Manager = ({ ticket, userInfo, WAY, step2Url }) => {
         mainContent = stepContent[step];
     }
 
-    return <div className="manager">{mainContent}</div>;
+    return (
+        <div className="manager">
+            {borwer.iswechat() && <DownloadWeChaTips />}
+            {mainContent}
+        </div>
+    );
 };
 
 const Success = ({ step2Url }) => {

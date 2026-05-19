@@ -19,10 +19,10 @@ body {
         .log-ipa {
             width: 130px;
             height: 130px;
-            background: url('https://s1.wuhanyunyi.top/static/h5_static/logo.png')
-                no-repeat;
+            background: img-url('/yeke_logo.png') no-repeat;
             background-size: cover;
             margin: auto;
+            border-radius: 10px;
         }
         .title {
             font-size: 40px;
